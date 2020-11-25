@@ -1,219 +1,142 @@
-<?php include('inc/header.php');?>
-<!-- 
-Body Section 
--->
+<?php
+include('inc/header.php');
+
+$datos = file_get_contents('datos/usuarios.json');
+//convierto a un array
+$datosJson = json_decode($datos,true);
+$errorpass="";
+if(isset($_POST['tPass1'])&&isset($_POST['tPass2']))  {
+if($_POST['tPass1']==$_POST['tPass2']){
+
+    if(isset($_POST['add'])){
+        
+    
+        $id = date('j/n/Y, H:i:s');
+
+        $datosJson[$id] = array('id'=>$id,'tipo'=> "Cliente", 'nombre'=>$_POST['tName'], 'apellido'=>$_POST['tApellido'],
+         'fecha'=>$_POST['tFecha'], 'user'=>$_POST['tUser'], 'email'=>$_POST['tEmail'], 'pass'=>$_POST['tPass1'], 'direccion'=>$_POST['tDireccion'],
+         'telefono'=>$_POST['tTel'], 'pedidos'=>$_POST[''], 'gasto'=>$_POST['']);
+    
+        //trunco el archivo
+        $fp = fopen('datos/usuarios.json','w');
+        //convierto a json string
+        $datosString = json_encode($datosJson);
+        //guardo el archivo
+        fwrite($fp,$datosString);
+        fclose($fp);
+        redirect('login.php');
+	}
+	
+  }else{
+    $errorpass="Las Contraseñas no coinciden";
+  }
+}
+?>
+
+<div class="container-fluid">
+
 	<div class="row">
-<div id="sidebar" class="span3">
-<?php include('inc/sidebar.php');?>
-
-	</div>
-	<div class="span9">
-    <ul class="breadcrumb">
-		<li><a href="index.php">Home</a> <span class="divider">/</span></li>
-		<li class="active">Registration</li>
-    </ul>
-	<h3> Registration</h3>	
-	<hr class="soft"/>
-	<div class="well">
-	<form class="form-horizontal">
-		<h3>Your Personal Details</h3>
+	<div class="col-12">
+        <div class="col-10 col-md-8 col-lg-5 mx-auto">		
+	
+	<div class="card bg-transparent border-0">
+	<form class="form-horizontal py-4" method="POST" action="">
+		<div class="d-flex justify-content-center pb-4"><i class="fas fa-user-plus" style="font-size: 100px"></i></div>
+		
 		<div class="control-group">
-		<label class="control-label">Title <sup>*</sup></label>
-		<div class="controls">
-		<select class="span1" name="days">
-			<option value="">-</option>
-			<option value="1">Mr.</option>
-			<option value="2">Mrs</option>
-			<option value="3">Miss</option>
-		</select>
-		</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label" for="inputFname">First name <sup>*</sup></label>
-			<div class="controls">
-			  <input type="text" id="inputFname" placeholder="First Name">
+			<div class="controls py-2">
+				
+				<input type="text" class="form-control form-control-lg" name="tUser" id="txtUser" placeholder="Usuario" required>
 			</div>
-		 </div>
-		 <div class="control-group">
-			<label class="control-label" for="inputLname">Last name <sup>*</sup></label>
-			<div class="controls">
-			  <input type="text" id="inputLname" placeholder="Last Name">
+		</div>
+		<div class="control-group">
+			<div class="controls py-2">
+				
+				<input class="form-control form-control-lg" type="password" name="tPass1" id="txtPass1" placeholder="Contraseña"required>
 			</div>
-		 </div>
+		</div>
 		<div class="control-group">
-		<label class="control-label" for="inputEmail">Email <sup>*</sup></label>
-		<div class="controls">
-		  <input type="text" placeholder="Email">
+			<div class="controls py-2">
+				
+				<input class="form-control form-control-lg" type="password" name="tPass2" id="txtPass2"  placeholder="Repetir Contraseña"required>
+			</div>
 		</div>
-	  </div>	  
+		<div class="d-flex justify-content-center">
+                <p class="text-danger form-control-lg"><?php if ($errorpass != ""){ echo $errorpass; }?></p>
+                </div>
 		<div class="control-group">
-		<label class="control-label">Password <sup>*</sup></label>
-		<div class="controls">
-		  <input type="password" placeholder="Password">
+			<div class="controls py-2">
+				
+				<input class="form-control form-control-lg" type="text" name="tName" id="txtName" placeholder="Nombre" required>
+			</div>
 		</div>
-	  </div>
 		<div class="control-group">
-		<label class="control-label">Date of Birth <sup>*</sup></label>
-		<div class="controls">
-		  <select class="span1" name="days">
-				<option value="">-</option>
-					<option value="1">1&nbsp;&nbsp;</option>
-					<option value="2">2&nbsp;&nbsp;</option>
-					<option value="3">3&nbsp;&nbsp;</option>
-					<option value="4">4&nbsp;&nbsp;</option>
-					<option value="5">5&nbsp;&nbsp;</option>
-					<option value="6">6&nbsp;&nbsp;</option>
-					<option value="7">7&nbsp;&nbsp;</option>
-			</select>
-			<select class="span1" name="days">
-				<option value="">-</option>
-					<option value="1">1&nbsp;&nbsp;</option>
-					<option value="2">2&nbsp;&nbsp;</option>
-					<option value="3">3&nbsp;&nbsp;</option>
-					<option value="4">4&nbsp;&nbsp;</option>
-					<option value="5">5&nbsp;&nbsp;</option>
-					<option value="6">6&nbsp;&nbsp;</option>
-					<option value="7">7&nbsp;&nbsp;</option>
-			</select>
-			<select class="span1" name="days">
-				<option value="">-</option>
-					<option value="1">1&nbsp;&nbsp;</option>
-					<option value="2">2&nbsp;&nbsp;</option>
-					<option value="3">3&nbsp;&nbsp;</option>
-					<option value="4">4&nbsp;&nbsp;</option>
-					<option value="5">5&nbsp;&nbsp;</option>
-					<option value="6">6&nbsp;&nbsp;</option>
-					<option value="7">7&nbsp;&nbsp;</option>
-			</select>
+			<div class="controls py-2">
+				
+				<input class="form-control form-control-lg" type="text" name="tApellido" id="txtApellido" placeholder="Apellido" required>
+			</div>
 		</div>
-	  </div>
-	<div class="control-group">
-		<div class="controls">
-		 <input type="submit" name="submitAccount" value="Register" class="exclusive shopBtn">
+		<div class="control-group">
+			<div class="controls py-2">
+				
+				<input class="form-control form-control-lg" type="text" name="tEmail" id="txtEmail" placeholder="Email" required>
+			</div>
 		</div>
-	</div>
+		<div class="control-group">
+			<div class="controls py-2">
+				<input class="form-control form-control-lg" type="date" name="tFecha" id="txtFecha"  required>
+			</div>
+		</div>
+		<hr>
+		<label class="form-control-lg" for="txtDireccion">Direccion:</label>
+		<div class="control-group row">
+			<div class="controls py-2 col-md-6">
+				<div>
+					<input class="form-control form-control-lg" type="text" name="tDireccion[barrio]" id="txtDireccion" placeholder="Barrio" >
+				</div>
+			</div>
+			<div class="controls py-2 col-md-6">
+				<div>
+					<input class="form-control form-control-lg" type="text" name="tDireccion[calle]" id="txtDireccion" placeholder="Calle" >
+				</div>
+			</div>
+		</div>
+		<div class="control-group row">
+			<div class="controls py-2 col-md-4">
+				<div>
+					<input class="form-control form-control-lg" type="text" name="tDireccion[altura]" id="txtDireccion" placeholder="Altura" >
+				</div>
+			</div>
+			<div class="controls py-2 col-md-4">
+				<div>
+					<input class="form-control form-control-lg" type="text" name="tDireccion[piso]"  id="txtDireccion" placeholder="Piso" >
+				</div>
+			</div>
+			<div class="controls py-2 col-md-4">
+				<div>
+					<input class="form-control form-control-lg" type="text" name="tDireccion[depto]" id="txtDireccion" placeholder="Depto" >
+				</div>
+			</div>
+		</div>
+		<hr>
+		<div class="control-group">
+			<div class="controls py-2">
+ 				<input class="form-control form-control-lg" type="text" name="tTel"  id="txtTelefono" placeholder="Teléfono" >
+			</div>
+		</div>		
+		<div class="control-group">
+		<center>
+			<input class="btn btn-danger" type="reset" value="Reset">
+			<input class="btn btn-success" type="submit" name="add" value="Registrarse">
+		</center>
+		</div>
 	</form>
-</div>
-
-<div class="well">
-	<form class="form-horizontal" >
-		<h3>Your Billing Details</h3>
-		<div class="control-group">
-			<label class="control-label">Fiels label <sup>*</sup></label>
-			<div class="controls">
-			  <input type="text" placeholder=" Field name">
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">Fiels label <sup>*</sup></label>
-			<div class="controls">
-			  <input type="text" placeholder=" Field name">
-			</div>
-		</div>
-		 <div class="control-group">
-			<label class="control-label">Fiels label <sup>*</sup></label>
-			<div class="controls">
-			  <input type="text" placeholder=" Field name">
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">Fiels label <sup>*</sup></label>
-			<div class="controls">
-			  <textarea></textarea>
-			</div>
-		</div>
-	<div class="control-group">
-		<div class="controls">
-		 <input type="submit" name="submitAccount" value="Register" class="shopBtn exclusive">
-		</div>
 	</div>
-	</form>
-</div>
-
-
-<div class="well">
-	<form class="form-horizontal" >
-		<h3>Your Account Details</h3>
-		<div class="control-group">
-			<label class="control-label">Fiels label <sup>*</sup></label>
-			<div class="controls">
-			  <input type="text" placeholder=" Field name">
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">Fiels label <sup>*</sup></label>
-			<div class="controls">
-			  <input type="text" placeholder=" Field name">
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">Fiels label <sup>*</sup></label>
-			<div class="controls">
-			  <input type="text" placeholder=" Field name">
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">Fiels label <sup>*</sup></label>
-			<div class="controls">
-			  <input type="text" placeholder=" Field name">
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">Fiels label <sup>*</sup></label>
-			<div class="controls">
-			  <input type="text" placeholder=" Field name">
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">Fiels label <sup>*</sup></label>
-			<div class="controls">
-			  <input type="text" placeholder=" Field name">
-			</div>
-		</div><div class="control-group">
-			<label class="control-label">Fiels label <sup>*</sup></label>
-			<div class="controls">
-			  <input type="text" placeholder=" Field name">
-			</div>
-		</div><div class="control-group">
-			<label class="control-label">Fiels label <sup>*</sup></label>
-			<div class="controls">
-			  <input type="text" placeholder=" Field name">
-			</div>
-		</div><div class="control-group">
-			<label class="control-label">Fiels label <sup>*</sup></label>
-			<div class="controls">
-			  <input type="text" placeholder=" Field name">
-			</div>
-		</div><div class="control-group">
-			<label class="control-label">Fiels label <sup>*</sup></label>
-			<div class="controls">
-			  <input type="text" placeholder=" Field name">
-			</div>
-		</div><div class="control-group">
-			<label class="control-label">Fiels label <sup>*</sup></label>
-			<div class="controls">
-			  <input type="text" placeholder=" Field name">
-			</div>
-		</div><div class="control-group">
-			<label class="control-label">Fiels label <sup>*</sup></label>
-			<div class="controls">
-			  <input type="text" placeholder=" Field name">
-			</div>
-		</div><div class="control-group">
-			<label class="control-label">Fiels label <sup>*</sup></label>
-			<div class="controls">
-			  <input type="text" placeholder=" Field name">
-			</div>
-		</div>
-	<div class="control-group">
-		<div class="controls">
-		 <input type="submit" name="submitAccount" value="Register" class="exclusive shopBtn">
-		</div>
-	</div>
-	</form>
-</div>
-
-
+</form>
 </div>
 </div>
-<?php include('inc/footer.php');?>
+</div>
+
+<?php
+include('inc/footer.php');
+?> 
