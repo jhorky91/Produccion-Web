@@ -27,10 +27,12 @@ try {
  
     // Set the plain-text "Body"
     $message->setBody("Email: ".$_POST['email']."\nNombre: ".$_POST['nombre']."\nMensaje: ".$_POST['mensaje']);
- 
+    $message->addPart('<strong>Email: </strong>'.$_POST['email'].'<br><strong>Nombre: </strong>'.$_POST['nombre'].'<br><strong>Mensaje: </strong>'.$_POST['mensaje']);
     // Send the message
     $result = $mailer->send($message);
+    
     redirect('contact.php');
+
 } catch (Exception $e) {
   echo $e->getMessage();
 } }
@@ -126,7 +128,7 @@ try {
                 <a href="#" class="btn btn-danger">
             	    <span>Reset</span>
                 </a>
-                <input class="btn btn-success" type="submit" name="enviar" value="Enviar">
+                <input class="btn btn-success" data-toggle="modal" data-target="#exampleModalCentered" type="submit" name="enviar" value="Enviar">
             </div>
 
           </form>
@@ -135,6 +137,22 @@ try {
     </div>
 
   </section>
+  <!-- Modal -->
+<div class="modal" id="exampleModalCentered" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenteredLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenteredLabel">Mensaje</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Se envió su mensaje correctamente
+      </div>
+    </div>
+  </div>
+</div>
 
 <?php
 include('inc/footer.php');
