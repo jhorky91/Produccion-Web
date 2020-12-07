@@ -1,7 +1,7 @@
 <?php
 include('inc/header.php');
 
-require_once './vendor/autoload.php';
+require_once('./vendor/autoload.php');
 
 if (isset($_POST['enviar'])) {
 try {
