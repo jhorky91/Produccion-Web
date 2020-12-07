@@ -1,13 +1,12 @@
 <?php
 include('inc/header.php');
+
 require_once './vendor/autoload.php';
 
 if (isset($_POST['enviar'])) {
 try {
     // Create the SMTP Transport
-    $transport = (new Swift_SmtpTransport('smtp.gmail.com',
-    465,
-    'ssl'))
+    $transport = (new Swift_SmtpTransport('smtp.gmail.com', 465,'ssl'))
         ->setUsername('contactomovieshop@gmail.com')
         ->setPassword('contacto123');
  
