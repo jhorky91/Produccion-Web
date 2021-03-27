@@ -1,7 +1,7 @@
 <?php
     include('functions/funcs.php');
 
-    require_once '../datos/config.php';
+    require_once 'inc/config.php';
 
     try {        
         $con = new PDO('mysql:host='.$hostname.';dbname='.$database, $username, $password);
