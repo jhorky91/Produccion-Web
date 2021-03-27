@@ -26,7 +26,6 @@ try {
     $message->addTo('contactomovieshop@gmail.com');
  
     // Set the plain-text "Body"
-    $message->setBody("Email: ".$_POST['email']."\nNombre: ".$_POST['nombre']."\nMensaje: ".$_POST['mensaje']);
     $message->addPart('<strong>Email: </strong>'.$_POST['email'].'<br><strong>Nombre: </strong>'.$_POST['nombre'].'<br><strong>Mensaje: </strong>'.$_POST['mensaje']);
     // Send the message
     $result = $mailer->send($message);

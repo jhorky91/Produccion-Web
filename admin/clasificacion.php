@@ -1,38 +1,21 @@
 <?php
 include('inc/header.php');
 
-$datos = file_get_contents('../datos/clasificacion.json');
-//echo $datos['imagen']['name'];
+//Devuelve el contenido de la tabla Clasificacion    
+$clasi = "SELECT id_clasificacion, nombre, descripcion FROM clasificacion;";
+$resultado = $con->query($clasi); 
+//Fin del Select
+
 
 if(isset($_GET['del'])){
-  //eliminacion de archivo imagen
-/*   foreach(file_get_contents('productos.json', true) as $a) {
-   $files = glob('img/'.$a['imagen']['name']); //obtenemos todos los nombres de los ficheros
-  } */
-    $datos = file_get_contents('../datos/clasificacion.json');
-    $datosJson = json_decode($datos,true);
-    
-
+  //eliminacion de archivo imagen   
+  $sql = "DELETE FROM clasificacion WHERE id_clasificacion=".$_GET["del"];
+  $count = $con->exec($sql);
+  
 
   //fin eliminacion archivo imagen
-  foreach($files as $file){
-      if(is_file($file))
-      unlink($file); //elimino el fichero
-  } 
-    //obtengo el contenido del archivo
-    $datos = file_get_contents('../datos/clasificacion.json');
-    //convierto a un array
-    $datosJson = json_decode($datos,true);
-    //var_dump($datosJson);
-    //borro del array
-    unset($datosJson[$_GET['del']]);
-    //trunco el archivo
-    $fp = fopen('../datos/clasificacion.json','w');
-    //convierto a json string
-    $datosString = json_encode($datosJson);
-    //guardo el archivo
-    fwrite($fp,$datosString);
-    fclose($fp);
+
+    unset($_GET['del']);
 
     redirect('clasificacion.php');
 }
@@ -76,14 +59,15 @@ if(isset($_GET['del'])){
                   </thead>
                   <tbody>
                   <?php
-                  foreach(json_decode(file_get_contents('../datos/clasificacion.json'), true) as $peli){ ?>
+                  foreach($resultado as $peli){ ?>
+                  
                     <tr align="center">
-                    <td><?php echo $peli['id']; ?></td>
+                    <td><?php echo $peli['id_clasificacion']; ?></td>
                       <td><?php echo $peli['nombre']; ?></td>
                       <td><?php echo $peli['descripcion']; ?></td>
                       <td><center>
-                      <a href="edit-clasific.php?edit=<?php echo $peli['id'];?>"><i class="fas fa-edit"></a></i>&nbsp;&nbsp;
-                      <a href="clasificacion.php?del=<?php echo $peli['id'];?>"><i class="fas fa-trash-alt"></i></a></i></center>
+                      <a href="edit-clasific.php?edit=<?php echo $peli['id_clasificacion'];?>"><i class="fas fa-edit"></a></i>&nbsp;&nbsp;
+                      <a href="clasificacion.php?del=<?php echo $peli['id_clasificacion'];?>"><i class="fas fa-trash-alt"></i></a></i></center>
                       </td>
                     </tr>
                   <?php } ?>
@@ -105,7 +89,7 @@ if(isset($_GET['del'])){
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>&copy;Copyright 2020. Todos los derechos reservados.</span><br>
+            <span>&copy;Copyright 2021. Todos los derechos reservados.</span><br>
             <span>Movie Shop</span>
           </div>
         </div>

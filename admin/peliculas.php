@@ -1,15 +1,22 @@
 <?php
 include('inc/header.php'); 
 
-$datos = file_get_contents('../datos/productos.json');
+//$datos = file_get_contents('../datos/productos.json');
 //echo $datos['imagen']['name'];
 
+    //Devuelve el contenido de la tabla peliculas  
+    $peliculas = "SELECT *
+                  FROM pelicula;";
+    $resultado = $con->query($peliculas); 
+    //Fin del Select
+
 if(isset($_GET['del'])){
-  //eliminacion de archivo imagen
-/*   foreach(file_get_contents('productos.json', true) as $a) {
-   $files = glob('img/'.$a['imagen']['name']); //obtenemos todos los nombres de los ficheros
-  } */
-    $datos = file_get_contents('../datos/productos.json');
+    $sql = "DELETE 
+            FROM pelicula 
+            WHERE id_pelicula=".$_GET["del"];
+    $count = $con->exec($sql);   
+
+/*     $datos = file_get_contents('../datos/productos.json');
     $datosJson = json_decode($datos,true);
     $eliminarimg= $datos['imagen']['name'];
     imagedestroy('img/'.$eliminarimg);
@@ -19,21 +26,23 @@ if(isset($_GET['del'])){
   foreach($files as $file){
       if(is_file($file))
       unlink($file); //elimino el fichero
-  } 
-    //obtengo el contenido del archivo
+  }  */
+/*     //obtengo el contenido del archivo
     $datos = file_get_contents('../datos/productos.json');
     //convierto a un array
     $datosJson = json_decode($datos,true);
     //var_dump($datosJson);
-    //borro del array
-    unset($datosJson[$_GET['del']]);
-    //trunco el archivo
+    //borro del array */
+    //unset($datosJson[$_GET['del']]);
+/*     //trunco el archivo
     $fp = fopen('../datos/productos.json','w');
     //convierto a json string
     $datosString = json_encode($datosJson);
     //guardo el archivo
     fwrite($fp,$datosString);
-    fclose($fp);
+    fclose($fp); */
+      //eliminacion de generos  
+
 
     redirect('peliculas.php');
 }
@@ -71,7 +80,7 @@ if(isset($_GET['del'])){
                 <table class="table table-xl-responsive-borderless"  id="tablajson" width="100%" cellspacing="0">
                   <thead class="thead-dark">
                     <tr align="center">
-                      <th>Fecha</th>
+                      <th>Id</th>
                       <th>Nombre</th>
                       <th>Imagen</th>
                       <th>Precio</th>
@@ -87,43 +96,57 @@ if(isset($_GET['del'])){
                   </thead>
                   <tbody>
                   <?php
-                  foreach(json_decode(file_get_contents('../datos/productos.json'), true) as $peli){ ?>
+                  foreach($resultado as $peli){ ?>
                     <tr align="center">
-                    <td><?php echo $peli['id']; ?></td>
+                    <td><?php echo $peli['id_pelicula']; ?></td>
                       <td><?php echo $peli['nombre']; ?></td>
-                      <td><img class="img-fluid" src="<?php 
-                                        if (is_array($peli['imagen'])) {
+                      <td><!-- <img class="img-fluid" src=" --><?php 
+                                       /*  if (is_array($peli['imagen'])) {
                                            echo 'img/'.$peli['imagen']['name'];
                                         } else {
                                         echo '../images/'.$peli['imagen'];
-                                        };
-                          ?>" ></td>
+                                        }; */
+                          ?><!--" >--></td>
                       <td><?php echo $peli['precio']; ?></td>
-                      <td><?php echo $peli['clasificacion']; ?></td>
+                      <td><?php echo $peli['id_clasificacion']; ?></td>
                       <td><?php 
 
-                        if (is_array($peli['genero'])) {
+/*                         if (is_array($gen['nombre'])) {
                         
-                        foreach ($peli['genero'] as $gen) {
-                          
-		                      $categorias = json_decode(file_get_contents('../datos/categorias.json'),true);
-                          
-                          echo ''.$categorias[$gen]['nombre'].'<br>'; 
-                          
-                        };
-                      } 
+                            foreach ($gen['nombre'] as $gen) {
+                              
+                              //$categorias = json_decode(file_get_contents('../datos/categorias.json'),true);
+                              //Devuelve el contenido de la tabla Clasificacion    
+                              $categorias = "SELECT id_genero, nombre 
+                                              FROM genero;
+                                              WHERE ";
+                              $resultado2 = $con->query($categorias); 
+                              //Fin del Select                          
+                              
+                              echo ''.$categorias[$gen]['nombre'].'<br>'; 
+                              
+                            };
+                        }  */
+                        $categorias = "SELECT genero.nombre
+                        FROM pelicula_genero INNER JOIN genero ON pelicula_genero.id_genero = genero.id_genero
+                        where pelicula_genero.id_pelicula=".$peli['id_pelicula'];
+                        $gen = $con->query($categorias);
+                        $b = $gen->fetchAll(PDO::FETCH_COLUMN, 0);
+                        $c = implode(', ', $b);
+                        echo $c;
+
                       ?>
                       </td>
                       <td><?php echo $peli['duracion']; ?></td>
                       <td><?php echo $peli['anio']; ?></td>
-                      <td><?php echo $peli['director']; ?></td>
+                      <td><?php echo $peli['directores']; ?></td>
                       <td><?php echo $peli['actores']; ?></td>
                       <td>
                       <button type='button' onclick="alert('<?php echo $peli['descripcion']; ?>')" class="btn btn-danger">Descripcion</button>
                       </td>
                       <td><center>
-                      <a href="edit-pelicula.php?edit=<?php echo $peli['id'];?>"><i class="fas fa-edit"></a></i>&nbsp;&nbsp;
-                      <a href="peliculas.php?del=<?php echo $peli['id'];?>"><i class="fas fa-trash-alt"></i></a></i></center>
+                      <a href="edit-pelicula.php?edit=<?php echo $peli['id_pelicula'];?>"><i class="fas fa-edit"></a></i>&nbsp;&nbsp;
+                      <a href="peliculas.php?del=<?php echo $peli['id_pelicula'];?>"><i class="fas fa-trash-alt"></i></a></i></center>
                       </td>
                     </tr>
                   <?php } ?>

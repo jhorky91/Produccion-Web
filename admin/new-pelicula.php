@@ -3,52 +3,60 @@ include('inc/header.php');
 include_once('functions/funcs.php');
 
 include('functions/funimg.php');
-//$id = 1;
-/* echo '<pre>';
 
-if(isset($_FILES['tImg']))
-var_dump($_FILES);
-echo '</pre>'; */
-if(isset($_FILES['tImg']))
-  move_uploaded_file($_FILES['tImg']['tmp_name'],'img/'.$_FILES['tImg']['name']);
+
+/*if(isset($_FILES['tImg']))
+  $imagen=move_uploaded_file($_FILES['tImg']['tmp_name'],'img/'.$_FILES['tImg']['name']);*/
 
 
 //obtengo el contenido del archivo
-$datos = file_get_contents('../datos/productos.json');
+//$datos = file_get_contents('../datos/productos.json');
 //convierto a un array
-$datosJson = json_decode($datos,true);
+//$datosJson = json_decode($datos,true);
 
-    if(isset($_POST['add'])){
+
+
+    if(isset($_POST['add'])){   
+  
+
+        $nombre=$_POST['tName'];
+        $precio=$_POST['tPrecio'];
+        $clasif=$_POST['tClasi'];
+        $dur=$_POST['tDur'];
+        $anio=$_POST['tAnio'];
+        $direct=$_POST['tDirect'];
+        $actor=$_POST['tActor'];
+        $descripcion=$_POST['tDescripcion'];
         
-    
-        if(isset($_GET['edit'])){
-            //modificando
-            $id = $_GET['edit'];
+        
+        //Inserta datos en pelicula
+        $sql = "INSERT INTO pelicula(nombre, precio, id_clasificacion, duracion, anio, directores, actores, descripcion) 
+        VALUES ('$nombre', '$precio', '$clasif', '$dur', '$anio', '$direct', '$actor', '$descripcion');";
+        $count = $con->exec($sql);
+        
+        //Guarda el ultimo id_pelicula al insertar pelicula.
+        $idPelicula = $con->lastInsertId();    
+
+        $generos=$_POST['tGene'];
+        //echo var_dump($generos);
+
+        //Insertar generos en pelicula_genero
+        foreach($generos as $gen){
+          $sql2 = "INSERT INTO pelicula_genero(id_pelicula, id_genero)
+          VALUES ($idPelicula, $gen);";
+          $count2 = $con->exec($sql2);
+          
+        }        
+
+        //redirect('pelicula.php');
+        if($count > 0 ){
+          print($count." Filas afectadas");
         }else{
-            //agrego 
-            $id = date('j/n/Y, H:i:s');
+          printf("ERROR");
         }
-
-        $datosJson[$id] = array(
-          'id'=>$id,'nombre'=>$_POST['tName'],'genero'=>$_POST['tGene'],'anio'=>$_POST['tAnio'],
-          'director'=>$_POST['tDirect'],'actores'=>$_POST['tActor'],'duracion'=>$_POST['tDur'],
-          'clasificacion'=>$_POST['tClasi'],'descripcion'=>$_POST['tDescripcion'],
-          'imagen'=>$_FILES['tImg'],'precio'=>$_POST['tPrecio']);
-    
-        //trunco el archivo
-        $fp = fopen('../datos/productos.json','w');
-        //convierto a json string
-        $datosString = json_encode($datosJson);
-        //guardo el archivo
-        fwrite($fp,$datosString);
-        fclose($fp);
-        redirect('peliculas.php');
-    }
-
-    if(isset($_GET['edit'])){
-        $dato = $datosJson[$_GET['edit']];
-    }
-?>
+        
+    }  
+  ?>
 
         <!-- End of Topbar -->
 
@@ -85,16 +93,15 @@ $datosJson = json_decode($datos,true);
 
 
 
-                          $clasi=json_decode(file_get_contents('../datos/clasificacion.json'),true);
-                           
-                          
-                          /* '<pre>';
-                          $mostrar = var_dump($clasi);
-                          echo $mostrar;
-                          echo '</pre>'; */
+                          //$clasi=json_decode(file_get_contents('../datos/clasificacion.json'),true);
 
-                          foreach($clasi as $clas){ ?>
-                            <option class="bg-danger text-white" value="<?php echo $clas['nombre'] ?>"> <?php echo $clas['nombre'] ?> </option>
+                          $clasi = "SELECT id_clasificacion, nombre
+                                    FROM clasificacion;";
+                          $resultado = $con->query($clasi); 
+                                             
+                           
+                          foreach($resultado as $clas){ ?>
+                            <option class="bg-danger text-white" value="<?php echo $clas['id_clasificacion'] ?>"> <?php echo $clas['nombre'] ?> </option>
                           <?php } ?>
                           
                           </select>
@@ -104,19 +111,24 @@ $datosJson = json_decode($datos,true);
                           
                           </td>
                         </tr>
+                        <!--Checkbox-->
                         <tr>
                           <td align="right"><label for="txtGene">Género:</label</td>
                           <td>
                           
                           <?php 
                           
-                          $categorias = json_decode(file_get_contents('../datos/categorias.json'),true);
-                          
+                          //$categorias = json_decode(file_get_contents('../datos/categorias.json'),true);
+                          $gener = "SELECT id_genero, nombre 
+                                    FROM genero;";
+                          $resultados = $con->query($gener); 
+
+
                           $cont=0;
-                          foreach($categorias as $cat){ ?>
+                          foreach($resultados as $cat){ ?>
                           
                           
-                          <input type="checkbox" id="generos" name="tGene[]" value="<?php echo $cat['id'] ?>" size="5" class="bg-danger text-white">
+                          <input type="checkbox" id="generos" name="tGene[]" value="<?php echo $cat['id_genero'] ?>" size="5" class="bg-danger text-white">
                           <label class="bg-danger text-white" for="generos"><?php echo $cat['nombre'] ?></label>
                           
                             <?php $cont++; 
@@ -125,7 +137,7 @@ $datosJson = json_decode($datos,true);
                               echo "<br/>";
                             }?>
                           
-                          <?php  } ?>
+                          <?php   } ?>
                           
                           </td>
                         </tr>
@@ -145,10 +157,10 @@ $datosJson = json_decode($datos,true);
                           <td align="right"><label for="txtDur">Duración:</label</td>
                           <td><input type="text" id="txtDur" name="tDur"  size="5" class="bg-danger text-white"></td>
                         </tr>                                                  
-                        <tr>
+                        <!--<tr>
                           <td align="right"><label for="txtImg">Imagen:</label</td>
                           <td><input type="file" id="txtImg" name="tImg" value="Examinar" accept="image/*" class="bg-danger text-white"></td>
-                        </tr>
+                        </tr>-->
                         <tr>
                           <td align="right"><label for="txtDescripcion">Descripción</label</td>
                           <td align="left"><textarea id="txtDescripcion" name="tDescripcion" cols="80" rows="5" class="bg-danger text-white"></textarea></td>
@@ -173,7 +185,7 @@ $datosJson = json_decode($datos,true);
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>&copy;Copyright 2020. Todos los derechos reservados.</span><br>
+            <span>&copy;Copyright 2021. Todos los derechos reservados.</span><br>
             <span>Movie Shop</span>
           </div>
         </div>
@@ -191,7 +203,7 @@ $datosJson = json_decode($datos,true);
     <i class="fas fa-angle-up"></i>
   </a>
 
-  <!-- Logout Modal-->
+  <!-- Logout Modal
   <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -208,7 +220,7 @@ $datosJson = json_decode($datos,true);
         </div>
       </div>
     </div>
-  </div>
+  </div>-->
 
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>

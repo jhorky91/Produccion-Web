@@ -2,40 +2,20 @@
 include('inc/header.php');
 include_once('functions/funcs.php');
 
-$datos = file_get_contents('../datos/categorias.json');
-//echo $datos['imagen']['name'];
+  //Devuelve el contenido de la tabla Clasificacion    
+  $generos = "SELECT id_genero, nombre FROM genero;";
+  $resultado = $con->query($generos); 
+  //Fin del Select
 
 if(isset($_GET['del'])){
-  //eliminacion de archivo imagen
-/*   foreach(file_get_contents('productos.json', true) as $a) {
-   $files = glob('img/'.$a['imagen']['name']); //obtenemos todos los nombres de los ficheros
-  } */
-    $datos = file_get_contents('../datos/categorias.json');
-    $datosJson = json_decode($datos,true);
-    
 
+  //eliminacion de generos  
+  $sql = "DELETE FROM genero WHERE id_genero=".$_GET["del"];
+  $count = $con->exec($sql);
 
-  //fin eliminacion archivo imagen
-  foreach($files as $file){
-      if(is_file($file))
-      unlink($file); //elimino el fichero
-  } 
-    //obtengo el contenido del archivo
-    $datos = file_get_contents('../datos/categorias.json');
-    //convierto a un array
-    $datosJson = json_decode($datos,true);
-    //var_dump($datosJson);
-    //borro del array
-    unset($datosJson[$_GET['del']]);
-    //trunco el archivo
-    $fp = fopen('../datos/categorias.json','w');
-    //convierto a json string
-    $datosString = json_encode($datosJson);
-    //guardo el archivo
-    fwrite($fp,$datosString);
-    fclose($fp);
+  unset($_GET['del']);
 
-    //redirect('generos.php');
+    redirect('generos.php');
 }
 ?>
 
@@ -76,13 +56,13 @@ if(isset($_GET['del'])){
                   </thead>
                   <tbody>
                   <?php
-                  foreach(json_decode(file_get_contents('../datos/categorias.json'), true) as $cat){ ?>
+                  foreach($resultado as $cat){ ?>
                     <tr align="center">
-                    <td><?php echo $cat['id']; ?></td>
+                    <td><?php echo $cat['id_genero']; ?></td>
                       <td><?php echo $cat['nombre']; ?></td>
                       <td><center>
-                      <a href="edit-genero.php?edit=<?php echo $cat['id'];?>"><i class="fas fa-edit"></a></i>&nbsp;&nbsp;
-                      <a href="generos.php?del=<?php echo $cat['id'];?>"><i class="fas fa-trash-alt"></i></a></i></center>
+                      <a href="edit-genero.php?edit=<?php echo $cat['id_genero'];?>"><i class="fas fa-edit"></a></i>&nbsp;&nbsp;
+                      <a href="generos.php?del=<?php echo $cat['id_genero'];?>"><i class="fas fa-trash-alt"></i></a></i></center>
                       </td>
                     </tr>
                   <?php } ?>
@@ -104,7 +84,7 @@ if(isset($_GET['del'])){
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>&copy;Copyright 2020. Todos los derechos reservados.</span><br>
+            <span>&copy;Copyright 2021. Todos los derechos reservados.</span><br>
             <span>Movie Shop</span>
           </div>
         </div>
