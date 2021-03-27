@@ -11,10 +11,16 @@ include('inc/header.php');
     //Fin del Select
 
 if(isset($_GET['del'])){
-    $sql = "DELETE 
+
+  $sql = "DELETE 
+  FROM pelicula_genero
+  WHERE id_pelicula=".$_GET["del"];
+  $count = $con->exec($sql); 
+
+  $sql2 = "DELETE 
             FROM pelicula 
             WHERE id_pelicula=".$_GET["del"];
-    $count = $con->exec($sql);   
+  $count2 = $con->exec($sql2);   
 
 /*     $datos = file_get_contents('../datos/productos.json');
     $datosJson = json_decode($datos,true);
