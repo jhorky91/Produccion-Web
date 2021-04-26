@@ -1,7 +1,7 @@
 <?php
 
 require_once('DAO.php');
-require_once('../Modelos/PeliculaEntity.php');
+require_once('../Models/PeliculaEntity.php');
 
 class PeliculasDAO extends DAO{
 
@@ -16,6 +16,7 @@ class PeliculasDAO extends DAO{
         $sql = "SELECT id_pelicula,status,nombre,precio,id_clasificacion,duracion,anio,directores,actores,descripcion FROM $this->table WHERE id = $id";
         $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'PeliculaEntity')->fetch();
         return $resultado;
+        
 
     }
 
@@ -51,11 +52,7 @@ class PeliculasDAO extends DAO{
 
     }
 
-    public function delete($id){
-        $sql = "DELETE FROM $this->table WHERE id = $id";
-        return $this->con->exec($sql);
-
-    }
+    
     
 }
 

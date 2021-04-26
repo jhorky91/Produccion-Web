@@ -11,15 +11,8 @@ class AdminEntity{
     private $pass;
     private $email;
 
-    public function __construct($id_admin,$status,$nombre,$apellido,$fecha,$usuario,$pass,$email){
-        $this->id_admin=$id_admin;
-        $this->status=$status;
-        $this->nombre=$nombre;
-        $this->apellido=$apellido;
-        $this->fecha=$fecha;
-        $this->usuario=$usuario;
-        $this->pass=$pass;
-        $this->email=$email;
+    public function __construct(){
+
     }
 
     public function getIDAdmin(){
@@ -47,6 +40,31 @@ class AdminEntity{
         return $this->email;
     }
 
+
+    public function setIDAdmin(){
+        $this->id_admin=$id_admin;
+    }
+    public function setStatus(){
+        $this->status=$status;
+    }
+    public function setNombre(){
+        $this->nombre=$nombre;
+    }
+    public function setApellido(){
+        $this->apellido=$apellido;
+    }
+    public function setFecha(){
+        $this->fecha=$fecha;
+    }
+    public function setUsuario(){
+        $this->usuario=$usuario;
+    }
+    public function setPass(){
+        $this->pass=$pass;
+    }
+    public function setEmail(){
+        $this->email=$email;
+    }
 
     
 

@@ -1,12 +1,5 @@
 <?
-// datos de conexión
-
-$hostname = 'localhost';
-$database = 'produccion';
-$username = 'root';
-$password = '';
-$port = '3306';
-
+require_once('db.php');
 try {        
  $con = new PDO('mysql:host='.$hostname.';dbname='.$database, $username, $password);
  //print "Conexión exitosa!";

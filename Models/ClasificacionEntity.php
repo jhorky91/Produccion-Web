@@ -7,14 +7,10 @@ class ClasificacionEntity{
     private $nombre;
     private $descripcion;
 
-    public function __construct($id_clasificacion,$status,$nombre,$descripcion){
-        $this->id_clasificacion=$id_clasificacion;
-        $this->status=$status;
-        $this->nombre=$nombre;
-        $this->descripcion=$descripcion;
+    public function __construct(){
     }
 
-    public function getIDClasificacion(){
+    public function getID(){
         return $this->id_clasificacion;
     }
     public function getStatus(){
@@ -26,6 +22,20 @@ class ClasificacionEntity{
     public function getDescripcion(){
         return $this->descripcion;
     }
+
+    public function setID(){
+        $this->id_clasificacion=$id_clasificacion;
+    }
+    public function setStatus(){
+        $this->status=$status;
+    }
+    public function setNombre(){
+        $this->nombre=$nombre;
+    }
+    public function setDescripcion(){
+        $this->descripcion=$descripcion;
+    }
+    
     
 }
 

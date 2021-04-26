@@ -11,19 +11,12 @@ class ComentarioEntity{
     private $id_pelicula;
     private $id_usuario;
 
-    public function __construct($id_comentario,$status,$fecha,$rating,$titulo,$comentario,$id_pelicula,$id_usuario){
-        $this->id_comentario=$id_comentario;
-        $this->status=$status;
-        $this->fecha=$fecha;
-        $this->rating=$rating;
-        $this->titulo=$titulo;
-        $this->comentario=$comentario;
-        $this->id_pelicula=$id_pelicula;
-        $this->id_usuario=$id_usuario;
+    public function __construct(){
+
     }
 
     public function getIDComentario(){
-        return $this->id_comentaio;
+        return $this->id_comentario;
     }
     public function getStatus(){
         return $this->status;
@@ -37,7 +30,6 @@ class ComentarioEntity{
     public function getTitulo(){
         return $this->titulo;
     }
-
     public function getComentario(){
         return $this->comentario;
     }
@@ -48,6 +40,30 @@ class ComentarioEntity{
         return $this->id_usuario;
     }
 
+    public function setIDComentario(){
+        $this->id_comentario=$id_comentario;
+    }
+    public function setStatus(){
+        $this->status=$status;
+    }
+    public function setFecha(){
+        $this->fecha=$fecha;
+    }
+    public function setRating(){
+        $this->rating=$rating;
+    }
+    public function setTitulo(){
+        $this->titulo=$titulo;
+    }
+    public function setComentario(){
+        $this->comentario=$comentario;
+    }
+    public function setIDPelicula(){
+        $this->id_pelicula=$id_pelicula;
+    }
+    public function setIDUsuario(){
+        $this->id_usuario=$id_usuario;
+    }
 
     
 

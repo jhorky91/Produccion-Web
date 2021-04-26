@@ -15,30 +15,16 @@ class PeliculaEntity{
 
     private $gener;
     private $sgener;
-
     private $comentarios; //array
     
-    public function __construct(){}
-
-    public function setter($status,$nombre,$precio,$id_clasificacion,$duracion,$anio,$directores,$actores,$descripcion,$gener){
-      
-        $this->status=$status;
-        $this->nombre=$nombre;
-        $this->precio=$precio;
-        $this->id_clasificacion=$id_clasificacion;
-        $this->duracion=$duracion;
-        $this->anio=$anio;
-        $this->directores=$directores;
-        $this->actores=$actores;
-        $this->descripcion=$descripcion;
+    public function __construct(){
         $this->gener=array();
-        $this->gener=$gener;
-
+        $this->sgener=array();
         $this->comentarios=array();
-        
     }
 
-    public function getIDPelicula(){
+    
+    public function getID(){
         return $this->id_pelicula;
     }
     public function getStatus(){
@@ -71,88 +57,54 @@ class PeliculaEntity{
     public function getGenero(){
         return $this->gener;
     }
-    
-    public function addPelicula(){
-       
-        $hostname = 'localhost';
-        $database = 'produccion';
-        $username = 'root';
-        $password = '';
-        $port = '3306';
-        
-       try {        
-         $con = new PDO('mysql:host='.$hostname.';dbname='.$database, $username, $password);
-         //print "Conexión exitosa!";
-       }
-       catch (PDOException $e) {
-           //print "¡Error!: " . $e->getMessage();
-           die();
-       }  
-        
-          
-        //Inserta datos en pelicula
-        $sql = "INSERT INTO pelicula(status,nombre, precio, id_clasificacion, duracion, anio, directores, actores, descripcion) 
-        VALUES ('$this->status','$this->nombre', '$this->precio', '$this->id_clasificacion', 
-        '$this->duracion', '$this->anio', '$this->directores', '$this->actores', '$this->descripcion');";
-        $count = $con->exec($sql);
-        
-        //Guarda el ultimo id_pelicula al insertar pelicula.
-        
-        $this->id_pelicula=$con->lastInsertId();    
-        
-
-        //Insertar generos en pelicula_genero
-        
-        $this->sgener=1 ;
-         foreach($this->getGenero() as $gen){
-            
-          $sql = "INSERT INTO pelicula_genero(id_pelicula, id_genero,id_subgenero)
-          VALUES ('$this->id_pelicula','$gen',$this->sgener);";
-          $count2 = $con->exec($sql);
-        }
-        
-        if($count > 0 ){
-            print($count." Filas afectadas");
-          }else{
-            printf("ERROR");
-          } 
-
-          if($count2 > 0 ){
-            print($count2." Filas afectadas");
-          }else{
-            printf("ERROR");
-          }      
-
+    public function getSGen(){
+        return $this->$sgen;
     }
-    public function delPelicula($idpeli){
-        
-        $hostname = 'localhost';
-        $database = 'produccion';
-        $username = 'root';
-        $password = '';
-        $port = '3306';
-        
-       try {        
-         $con = new PDO('mysql:host='.$hostname.';dbname='.$database, $username, $password);
-         //print "Conexión exitosa!";
-       }
-       catch (PDOException $e) {
-          // print "¡Error!: " . $e->getMessage();
-           die();
-       } 
-          
-
-        $sql = "DELETE 
-        FROM pelicula_genero
-        WHERE id_pelicula=".$idpeli;
-        $count = $con->exec($sql); 
-
-        $sql = "DELETE 
-        FROM pelicula 
-        WHERE id_pelicula=".$idpeli;
-        $count = $con->exec($sql);  
+    public function getComentarios(){
+        return $this->$comentarios;
     }
-    
+
+
+    public function setID(){
+        $this->id_pelicula=$id_pelicula;
+    }
+    public function setStatus(){
+        $this->status=$status;
+    }
+    public function setNombre(){
+        $this->nombre=$nombre;
+    }
+    public function setPrecio(){
+        $this->precio=$precio;
+    }
+    public function setIDClasificacion(){
+        $this->id_clasificacion=$id_clasificacion;
+    }
+    public function setDuracion(){
+        $this->duracion=$duracion;
+    }
+    public function setAnio(){
+        $this->anio=$anio;
+    }
+    public function setDirectores(){
+        $this->directores=$directores;
+    }
+    public function setActores(){
+        $this->actores=$actores;
+    }
+    public function setDescripcion(){
+        $this->descripcion=$descripcion;
+    }
+    public function setGenero(){
+        $this->gener=$gener;
+    }
+    public function setSGen(){
+        $this->$sgen=$sgen;
+    }
+    public function setComentarios(){
+        $this->$comentarios=$comentarios;
+    }
+
 
 }
 

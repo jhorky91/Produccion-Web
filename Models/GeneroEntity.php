@@ -6,14 +6,11 @@ class GeneroEntity{
     protected $status;
     protected $nombre;
     
-    public function __construct($id_genero,$status,$nombre){
-        $this->id_genero=$id_genero;
-        $this->status=$status;
-        $this->nombre=$nombre;
-        
+    public function __construct(){
+    
     }
 
-    public function getIDGenero(){
+    public function getID(){
         return $this->id_genero;
     }
     public function getStatus(){
@@ -22,13 +19,15 @@ class GeneroEntity{
     public function getNombre(){
         return $this->nombre;
     }
+    public function setID(){
+        $this->id_genero=$id_genero;
+    }
     public function setStatus(){
         $this->status=$status;
     }
     public function setNombre(){
         $this->nombre=$nombre;
     }
-
     
 }
 

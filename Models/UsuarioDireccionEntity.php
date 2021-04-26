@@ -11,11 +11,7 @@ class UsuarioDireccionEntity {
     private $id_direccion;
     
     
-    public function __construct($id_usuario_direccion,$id_usuario,$id_direccion){
-        
-        $this->id_usuario_direccion=$id_usuario_direccion;
-        $this->id_usuario= $id_usuario;
-        $this->id_direccion= $id_direccion;
+    public function __construct(){
         
     }
 
@@ -29,6 +25,16 @@ class UsuarioDireccionEntity {
         return $this->id_direccion;
     }
     
+
+    public function setIDUsuarioDireccion(){
+        $this->id_usuario_direccion=$id_usuario_direccion;
+    }
+    public function setIDUsuario(){
+        $this->id_usuario=$id_usuario;
+    }
+    public function setIDDireccion(){
+        $this->id_direccion=$id_direccion;
+    }
     
 }
 

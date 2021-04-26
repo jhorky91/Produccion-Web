@@ -2,26 +2,35 @@
 
 require_once('GeneroEntity.php');
 
-class SubGeneroEntity extends GeneroEntity{
+class SubGeneroEntity{
     
     private $id_subgenero;
+    private $status;
+    private $nombre;
     
     
-    public function __construct($id_subgenero,$status,$nombre){
-        $this->id_subgenero=$id_subgenero;
-        parent::setStatus($status);
-        parent::setNombre($nombre);
-        
+    public function __construct(){
+
     }
 
     public function getIDSubGenero(){
         return $this->id_subgenero;
     }
     public function getStatus(){
-        return parent::getStatus();;
+        return $this->status;
     }
     public function getNombre(){
-        return parent::getNombre();;
+        return $this->nombre;
+    }
+
+    public function setIDSubGenero(){
+        $this->id_subgenero=$id_subgenero;
+    }
+    public function setStatus(){
+        $this->status=$status;
+    }
+    public function setNombre(){
+        $this->nombre=$nombre;
     }
     
     

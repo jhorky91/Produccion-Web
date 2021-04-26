@@ -7,28 +7,16 @@ class UsuarioEntity{
     private $nombre;
     private $apellido;
     private $fecha;
-    private $fechaNac;
+    private $fecha_nac;
     private $usuario;
     private $pass;
     private $email;
-
     private $telefono;
     private $pedidos;
-    private $dineroGastado;
+    private $dinero_gastado;
 
-    public function __construct($id_usuario,$status,$nombre,$apellido,$fecha,$fechaNac,$usuario,$pass,$email,$telefono,$pedidos,$dineroGastado){
-        $this->id_usuario=$id_usuario;
-        $this->status=$status;
-        $this->nombre=$nombre;
-        $this->apellido=$apellido;
-        $this->fecha=$fecha;
-        $this->fechaNac=$fechaNac;
-        $this->usuario=$usuario;
-        $this->pass=$pass;
-        $this->email=$email;
-        $this->telefono=$telefono;
-        $this->pedidos=$pedidos;
-        $this->dineroGastado=$dineroGastado;
+    public function __construct(){
+
     }
 
     public function getIDUsuario(){
@@ -47,7 +35,7 @@ class UsuarioEntity{
         return $this->fecha;
     }
     public function getFechaNac(){
-        return $this->fechaNac;
+        return $this->fecha_nac;
     }
     public function getUsuario(){
         return $this->usuario;
@@ -65,7 +53,46 @@ class UsuarioEntity{
         return $this->pedidos;
     }
     public function getDineroGastado(){
-        return $this->dineroGastado;
+        return $this->dinero_gastado;
+    }
+
+
+
+    public function setIDUsuario(){
+        $this->id_usuario=$id_usuario;
+    }
+    public function setStatus(){
+        $this->status=$status;
+    }
+    public function setNombre(){
+        $this->nombre=$nombre;
+    }
+    public function setApellido(){
+        $this->apellido=$apellido;
+    }
+    public function setFecha(){
+        $this->fecha=$fecha;
+    }
+    public function setFechaNac(){
+        $this->fecha_nac=$fecha_nac;
+    }
+    public function setUsuario(){
+        $this->usuario=$usuario;
+    }
+    public function setPass(){
+        $this->pass=$pass;
+    }
+    public function setEmail(){
+        $this->email=$email;
+    }
+    public function setTelefono(){
+        $this->telefono=$telefono;
+    }
+    public function setPedidos(){
+        $this->pedidos=$pedidos;
+    }
+    public function setDineroGastado(){
+        $this->dinero_gastado=$dinero_gastado;
     }
 
 

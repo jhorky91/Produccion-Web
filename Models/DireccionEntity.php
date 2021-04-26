@@ -9,13 +9,8 @@ class DireccionEntity{
     private $dpto;
     private $barrio;
 
-    public function __construct($id_direccion,$calle,$altura,$piso,$dpto,$barrio){
-        $this->id_direccion=$id_direccion;
-        $this->calle=$calle;
-        $this->altura=$altura;
-        $this->piso=$piso;
-        $this->dpto=$dpto;
-        $this->barrio=$barrio;
+    public function __construct(){
+
     }
 
     public function getIDDireccion(){
@@ -35,6 +30,25 @@ class DireccionEntity{
     }
     public function getBarrio(){
         return $this->barrio;
+    }
+
+    public function setIDDireccion(){
+        $this->id_direccion=$id_direccion;
+    }
+    public function setCalle(){
+        $this->calle=$calle;
+    }
+    public function setAltura(){
+        $this->altura=$altura;
+    }
+    public function setPiso(){
+        $this->piso=$piso;
+    }
+    public function setDpto(){
+        $this->dpto=$dpto;
+    }
+    public function setBarrio(){
+        $this->barrio=$barrio;
     }
     
 }
