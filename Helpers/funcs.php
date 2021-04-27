@@ -1,7 +1,4 @@
 <?php
-
-
-
 /*Funcion de redireccionamiento de paginas*/
 
 function redirect($pURL) 
@@ -19,14 +16,11 @@ function redirect($pURL)
 		exit();
 	}	
 }
- 
-
 //redimencionar imagen
 
 //	$tamanhos = array(0 => array('nombre'=>'big','ancho'=>'5000','alto'=>'10000'),
 //					  1 => array('nombre'=>'small','ancho'=>'500','alto'=>'1000'),
 //					  2 => array('nombre'=>'thumb','ancho'=>'50','alto'=>'70'));
-
 				  
 function redimensionar($ruta,$file_name,$uploadedfile,$id,$tamanhos){
 	$filename = stripslashes($file_name);
@@ -287,6 +281,7 @@ function cant_imagenes($carpeta,$id,$base ='../' ){
  
 ?>
 
+
 <!-- Mostrar/Ocultar Password -->
 <script type="text/javascript">
 function mostrarPassword(){
@@ -298,7 +293,7 @@ function mostrarPassword(){
 			cambio.type = "password";
 			$('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
 		}
-	} 
+}
 	
 	$(document).ready(function () {
 	//CheckBox mostrar contraseña

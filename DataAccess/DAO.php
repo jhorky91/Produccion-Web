@@ -16,11 +16,13 @@ abstract class DAO{
     
     public abstract function save($datos = array());
 
-    public abstract function modify($id, $datos = array());
+    public abstract function modify($id, $datos=array());
 
     public function delete($id){
-        $sql = "DELETE FROM $this->table WHERE id = $id";
+        $sql = "DELETE FROM $this->table WHERE id_$this->table = $id";
         return $this->con->exec($sql);
+
+        
 
     }
 

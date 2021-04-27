@@ -69,6 +69,7 @@ if(isset($_GET['del'])){
                   <thead class="thead-dark">
                     <tr align="center">
                       <th>ID</th>
+                      <th>Status</th>
                       <th>Nombre</th>
                       <th>Apellido</th>
                       <th>Fecha de nacimiento</th>
@@ -96,6 +97,7 @@ if(isset($_GET['del'])){
 
                     <tr align="center">
                       <td><?php echo $us->getIDUsuario(); ?></td>
+                      <td><?php echo $us->getStatus(); ?></td>
                       <td><?php echo $us->getNombre(); ?></td>
                       <td><?php echo $us->getApellido(); ?></td>
                       <td><?php echo $us->getFechaNac(); ?></td>

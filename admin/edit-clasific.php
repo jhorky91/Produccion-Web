@@ -4,9 +4,12 @@ include_once('../Helpers/funcs.php');
 
 
 //obtengo el contenido del archivo
-$datos = file_get_contents('../../DataAccess/clasificacion.json');
+//$datos = file_get_contents('../../DataAccess/clasificacion.json');
 //convierto a un array
-$datosJson = json_decode($datos,true);
+//$datosJson = json_decode($datos,true);
+
+require_once('../Business/ClasificacionBusiness.php');
+$ClasificacionB = new ClasificacionBusiness($con);
 
     if(isset($_POST['add'])){
         
@@ -14,26 +17,26 @@ $datosJson = json_decode($datos,true);
         if(isset($_GET['edit'])){
             //modificando
             $id = $_GET['edit'];
-        }else{
-            //agrego 
-            $id = date('Ymdhis');
         }
 
-        $datosJson[$id] = array('id'=>$id, 'nombre'=>$_POST['tName'],'descripcion'=>$_POST['tDescripcion']);
+        $ClasificacionB->getMod();
     
-        //trunco el archivo
+        /*//trunco el archivo
         $fp = fopen('../../DataAccess/clasificacion.json','w');
         //convierto a json string
         $datosString = json_encode($datosJson);
         //guardo el archivo
         fwrite($fp,$datosString);
-        fclose($fp);
+        fclose($fp);*/
         redirect('clasificacion.php');
     }
 
     if(isset($_GET['edit'])){
-        $dato = $datosJson[$_GET['edit']];
+        //$dato = $datosJson[$_GET['edit']];
+        
+        $dato = $ClasificacionB->getEntrada();
     }
+
 ?>
 
         <!-- End of Topbar -->
@@ -56,12 +59,16 @@ $datosJson = json_decode($datos,true);
                     <form method="POST" action="" name="prod" enctype="multipart/form-data">
                       <table class="table bg-gradient-dark text-white" id="dataTable" width="100%" cellspacing="0">
                       <tr>
-                          <td align="right"><label for="txtName">Nombre:</label</td>
-                          <td><input type="text" id="txtName" name="tName" value="<?php echo isset($dato)?$dato['nombre']:''?>" size="50" class="bg-danger text-white"></td>
+                          <td align="right"><label for="txtStatus">Status:</label></td>
+                          <td><input type="text" id="txtStatus" name="status" value="<?php echo $dato->getStatus()?>" size="10" class="bg-danger text-white"></td>
+                      </tr>
+                      <tr>
+                          <td align="right"><label for="txtName">Nombre:</label></td>
+                          <td><input type="text" id="txtName" name="nombre" value="<?php echo $dato->getNombre()?>" size="50" class="bg-danger text-white"></td>
                         </tr>
                         <tr>
-                          <td align="right"><label for="txtDescripcion">Descripción:</label</td>
-                          <td align="left"><textarea id="txtDescripcion" name="tDescripcion" cols="80" rows="5" class="bg-danger text-white"><?php echo isset($dato)?$dato['descripcion']:''?></textarea></td>
+                          <td align="right"><label for="txtDescripcion">Descripción:</label></td>
+                          <td align="left"><textarea id="txtDescripcion" name="descripcion" cols="80" rows="5" class="bg-danger text-white"><?php echo $dato->getDescripcion()?></textarea></td>
                         </tr>                            
                         <tr>
                           <td align="right"><input type="submit" name="add" value="Guardar" class="btn btn-danger"></td>
@@ -83,7 +90,7 @@ $datosJson = json_decode($datos,true);
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>&copy;Copyright 2020. Todos los derechos reservados.</span><br>
+            <span>&copy;Copyright 2021. Todos los derechos reservados.</span><br>
             <span>Movie Shop</span>
           </div>
         </div>

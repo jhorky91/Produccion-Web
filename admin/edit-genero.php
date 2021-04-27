@@ -2,16 +2,9 @@
 include('header.php');
 include_once('../Helpers/funcs.php');
 
-if(isset($_FILES['tImg']))
-  move_uploaded_file($_FILES['tImg']['tmp_name'],'img/'.$_FILES['tImg']['name']);
+require_once('../Business/GeneroBusiness.php');
 
-//Fin Funcion Carga Imagen
-
-//obtengo el contenido del archivo
-$datos = file_get_contents('../../DataAccess/categorias.json');
-//convierto a un array
-$datosJson = json_decode($datos,true);
-
+$GeneroB = new GeneroBusiness($con);
 
 
     if(isset($_POST['add'])){
@@ -20,25 +13,21 @@ $datosJson = json_decode($datos,true);
         if(isset($_GET['edit'])){
             //modificando
             $id = $_GET['edit'];
-        }else{
-            //agrego 
-            $id = date('Ymdhis');
         }
+        
+        $id = $_GET['edit'];
+       $datos= array('nombre'=> $_POST['nombre'],
+                     'status'=> $_POST['status']
+                    );     
 
-        $datosJson[$id] = array('id'=>$id, 'nombre'=>$_POST['tName']);
-    
-        //trunco el archivo
-        $fp = fopen('../../DataAccess/categorias.json','w');
-        //convierto a json string
-        $datosString = json_encode($datosJson);
-        //guardo el archivo
-        fwrite($fp,$datosString);
-        fclose($fp);
+        $GeneroB->getMod($id,$datos);
+              
         redirect('generos.php');
+        
     }
 
     if(isset($_GET['edit'])){
-        $dato = $datosJson[$_GET['edit']];
+        $dato = $GeneroB->getEntrada();
     }
 ?>
 
@@ -62,8 +51,12 @@ $datosJson = json_decode($datos,true);
                     <form method="POST" action="" name="prod" enctype="multipart/form-data">
                       <table class="table bg-gradient-dark text-white" id="dataTable" width="100%" cellspacing="0">
                       <tr>
+                          <td align="right"><label for="txtStatus">Status:</label</td>
+                          <td><input type="text" id="txtStatus" name="status" value="<?php echo $dato->getStatus()?>" size="50" class="bg-danger text-white"></td>
+                        </tr>
+                      <tr>
                           <td align="right"><label for="txtName">Nombre:</label</td>
-                          <td><input type="text" id="txtName" name="tName" value="<?php echo isset($dato)?$dato['nombre']:''?>" size="50" class="bg-danger text-white"></td>
+                          <td><input type="text" id="txtName" name="nombre" value="<?php echo $dato->getNombre()?>" size="50" class="bg-danger text-white"></td>
                         </tr>
                           <tr>
                           <td align="right"><input type="submit" name="add" value="Guardar" class="btn btn-danger"></td>

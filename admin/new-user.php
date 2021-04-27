@@ -61,11 +61,11 @@ if(isset($_POST['tTipo'])){
               <form method="POST" action="" name="com" enctype="multipart/form-data">
                       <table class="table bg-gradient-dark text-white" id="dataTable" width="100%" cellspacing="0">
                          <tr>
-                          <td align="right"><label for="txtName">Tipo:</label</td>
+                          <td align="right"><label for="txtStatus">Status:</label</td>
                           <td>
-                          <select name="tTipo" id="#tipo" class="bg-danger text-white">
-                          <option class="bg-danger text-white" value="Admin"> Admin </option>
-                          <option class="bg-danger text-white" value="Cliente"> Cliente </option>
+                          <select name="status" id="#tipo" class="bg-danger text-white px-2">
+                          <option class="bg-danger text-white" value="0"> Pendiente </option>
+                          <option class="bg-danger text-white" value="1"> Activo </option>
                           
                           
                           </select>

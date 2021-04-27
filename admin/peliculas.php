@@ -52,6 +52,7 @@ if(isset($_GET['del'])){
                   <thead class="thead-dark">
                     <tr align="center">
                       <th>Id</th>
+                      <th>Status</th>
                       <th>Nombre</th>
                       <th>Imagen</th>
                       <th>Precio</th>
@@ -70,6 +71,7 @@ if(isset($_GET['del'])){
                   foreach($PeliculaB->getEntradas() as $peli){ ?>
                     <tr align="center">
                     <td><?php echo $peli->getID(); ?></td>
+                    <td><?php echo $peli->getStatus(); ?></td>
                       <td><?php echo $peli->getNombre(); ?></td>
                       <td><!-- <img class="img-fluid" src=" --><?php 
                                        /*  if (is_array($peli['imagen'])) {

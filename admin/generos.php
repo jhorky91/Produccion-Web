@@ -12,8 +12,8 @@ include_once('header.php');
 if(isset($_GET['del'])){
 
   //eliminacion de generos  
-  $sql = "DELETE FROM genero WHERE id_genero=".$_GET["del"];
-  $count = $con->exec($sql);
+  $id = $_GET['del'];
+  $GeneroB->getDel($id);
 
   unset($_GET['del']);
 
@@ -52,6 +52,7 @@ if(isset($_GET['del'])){
                   <thead class="thead-dark">
                     <tr align="center">
                       <th>ID</th>
+                      <th>Status</th>
                       <th>Nombre</th>
                       <th>Acciones</th>
                     </tr>
@@ -61,6 +62,7 @@ if(isset($_GET['del'])){
                   foreach($GeneroB->getEntradas() as $cat){ ?>
                     <tr align="center">
                     <td><?php echo $cat->getID(); ?></td>
+                    <td><?php echo $cat->getStatus(); ?></td>
                       <td><?php echo $cat->getNombre(); ?></td>
                       <td><center>
                       <a href="edit-genero.php?edit=<?php echo $cat->getID();?>"><i class="fas fa-edit"></a></i>&nbsp;&nbsp;

@@ -4,7 +4,7 @@ require_once('DAO.php');
 require_once('../Models/GeneroEntity.php');
 
 class GeneroDAO extends DAO{
-
+    
 
     function __construct($con)
     {
@@ -34,9 +34,26 @@ class GeneroDAO extends DAO{
 
     }
 
-    public function modify($id, $datos = array()){
-        $sql = "UPDATE $this->table SET status = '".$datos['status']."', nombre ='".$datos['nombre']."' WHERE id = ".$id;
-        return $this->con->exec($sql);
+    public function modify($id, $datos=array()){
+        /* $sql = "UPDATE $this->table SET status = '".$datos['status']."', nombre ='".$datos['nombre']."' WHERE id_genero = ".$id;
+        return $this->con->exec($sql);  */
+
+        $sql = "UPDATE $this->table SET status= ?,nombre=? WHERE id_genero=?";
+        $send = $this->con->prepare($sql);
+        $send ->execute([$datos['status'],$datos['nombre'],$id]);
+        /*$send -> bindParam(1,$status,PDO::PARAM_INT);
+        $send -> bindParam(2,$nombre,PDO::PARAM_STR);
+        $send -> bindParam(3,$id,PDO::PARAM_INT);
+        
+        $send->execute();
+        $result= $send ->fetchAll(PDO::FETCH_ASSOC); */
+        
+
+        /* echo $id;
+        echo $status;
+        echo $nombre; */
+
+
 
     }
 

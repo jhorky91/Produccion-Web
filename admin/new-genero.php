@@ -1,38 +1,26 @@
 <?php
 include('header.php');
 include_once('../Helpers/funcs.php');
+require_once('../Business/GeneroBusiness.php');
 
-//obtengo el contenido del archivo
-$datos = file_get_contents('../../DataAccess/categorias.json');
-//convierto a un array
-$datosJson = json_decode($datos,true);
+
+$GeneroB = new GeneroBusiness($con);
+
 
     if(isset($_POST['add'])){
+      
+      $datos = array(
+        'status'=>$_POST['status'],
+        'nombre'=>$_POST['nombre']
+      );
+      $GeneroB->Add($datos);
         
-    
-        if(isset($_GET['edit'])){
-            //modificando
-            $id = $_GET['edit'];
-        }else{
-            //agrego 
-            $id = date('j/n/Y, H:i:s');
-        }
 
-        $datosJson[$id] = array('id'=>$id, 'nombre'=>$_POST['tName']);
-    
-        //trunco el archivo
-        $fp = fopen('../../DataAccess/categorias.json','w');
-        //convierto a json string
-        $datosString = json_encode($datosJson);
-        //guardo el archivo
-        fwrite($fp,$datosString);
-        fclose($fp);
+        
         redirect('generos.php');
     }
 
-    if(isset($_GET['edit'])){
-        $dato = $datosJson[$_GET['edit']];
-    }
+    
 ?>
 
         <!-- End of Topbar -->
@@ -54,6 +42,11 @@ $datosJson = json_decode($datos,true);
               <div class="table-responsive">
                     <form method="POST" action="" name="prod" enctype="multipart/form-data">
                       <table class="table bg-gradient-dark text-white" id="dataTable" width="100%" cellspacing="0">
+                      <tr>
+                          <td align="right"><label for="txtStatus">Status:</label</td>
+                          <td><input type="text" id="txtStatus" name="status" size="50" class="bg-danger text-white"></td>
+                        </tr>
+                        
                         <tr>
                           <td align="right"><label for="txtName">Nombre:</label</td>
                           <td><input type="text" id="txtName" name="nombre" size="50" class="bg-danger text-white"></td>
@@ -79,7 +72,7 @@ $datosJson = json_decode($datos,true);
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>&copy;Copyright 2020. Todos los derechos reservados.</span><br>
+            <span>&copy;Copyright 2021. Todos los derechos reservados.</span><br>
             <span>Movie Shop</span>
           </div>
         </div>

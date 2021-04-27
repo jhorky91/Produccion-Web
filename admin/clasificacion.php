@@ -54,6 +54,7 @@ if(isset($_GET['del'])){
                   <thead class="thead-dark">
                     <tr align="center">
                       <th>ID</th>
+                      <th>Status</th>
                       <th>Nombre</th>
                       <th>Descripcion</th>
                       <th>Acciones</th>
@@ -65,6 +66,7 @@ if(isset($_GET['del'])){
                   
                     <tr align="center">
                     <td><?php echo $peli->getID(); ?></td>
+                    <td><?php echo $peli->getStatus(); ?></td>
                       <td><?php echo $peli->getNombre(); ?></td>
                       <td><?php echo $peli->getDescripcion(); ?></td>
                       <td><center>
