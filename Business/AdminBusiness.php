@@ -22,6 +22,14 @@ class AdminBusiness {
         return $entradas;
     }
 
+    public function contar(){
+        return $this->AdminDAO->contar();
+    }
+
+    public function contarActivos(){
+        return $this->AdminDAO->contarActivos();
+    }
+
 }
 
 

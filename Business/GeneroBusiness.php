@@ -37,6 +37,14 @@ class GeneroBusiness {
 
         return $entradas;
     }
+
+    public function contar(){
+        return $this->GeneroDAO->contar();
+    }
+
+    public function contarActivos(){
+        return $this->GeneroDAO->contarActivos();
+    }
 }
 
 

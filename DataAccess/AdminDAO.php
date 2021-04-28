@@ -42,6 +42,11 @@ class AdminDAO extends DAO{
 
     }
 
+    public function delete($id){
+        $sql = "DELETE FROM $this->table WHERE id_$this->table = $id";
+        return $this->con->exec($sql);
+    }
+
     
 }
 

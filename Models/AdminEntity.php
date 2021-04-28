@@ -3,7 +3,7 @@
 class AdminEntity{
     
     private $id_admin;
-    private $status;
+    private static $status;
     private $nombre;
     private $apellido;
     private $fecha;
@@ -12,7 +12,7 @@ class AdminEntity{
     private $email;
 
     public function __construct(){
-
+        $this->status=0;
     }
 
     public function getIDAdmin(){

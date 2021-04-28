@@ -30,6 +30,13 @@ class ClasificacionBusiness {
 
         return $entradas;
     }
+    public function contar(){
+        return $this->ClasificacionDAO->contar();
+    }
+
+    public function contarActivos(){
+        return $this->ClasificacionDAO->contarActivos();
+    }
 
 }
 
