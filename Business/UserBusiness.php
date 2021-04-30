@@ -15,7 +15,13 @@ class UserBusiness {
 
         return $entradas;
     }
+    public function contar(){
+        return $this->UserDAO->contar();
+    }
 
+    public function contarActivos(){
+        return $this->UserDAO->contarActivos();
+    }
 }
 
 

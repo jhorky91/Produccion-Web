@@ -52,9 +52,11 @@ class GeneroDAO extends DAO{
         /* echo $id;
         echo $status;
         echo $nombre; */
+    }
 
-
-
+    public function delete($id){
+        $sql = "DELETE FROM $this->table WHERE id_$this->table = $id";
+        return $this->con->exec($sql);
     }
 
     

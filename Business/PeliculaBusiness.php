@@ -16,6 +16,14 @@ class PeliculaBusiness {
         return $entradas;
     }
 
+    public function contar(){
+        return $this->PeliculasDAO->contar();
+    }
+
+    public function contarActivos(){
+        return $this->PeliculasDAO->contarActivos();
+    }
+
 }
 
 

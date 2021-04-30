@@ -21,6 +21,7 @@ class PeliculaEntity{
         $this->gener=array();
         $this->sgener=array();
         $this->comentarios=array();
+ 
     }
 
     

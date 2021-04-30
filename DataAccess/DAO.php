@@ -18,12 +18,18 @@ abstract class DAO{
 
     public abstract function modify($id, $datos=array());
 
-    public function delete($id){
-        $sql = "DELETE FROM $this->table WHERE id_$this->table = $id";
-        return $this->con->exec($sql);
+    public abstract function delete($id);
 
-        
+    public function contar(){
+        $sql = "SELECT count(*) as total FROM $this->table ";
+        $cont=$this->con->query($sql)->fetch();
+        return $cont['total'];
+    }
 
+    public function contarActivos(){
+        $sql = "SELECT count(*) as total FROM $this->table WHERE status=1";
+        $cont=$this->con->query($sql)->fetch();
+        return $cont['total'];
     }
 
 }

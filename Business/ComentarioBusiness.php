@@ -16,6 +16,14 @@ class ComentarioBusiness {
         return $entradas;
     }
 
+    public function contar(){
+        return $this->ComentariosDAO->contar();
+    }
+
+    public function contarActivos(){
+        return $this->ComentariosDAO->contarActivos();
+    }
+
 }
 
 

@@ -12,7 +12,7 @@ class AdminEntity{
     private $email;
 
     public function __construct(){
-
+        
     }
 
     public function getIDAdmin(){
