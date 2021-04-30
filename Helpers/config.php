@@ -7,7 +7,7 @@ try {
  //print "Conexión exitosa!";
 }
 catch (PDOException $e) {
-   echo $error->getMessage();
+   echo $e->getMessage();
    die();
 
 } 
