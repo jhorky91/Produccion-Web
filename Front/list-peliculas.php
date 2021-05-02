@@ -1,12 +1,39 @@
 	<div class="col-12 col-lg-10">
 	<?php
 	require_once('../Business/PeliculaBusiness.php');
-	
+	require_once('../Business/GeneroBusiness.php');
+	require_once('../Business/SubGeneroBusiness.php');
+	require_once('../Business/ClasificacionBusiness.php');
 	$PeliculaB = new PeliculaBusiness($con);
+	$GeneroB= new GeneroBusiness($con);
+	$SubGeneroB= new SubGeneroBusiness($con);
+	$ClasiB= new ClasificacionBusiness($con);
+
 	?>
 
 
-		<h3>Listado de Peliculas</h3>
+		<h3>Listado de Peliculas
+		<?php  
+		echo !empty($_GET['genero'])? ' / '.$GeneroB->getEntrada($_GET['genero'])->getNombre().' ':'';
+		
+		echo !empty($_GET['subgenero'])? ' / '.$SubGeneroB->getEntrada($_GET['subgenero'])->getNombre().' ':'';
+
+		echo !empty($_GET['clasificacion'])? ' / '.$ClasificacionB->getEntrada($_GET['clasificacion'])->getNombre().' ':'';
+		
+		if(!empty($_GET['orden'])){
+			if($_GET['orden']==1){
+			echo '/ A-Z';
+			}else if($_GET['orden']==2){
+				echo '/ Z-A';
+				} else if($_GET['orden']==3){
+					echo '/ Año ASC';
+					} else if($_GET['orden']==4){
+						echo '/ Año DESC';
+						}
+		}
+		?>
+		
+		</h3>
 
 		<div class="row">
 		

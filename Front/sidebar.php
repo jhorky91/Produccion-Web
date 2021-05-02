@@ -35,7 +35,7 @@
 							 
 		</div>
 		
-		<div class="col-12 col-lg-2 ">	
+		<div class="col-12  ">	
       	<h5>SubGeneros</h5>
 
 								<ul>									
@@ -67,7 +67,7 @@
 								</ul>
 							 
 		</div>
-    <div class="col-12 col-lg-2 ">
+    <div class="col-12 ">
       <h5>Clasificacion por edades</h5>
 
 								<ul> 
@@ -92,7 +92,7 @@
 								</ul>							
 							
 	  </div>
-	  <div class="col-12 col-lg-2 ">	
+	  <div class="col-12  ">	
       	<h5>Ordenado</h5>
 								<ul>									
 									<div class="list-group">	
@@ -103,7 +103,8 @@
 												&clasificacion=<?php echo isset($_GET['clasificacion'])?$_GET['clasificacion']:'' ?>
 												&orden=1">
 													<span class="oi oi-chevron-right"></span>
-													Nombre Ascendente
+													A-Z
+													
 												</a>
 
 											</li>
@@ -116,7 +117,7 @@
 												&clasificacion=<?php echo isset($_GET['clasificacion'])?$_GET['clasificacion']:'' ?>
 												&orden=2">
 													<span class="oi oi-chevron-right"></span>
-													Nombre Descendente
+													Z-A
 												</a>
 
 											</li>
