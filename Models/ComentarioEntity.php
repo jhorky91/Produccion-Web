@@ -52,7 +52,7 @@ class ComentarioEntity{
     public function setRating(){
         $this->rating=$rating;
     }
-    public function setTitulo(){
+    public function setTitulo($titulo){
         $this->titulo=$titulo;
     }
     public function setComentario(){

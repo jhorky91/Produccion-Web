@@ -27,6 +27,21 @@ class ComentariosDAO extends DAO{
 
     }
 
+        
+    public function getAllIDUser($id){
+
+        $sql = "SELECT * FROM $this->table WHERE id_usuario=".$id;
+        return $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'ComentarioEntity')->fetchAll();   
+
+    }
+
+    public function getAllIDPeli($id){
+
+        $sql = "SELECT * FROM $this->table WHERE id_pelicula=".$id;
+        return $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'ComentarioEntity')->fetchAll();   
+
+    }
+
     public function save($datos = array()){
 
         $sql = "INSERT INTO $this->table (status,fecha,rating,titulo,comentario, id_pelicula,id_usuario) 
@@ -39,8 +54,8 @@ class ComentariosDAO extends DAO{
     public function modify($id, $datos = array()){
         $sql = "UPDATE $this->table SET status = '".$datos['status']."', fecha= NOW(),rating='".$datos['rating']."'
         ,titulo='".$datos['titulo']."',comentario='".$datos['comentario']."',id_pelicula='".$datos['id_pelicula']."'
-        ,id_usuario='".$datos['id_usuario']."' WHERE id = ".$id;
-        echo $sql;
+        ,id_usuario='".$datos['id_usuario']."' WHERE id_comentario = ".$id;
+        
         return $this->con->exec($sql);
 
     }

@@ -9,8 +9,8 @@ class ClasificacionBusiness {
     function __construct($con){
         $this->ClasificacionDAO = new ClasificacionDAO($con);
     }
-    public function getEntrada(){
-        $entradas = $this->ClasificacionDAO->getOne($_GET["edit"]); 
+    public function getEntrada($id){
+        $entradas = $this->ClasificacionDAO->getOne($id); 
 
         return $entradas;
     }

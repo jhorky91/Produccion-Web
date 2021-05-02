@@ -10,8 +10,14 @@ class PeliculaBusiness {
         $this->PeliculasDAO = new PeliculasDAO($con);
     }
     
-    public function getEntradas(){
-        $entradas = $this->PeliculasDAO->getAll(); 
+    public function getEntrada($id){
+        $entrada = $this->PeliculasDAO->getOne($id); 
+
+        return $entrada;
+    }
+
+    public function getEntradas($where = array()){
+        $entradas = $this->PeliculasDAO->getAll($where); 
 
         return $entradas;
     }
@@ -22,6 +28,11 @@ class PeliculaBusiness {
 
     public function contarActivos(){
         return $this->PeliculasDAO->contarActivos();
+    }
+    public function getMod($id,$datos = array()){
+        $entradas = $this->PeliculasDAO->modify($id, $datos); 
+
+        return $entradas;
     }
 
 }

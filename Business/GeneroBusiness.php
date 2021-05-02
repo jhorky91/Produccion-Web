@@ -10,13 +10,13 @@ class GeneroBusiness {
         $this->GeneroDAO = new GeneroDAO($con);
     }
 
-    public function getEntrada(){
-        $entradas = $this->GeneroDAO->getOne($_GET["edit"]); 
+    public function getEntrada($id){
+        $entradas = $this->GeneroDAO->getOne($id); 
 
         return $entradas;
     }
     
-    public function getEntradas(){
+    public function getEntradas($where = array()){
         $entradas = $this->GeneroDAO->getAll(); 
 
         return $entradas;
@@ -45,6 +45,13 @@ class GeneroBusiness {
     public function contarActivos(){
         return $this->GeneroDAO->contarActivos();
     }
+
+    public function getEntradaIDPeli($id){
+        $entradas = $this->GeneroDAO->getOneIDPeli($id); 
+
+        return $entradas;
+    }
+    
 }
 
 

@@ -19,9 +19,18 @@ class SubGeneroDAO extends DAO{
 
     }
 
+    public function getOneIDPeli($id){
+        $sql = "SELECT SG.id_subgenero, SG.nombre FROM $this->table SG
+        INNER JOIN genero_subgenero GS ON SG.id_subgenero = GS.id_subgenero
+        INNER JOIN pelicula_genero PG ON GS.id_genero_subgenero = PG.id_genero_subgenero
+        WHERE PG.id_pelicula=".$id;
+        return $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'SubgeneroEntity')->fetchAll();
+        
+    }
+
     public function getAll($where = array()){
 
-        $sql = "SELECT id_subgenero,status,nombre FROM $this->table";
+        $sql = "SELECT id_subgenero,status,nombre FROM $this->table ORDER BY nombre";
         $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'SubGeneroEntity')->fetchAll();
         return $resultado;
 
@@ -38,6 +47,10 @@ class SubGeneroDAO extends DAO{
         $sql = "UPDATE $this->table SET status = '".$datos['status']."', nombre ='".$datos['nombre']."' WHERE id = ".$id;
         return $this->con->exec($sql);
 
+    }
+    public function delete($id){
+        $sql = "DELETE FROM $this->table WHERE id_$this->table = $id";
+        return $this->con->exec($sql);
     }
 
    

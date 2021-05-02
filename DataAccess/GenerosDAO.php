@@ -14,9 +14,16 @@ class GeneroDAO extends DAO{
 
     public function getOne($id){
         $sql = "SELECT id_genero,status,nombre FROM $this->table WHERE id_genero = $id";
-        $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'GeneroEntity')->fetch();
-        return $resultado;
-
+        return $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'GeneroEntity')->fetch();
+         
+        
+    }
+    public function getOneIDPeli($id){
+        $sql = "SELECT G.id_genero, G.nombre FROM genero G
+        INNER JOIN genero_subgenero GS ON G.id_genero = GS.id_genero
+        INNER JOIN pelicula_genero PG ON GS.id_genero_subgenero = PG.id_genero_subgenero
+        WHERE PG.id_pelicula=".$id;
+        return $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'GeneroEntity')->fetchAll();
     }
 
     public function getAll($where = array()){
