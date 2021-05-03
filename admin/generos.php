@@ -1,7 +1,7 @@
 <?php
 include_once('header.php');
 
-  echo "sebaa";
+
  require_once('../Business/GeneroBusiness.php');
   $GeneroB = new GeneroBusiness($con);
   
@@ -39,7 +39,7 @@ if(isset($_GET['del'])){
               <span class="m-0 font-weight-bold text-primary">Borrador()</span>
               <span class="m-0 font-weight-bold text-primary">|</span>
               <span class="m-0 font-weight-bold text-primary">Pendiente()</span>
-              <a href="new-genero.php"><input class="btn btn-danger" type="submit" value="Añadir Género"></a>
+              <a href="modify-genero.php"><input class="btn btn-danger" type="submit" value="Añadir Género"></a>
               <input class="btn btn-danger" type="submit" value="Importar">
               <input class="btn btn-danger" type="submit" value="Exportar">
             </div>
@@ -63,7 +63,7 @@ if(isset($_GET['del'])){
                     <td><?php echo $cat->getStatus(); ?></td>
                       <td><?php echo $cat->getNombre(); ?></td>
                       <td><center>
-                      <a href="edit-genero.php?edit=<?php echo $cat->getID();?>"><i class="fas fa-edit"></a></i>&nbsp;&nbsp;
+                      <a href="modify-genero.php?edit=<?php echo $cat->getID();?>"><i class="fas fa-edit"></a></i>&nbsp;&nbsp;
                       <a href="generos.php?del=<?php echo $cat->getID();?>"><i class="fas fa-trash-alt"></i></a></i></center>
                       </td>
                     </tr>
