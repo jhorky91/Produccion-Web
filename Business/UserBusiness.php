@@ -10,6 +10,12 @@ class UserBusiness {
         $this->UserDAO = new UserDAO($con);
     }
     
+    public function getEntrada($id){
+        $entradas = $this->UserDAO->getOne($id); 
+
+        return $entradas;
+    }
+
     public function getEntradas(){
         $entradas = $this->UserDAO->getAll(); 
 

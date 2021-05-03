@@ -13,7 +13,7 @@ class SubGeneroEntity{
 
     }
 
-    public function getIDSubGenero(){
+    public function getID(){
         return $this->id_subgenero;
     }
     public function getStatus(){
@@ -23,7 +23,7 @@ class SubGeneroEntity{
         return $this->nombre;
     }
 
-    public function setIDSubGenero(){
+    public function setID(){
         $this->id_subgenero=$id_subgenero;
     }
     public function setStatus(){

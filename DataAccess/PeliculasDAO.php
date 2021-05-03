@@ -2,6 +2,9 @@
 
 require_once('DAO.php');
 require_once('../Models/PeliculaEntity.php');
+require_once('../DataAccess/GenerosDao.php');
+require_once('../DataAccess/SubGenerosDao.php');
+require_once('../DataAccess/ComentariosDao.php');
 
 class PeliculasDAO extends DAO{
 
@@ -13,18 +16,65 @@ class PeliculasDAO extends DAO{
     }
 
     public function getOne($id){
-        $sql = "SELECT id_pelicula,status,nombre,precio,id_clasificacion,duracion,anio,directores,actores,descripcion FROM $this->table WHERE id = $id";
-        $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'PeliculaEntity')->fetch();
-        return $resultado;
         
-
+        
+        $sql = "SELECT * FROM $this->table WHERE id_pelicula=".$id;
+        $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'PeliculaEntity')->fetchAll();
+             
+        return $resultado;
     }
 
     public function getAll($where = array()){
+        
+        $sWhere = array();
+        $ord='';
+        if(!empty($_GET['genero'])){
+            $sWhere[]=' AND G.id_genero ='.$where['genero'];
+        }
+        if(!empty($_GET['subgenero'])){
+            $sWhere[]=' AND SG.id_subgenero ='.$where['subgenero'];
+        }
+        if(!empty($_GET['clasificacion'])){
+            $sWhere[]=' AND P.id_clasificacion ='.$where['clasificacion'];
+        }
+        if(!empty($_GET['orden'])){
+        if($_GET['orden']==1){
+            $ord=' ORDER BY P.nombre';
+        }else if($_GET['orden']==2){
+            $ord=' ORDER BY P.nombre DESC';
+        }else if($_GET['orden']==3){
+            $ord=' ORDER BY P.anio';
+        }else if($_GET['orden']==4){
+            $ord=' ORDER BY P.anio DESC';
+        }
+        }
+        $sWhereStr='';
+        if(!empty($sWhere)) { $sWhereStr=' '. implode(' ',$sWhere);
+        }
 
-        $sql = "SELECT id_pelicula,status,nombre,precio,id_clasificacion,duracion,anio,directores,actores,descripcion FROM $this->table";
+        $sql = "SELECT DISTINCT P.id_pelicula,
+                        P.status,
+                        P.nombre,
+                        P.precio,
+                        P.id_clasificacion,
+                        P.duracion,
+                        P.anio,
+                        P.directores,
+                        P.actores,
+                        P.descripcion,
+                        G.id_genero,
+                        SG.id_subgenero
+                FROM pelicula P
+                INNER JOIN pelicula_genero GP ON P.id_pelicula=GP.id_pelicula
+                INNER JOIN genero_subgenero GSG ON GP.id_genero_subgenero=GSG.id_genero_subgenero
+                INNER JOIN genero G ON GSG.id_genero=G.id_genero
+                INNER JOIN subgenero SG ON GSG.id_subgenero=SG.id_subgenero
+                WHERE P.status = 1 ".$sWhereStr.' GROUP BY  P.nombre '.$ord;
+
         $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'PeliculaEntity')->fetchAll();
+        
         return $resultado;
+
 
     }
 
@@ -46,8 +96,8 @@ class PeliculasDAO extends DAO{
                 anio = '".$datos['anio']."',
                 directores = '".$datos['directores']."',
                 actores = '".$datos['actores']."',
-                descripcion '".$datos['descripcion']."' 
-                    WHERE id = ".$id;
+                descripcion ='".$datos['descripcion']."' 
+                    WHERE id_pelicula = ".$id;
         return $this->con->exec($sql);
 
     }

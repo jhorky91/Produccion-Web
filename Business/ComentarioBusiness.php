@@ -24,6 +24,21 @@ class ComentarioBusiness {
         return $this->ComentariosDAO->contarActivos();
     }
 
+    public function getEntradaIDPeli($id){
+        $entradas = $this->ComentariosDAO->getAllIDPeli($id); 
+
+        return $entradas;
+    }
+    public function getEntradaIDUser($id){
+        $entradas = $this->ComentariosDAO->getAllIDUser($id); 
+
+        return $entradas;
+    }
+    public function getMod($id,$datos = array()){
+        $entradas = $this->ComentariosDAO->modify($id, $datos); 
+
+        return $entradas;
+    }
 }
 
 

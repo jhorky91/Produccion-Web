@@ -13,7 +13,7 @@ class UserDAO extends DAO{
     }
 
     public function getOne($id){
-        $sql = "SELECT id_usuario, status, nombre, apellido, fecha, fecha_nac, usuario, pass, email, telefono, pedidos, dinero_gastado FROM $this->table WHERE id = $id";
+        $sql = "SELECT id_usuario, status, nombre, apellido, fecha, fecha_nac, usuario, pass, email, telefono, pedidos, dinero_gastado FROM $this->table WHERE id_usuario = $id";
         $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'UsuarioEntity')->fetch();
         return $resultado;
 

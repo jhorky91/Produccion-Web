@@ -13,13 +13,13 @@ class PeliculaEntity{
     private $actores;
     private $descripcion;
 
-    private $gener;
-    private $sgener;
+    private $genero;
+    private $subgenero;
     private $comentarios; //array
     
     public function __construct(){
-        $this->gener=array();
-        $this->sgener=array();
+        $this->genero=array();
+        $this->subgenero=array();
         $this->comentarios=array();
  
     }
@@ -56,53 +56,53 @@ class PeliculaEntity{
         return $this->descripcion;
     }
     public function getGenero(){
-        return $this->gener;
+        return $this->genero;
     }
-    public function getSGen(){
-        return $this->$sgen;
+    public function getSubGenero(){
+        return $this->$subgenero;
     }
     public function getComentarios(){
         return $this->$comentarios;
     }
 
 
-    public function setID(){
+    public function setID($id_pelicula){
         $this->id_pelicula=$id_pelicula;
     }
-    public function setStatus(){
+    public function setStatus($status){
         $this->status=$status;
     }
-    public function setNombre(){
+    public function setNombre($nombre){
         $this->nombre=$nombre;
     }
-    public function setPrecio(){
+    public function setPrecio($precio){
         $this->precio=$precio;
     }
-    public function setIDClasificacion(){
+    public function setIDClasificacion($id_clasificacion){
         $this->id_clasificacion=$id_clasificacion;
     }
-    public function setDuracion(){
+    public function setDuracion($duracion){
         $this->duracion=$duracion;
     }
-    public function setAnio(){
+    public function setAnio($anio){
         $this->anio=$anio;
     }
-    public function setDirectores(){
+    public function setDirectores($directores){
         $this->directores=$directores;
     }
-    public function setActores(){
+    public function setActores($actores){
         $this->actores=$actores;
     }
-    public function setDescripcion(){
+    public function setDescripcion($descripcion){
         $this->descripcion=$descripcion;
     }
-    public function setGenero(){
-        $this->gener=$gener;
+    public function setGenero($genero){
+        $this->genero=$genero;
     }
-    public function setSGen(){
-        $this->$sgen=$sgen;
+    public function setSubGenero($subgenero){
+        $this->$subgenero=$subgenero;
     }
-    public function setComentarios(){
+    public function setComentarios($comentarios){
         $this->$comentarios=$comentarios;
     }
 
