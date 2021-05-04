@@ -9,9 +9,6 @@ body{
 	background-color: #333333;
 	background-size: cover;
 }
-.navbar-toggler{
-	/*background-image: url('https://mdbootstrap.com/img/svg/hamburger6.svg?color=000')*/
-}
 .nav-link{
 	color: white;
 }
@@ -46,8 +43,9 @@ h5{
 
 footer{
 	background-color:#333333;
-	height: 10vh;
+	height: 20vh;
 	color: white;
+	text-align: center;
 }
 ul{
 	text-align: left;

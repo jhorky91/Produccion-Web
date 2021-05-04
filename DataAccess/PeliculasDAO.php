@@ -19,7 +19,7 @@ class PeliculasDAO extends DAO{
         
         
         $sql = "SELECT * FROM $this->table WHERE id_pelicula=".$id;
-        $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'PeliculaEntity')->fetchAll();
+        $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'PeliculaEntity')->fetch();
              
         return $resultado;
     }
@@ -38,15 +38,15 @@ class PeliculasDAO extends DAO{
             $sWhere[]=' AND P.id_clasificacion ='.$where['clasificacion'];
         }
         if(!empty($_GET['orden'])){
-        if($_GET['orden']==1){
-            $ord=' ORDER BY P.nombre';
-        }else if($_GET['orden']==2){
-            $ord=' ORDER BY P.nombre DESC';
-        }else if($_GET['orden']==3){
-            $ord=' ORDER BY P.anio';
-        }else if($_GET['orden']==4){
-            $ord=' ORDER BY P.anio DESC';
-        }
+            if($_GET['orden']==1){
+                $ord=' ORDER BY P.nombre';
+            }else if($_GET['orden']==2){
+                $ord=' ORDER BY P.nombre DESC';
+            }else if($_GET['orden']==3){
+                $ord=' ORDER BY P.anio';
+            }else if($_GET['orden']==4){
+                $ord=' ORDER BY P.anio DESC';
+            }
         }
         $sWhereStr='';
         if(!empty($sWhere)) { $sWhereStr=' '. implode(' ',$sWhere);
@@ -81,7 +81,7 @@ class PeliculasDAO extends DAO{
     public function save($datos = array()){
 
         $sql = "INSERT INTO $this->table(status,nombre,precio,id_clasificacion,duracion,anio,directores,actores,descripcion)
-                 VALUES ('".$datos['status']."','".$datos['nombre']."','".$datos['precio']."','".$datos['id_clasificacion']."','".$datos['duracion']."','".$datos['anio']."','".$datos['directores']."','".$datos['actores']."','".$datos['descripcion']."')";
+                 VALUES ('0','".$datos['nombre']."','".$datos['precio']."','".$datos['id_clasificacion']."','".$datos['duracion']."','".$datos['anio']."','".$datos['directores']."','".$datos['actores']."','".$datos['descripcion']."')";
         return $this->con->exec($sql);
 
     }
@@ -105,6 +105,70 @@ class PeliculasDAO extends DAO{
     public function delete($id){
         $sql = "DELETE FROM $this->table WHERE id_$this->table = $id";
         return $this->con->exec($sql);
+    }
+    public function destacados(){
+        $sql = "SELECT AVG(C.rating) AS rating,
+                       P.id_pelicula,
+                       P.status,
+                       P.nombre,
+                       P.precio,
+                       P.id_clasificacion,
+                       P.duracion,
+                       P.anio,
+                       P.directores,
+                       P.actores,
+                       P.descripcion
+        FROM pelicula P
+        INNER JOIN comentario C ON P.id_pelicula = C.id_pelicula
+        WHERE  P.status = 1 
+        GROUP BY P.id_pelicula
+        ORDER BY 1 DESC
+        LIMIT 10";
+        $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'PeliculaEntity')->fetchAll();
+        
+        return $resultado;
+      
+
+    }
+
+    public function getAllAnio($condicion){
+        $sql = "SELECT  P.id_pelicula,
+                        P.status,
+                        P.nombre,
+                        P.precio,
+                        P.id_clasificacion,
+                        P.duracion,
+                        P.anio,
+                        P.directores,
+                        P.actores,
+                        P.descripcion
+                FROM pelicula P
+                WHERE P.status = 1 AND P.anio =".$condicion;
+
+        $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'PeliculaEntity')->fetchAll();
+        
+        return $resultado;
+    }
+    public function getUltimos(){
+        $sql = "SELECT  P.id_pelicula,
+                        P.status,
+                        P.nombre,
+                        P.precio,
+                        P.id_clasificacion,
+                        P.duracion,
+                        P.anio,
+                        P.directores,
+                        P.actores,
+                        P.descripcion
+                FROM pelicula P
+                ORDER BY 1 DESC
+                LIMIT 10";
+
+        $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'PeliculaEntity')->fetchAll();
+        
+        return $resultado;
+
+
     }
 
     

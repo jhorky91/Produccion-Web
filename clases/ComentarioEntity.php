@@ -12,25 +12,25 @@ class ComentariosEntity extends BaseEntity{
         parent:: __construct();
      } 
 
-    public function setRank(){
+    public function setRank($rank){
         $this->rank=$rank;
     }
     public function getRank(){
         return $this->rank;
     }
-    public function setComentarios(){
+    public function setComentarios($comentarios){
         $this->comentarios=$comentarios;
     }
     public function getComentarios(){
         return $this->comentarios;
     }
-    public function setIp(){
+    public function setIp($ip){
         $this->ip=$ip;
     }
     public function getIp(){
         return $this->ip;
     }
-    public function setEmail(){
+    public function setEmail($email){
         $this->email=$email;
     }
     public function getEmail(){

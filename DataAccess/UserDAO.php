@@ -46,6 +46,11 @@ class UserDAO extends DAO{
         return $this->con->exec($sql);
     }
    
+    public function SessionUser($user, $pass){
+        $sql = "SELECT id_usuario, status, nombre, apellido, fecha, fecha_nac, usuario, pass, email, telefono, pedidos, dinero_gastado FROM $this->table WHERE usuario =".$user." AND pass=".$pass;
+        $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'UsuarioEntity')->fetch();
+        return $resultado;
+    }
     
 }
 

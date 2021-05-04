@@ -21,7 +21,7 @@ class ComentariosDAO extends DAO{
 
     public function getAll($where = array()){
 
-        $sql = "SELECT id_comentario,status,fecha,rating,titulo,comentario, id_pelicula,id_usuario FROM $this->table";
+        $sql = "SELECT id_comentario,status,fecha,rating,titulo,comentario, id_pelicula,id_usuario FROM $this->table WHERE status=1";
         $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'ComentarioEntity')->fetchAll();
         return $resultado;
 
@@ -30,14 +30,14 @@ class ComentariosDAO extends DAO{
         
     public function getAllIDUser($id){
 
-        $sql = "SELECT * FROM $this->table WHERE id_usuario=".$id;
+        $sql = "SELECT * FROM $this->table WHERE status=1 AND id_usuario=".$id;
         return $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'ComentarioEntity')->fetchAll();   
 
     }
 
     public function getAllIDPeli($id){
 
-        $sql = "SELECT * FROM $this->table WHERE id_pelicula=".$id;
+        $sql = "SELECT * FROM $this->table WHERE status=1 AND id_pelicula=".$id;
         return $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'ComentarioEntity')->fetchAll();   
 
     }
@@ -45,7 +45,7 @@ class ComentariosDAO extends DAO{
     public function save($datos = array()){
 
         $sql = "INSERT INTO $this->table (status,fecha,rating,titulo,comentario, id_pelicula,id_usuario) 
-        VALUES ('".$datos['status']."','NOW()','".$datos['rating']."','".$datos['titulo']."','".$datos['comentario']."'
+        VALUES ('0','NOW()','".$datos['rating']."','".$datos['titulo']."','".$datos['comentario']."'
         ,'".$datos['id_pelicula']."','".$datos['id_usuario']."')";
         return $this->con->exec($sql);
 
@@ -65,7 +65,10 @@ class ComentariosDAO extends DAO{
         return $this->con->exec($sql);
     }
 
-    
+    public function calRating($id){
+        $sql = "SELECT ROUND(AVG(rating),1) AS rating FROM $this->table WHERE status=1 AND id_pelicula =".$id;
+        return $this->con->query($sql,PDO::FETCH_CLASS,'ComentarioEntity')->fetch();
+    }
     
 }
 

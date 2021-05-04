@@ -28,6 +28,10 @@ class UserBusiness {
     public function contarActivos(){
         return $this->UserDAO->contarActivos();
     }
+    public function getSession($user, $pass){
+        $entradas = $this->UserDAO->SessionUser($user, $pass);
+        return $entradas;
+    }
 }
 
 

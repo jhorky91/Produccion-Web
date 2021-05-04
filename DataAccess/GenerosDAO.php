@@ -13,7 +13,7 @@ class GeneroDAO extends DAO{
     }
 
     public function getOne($id){
-        $sql = "SELECT id_genero,status,nombre FROM $this->table WHERE id_genero = $id";
+        $sql = "SELECT id_genero,status,nombre FROM $this->table WHERE status=1 AND id_genero = $id";
         return $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'GeneroEntity')->fetch();
          
         
@@ -22,13 +22,13 @@ class GeneroDAO extends DAO{
         $sql = "SELECT G.id_genero, G.nombre FROM genero G
         INNER JOIN genero_subgenero GS ON G.id_genero = GS.id_genero
         INNER JOIN pelicula_genero PG ON GS.id_genero_subgenero = PG.id_genero_subgenero
-        WHERE PG.id_pelicula=".$id;
+        WHERE G.status=1 AND PG.id_pelicula=".$id;
         return $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'GeneroEntity')->fetchAll();
     }
 
     public function getAll($where = array()){
 
-        $sql = "SELECT id_genero,status,nombre FROM $this->table";
+        $sql = "SELECT id_genero,status,nombre FROM $this->table WHERE status=1 ";
         $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'GeneroEntity')->fetchAll();
         return $resultado;
 
@@ -42,23 +42,11 @@ class GeneroDAO extends DAO{
     }
 
     public function modify($id, $datos=array()){
-        /* $sql = "UPDATE $this->table SET status = '".$datos['status']."', nombre ='".$datos['nombre']."' WHERE id_genero = ".$id;
-        return $this->con->exec($sql);  */
-
+        
         $sql = "UPDATE $this->table SET status= ?,nombre=? WHERE id_genero=?";
         $send = $this->con->prepare($sql);
         $send ->execute([$datos['status'],$datos['nombre'],$id]);
-        /*$send -> bindParam(1,$status,PDO::PARAM_INT);
-        $send -> bindParam(2,$nombre,PDO::PARAM_STR);
-        $send -> bindParam(3,$id,PDO::PARAM_INT);
         
-        $send->execute();
-        $result= $send ->fetchAll(PDO::FETCH_ASSOC); */
-        
-
-        /* echo $id;
-        echo $status;
-        echo $nombre; */
     }
 
     public function delete($id){

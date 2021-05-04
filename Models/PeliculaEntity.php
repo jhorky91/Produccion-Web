@@ -12,10 +12,11 @@ class PeliculaEntity{
     private $directores;
     private $actores;
     private $descripcion;
-
+        
     private $genero;
     private $subgenero;
     private $comentarios; //array
+    private $rating;
     
     public function __construct(){
         $this->genero=array();
@@ -64,6 +65,9 @@ class PeliculaEntity{
     public function getComentarios(){
         return $this->$comentarios;
     }
+    public function getRating(){
+        return $this->$rating;
+    }
 
 
     public function setID($id_pelicula){
@@ -104,6 +108,9 @@ class PeliculaEntity{
     }
     public function setComentarios($comentarios){
         $this->$comentarios=$comentarios;
+    }
+    public function setRating($rating){
+        $this->$rating=$rating;
     }
 
 

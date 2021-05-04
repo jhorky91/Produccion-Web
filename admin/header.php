@@ -8,11 +8,7 @@
     if(!isset($_SESSION['admin_usuario_logueado'])){
       redirect('login.php'); 
      }
-    
-    //obtengo el contenido del archivo
-    //$datosA = file_get_contents('../../DataAccess/admin.json');
-    //convierto a un array
-    //$datosAdmin = json_decode($datosA,true);
+  
 
 
     $sql = "SELECT id_admin, status, nombre, apellido, fecha, usuario, pass, email FROM admin;";
@@ -60,6 +56,7 @@
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
   <link rel="shortcut icon" href="img/logo-bootstrap-shoping-cart.png">
   <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+  <link href="css/estilos.css" rel="stylesheet">
 
 </head>
 

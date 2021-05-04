@@ -1,24 +1,24 @@
 <?php
-    $productos = json_decode(file_get_contents('../DataAccess/productos.json'),true);
-    $columns = array_column($productos, 'anio');
-    array_multisort($columns, SORT_DESC, $productos);
-?>
-<?php
-$mostrar = '0';   
-   foreach ($productos as $prod){
-
-            
-            if ($prod['anio'] < '2015' && $mostrar <= '3') {
-                $mostrar++;
- ?>
+    require_once('../Business/PeliculaBusiness.php');
+	$p2020 = new PeliculaBusiness($con);
+    
+	$cont=0;
+    $condicion = 2020;
+	foreach ($p2020->getAllAnio($condicion) as $prod) { 
+		$cont++;
+    ?>
+        
             <div class="col-lg-3">
-                <h5><?php echo $prod['anio']?></h5>
+                <h5><?php echo $prod->getAnio()?></h5>
+                     <div class="thumbnail">
+                        
+                        <a href="product-details.php?id=<?php echo $prod->getID()?>"><img class="img-fluid" src="images/<?php echo $prod->getID() ?>.jpg" alt=""></a>
+                        <h4><?php echo $prod->getNombre()?></h4>
+                        <p><strong> $<?php echo $prod->getPrecio() ?> </strong></p>
+                        <h4><a class="btn btn-warning" href="product-details.php?id=<?php echo $prod->getID()?>" title="add to cart"> Detalles </a></h4>
+                    </div>
 
-                        <a href="product-details.php?id=<?php echo $prod['id']?>"><img class="img-fluid" src="images/<?php echo $prod['imagen'] ?>" alt=""></a>
-                        <h4><?php echo $prod['nombre']?></h4>
-                        <p><strong> $<?php echo $prod['precio'] ?> </strong></p>
-                        <h4><a class="btn btn-warning" href="product-details.php?id=<?php echo $prod['id']?>" title="add to cart"> Detalles </a></h4>
-
-                  
-            </div>                
-        <?php }  }?>
+            </div>    
+    <?php if($cont==4){ break; }
+	
+    } ?>

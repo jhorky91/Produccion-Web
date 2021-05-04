@@ -1,27 +1,30 @@
 <?php
-
+require_once('../Helpers/funcs.php');
+require_once('../Helpers/config.php');
 session_start();
-include('../Helpers/funcs.php');
 
-//obtengo el contenido del archivo
-$datos = file_get_contents('../DataAccess/usuarios.json');
-//convierto a un array
-$datosJson = json_decode($datos,true);
+require_once('../Business/UserBusiness.php');
+$get = new UserBusiness($con);
+
 
 if(isset($_POST['login'])){
-  foreach($datosJson as $user) { 
-    if($_POST['pass'] == $user['pass'] && $_POST['user'] == $user['user']){
+  $ses=$get->getEntradas();
+  foreach($ses as $UserB){
+  
+    if($_POST['pass'] == $UserB->getPass() && $_POST['user'] == $UserB->getUsuario()){
       $_SESSION['usuario_logueado'] = true;
-      $_SESSION['user'] = $user['nombre']." ".$user['apellido'];
+      $_SESSION['user'] = $UserB->getNombre()." ".$UserB->getApellido();
+      $_SESSION['id'] = $UserB->getIDUsuario();
       $_SESSION['error'] = "0";
       redirect('index.php');
-    break;
+      break;
     }else{
       $_SESSION['error'] = "1";  
+
     }
   }
 }
-
+ 
 
 if(isset($_GET['logout'])){
   unset($_SESSION['usuario_logueado']);
@@ -115,3 +118,4 @@ if(isset($_GET['logout'])){
 
     </section>  
     
+

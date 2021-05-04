@@ -34,8 +34,23 @@ class PeliculaBusiness {
 
         return $entradas;
     }
+    public function getDestacados(){
+        $entradas = $this->PeliculasDAO->destacados(); 
 
+        return $entradas;
+    }
+    public function getAllAnio($condicion){
+        $entradas = $this->PeliculasDAO->getAllAnio($condicion); 
+
+        return $entradas;
+    }
+    public function getUltimos(){
+        $entradas = $this->PeliculasDAO->getUltimos(); 
+
+        return $entradas;
+    }
 }
+
 
 
 

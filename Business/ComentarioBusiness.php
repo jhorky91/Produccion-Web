@@ -39,6 +39,18 @@ class ComentarioBusiness {
 
         return $entradas;
     }
+    public function getAdd($datos = array()){
+        $entradas = $this->ComentariosDAO->save($datos); 
+
+        return $entradas;
+    }
+
+    public function getRating($id){
+        $entradas = $this->ComentariosDAO->calRating($id); 
+
+        return $entradas;
+    }
+
 }
 
 

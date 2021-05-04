@@ -58,40 +58,40 @@ class UsuarioEntity{
 
 
 
-    public function setIDUsuario(){
+    public function setIDUsuario($id_usuario){
         $this->id_usuario=$id_usuario;
     }
-    public function setStatus(){
+    public function setStatus($status){
         $this->status=$status;
     }
-    public function setNombre(){
+    public function setNombre($nombre){
         $this->nombre=$nombre;
     }
-    public function setApellido(){
+    public function setApellido($apellido){
         $this->apellido=$apellido;
     }
-    public function setFecha(){
+    public function setFecha($fecha){
         $this->fecha=$fecha;
     }
-    public function setFechaNac(){
+    public function setFechaNac($fecha_nac){
         $this->fecha_nac=$fecha_nac;
     }
-    public function setUsuario(){
+    public function setUsuario($usuario){
         $this->usuario=$usuario;
     }
-    public function setPass(){
+    public function setPass($pass){
         $this->pass=$pass;
     }
-    public function setEmail(){
+    public function setEmail($email){
         $this->email=$email;
     }
-    public function setTelefono(){
+    public function setTelefono($telefono){
         $this->telefono=$telefono;
     }
-    public function setPedidos(){
+    public function setPedidos($pedidos){
         $this->pedidos=$pedidos;
     }
-    public function setDineroGastado(){
+    public function setDineroGastado($dinero_gastado){
         $this->dinero_gastado=$dinero_gastado;
     }
 

@@ -5,10 +5,6 @@ include_once('../Helpers/config.php');
 
 session_start();
 
-//obtengo el contenido del archivo
-//$datosA = file_get_contents('../../DataAccess/admin.json');
-//convierto a un array
-//$datosAdmin = json_decode($datosA,true);
 
 $sql = "SELECT id_admin, status, nombre, apellido, fecha, usuario, pass, email FROM admin;";
 $resultado = $con->query($sql);

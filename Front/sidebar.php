@@ -93,7 +93,7 @@
 							
 	  </div>
 	  <div class="col-12  ">	
-      	<h5>Ordenado</h5>
+      	<h5>Ordenados por</h5>
 								<ul>									
 									<div class="list-group">	
 											<li>
@@ -130,7 +130,7 @@
 												&clasificacion=<?php echo isset($_GET['clasificacion'])?$_GET['clasificacion']:'' ?>
 												&orden=3">
 													<span class="oi oi-chevron-right"></span>
-													Año Ascendente
+													Año Asc
 												</a>
 
 											</li>
@@ -143,7 +143,7 @@
 												&clasificacion=<?php echo isset($_GET['clasificacion'])?$_GET['clasificacion']:'' ?>
 												&orden=4">
 													<span class="oi oi-chevron-right"></span>
-													Año Descendente
+													Año Desc
 												</a>
 
 											</li>

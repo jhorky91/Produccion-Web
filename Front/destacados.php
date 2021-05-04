@@ -1,15 +1,15 @@
 <?php
+	require_once('../Business/PeliculaBusiness.php');
+	$pB = new PeliculaBusiness($con);
 
-require_once('../Business/PeliculaBusiness.php');
-$pLanzamientos = new PeliculaBusiness($con);
 
-
-$cont=0;
-
-	foreach ($pLanzamientos->getUltimos() as $prod) { 
+	$cont=0;
+    
+	foreach ($pB->getDestacados() as $prod) { 
 		$cont++;
-	?>
-		<div class="col-lg-3">
+    ?>
+	
+		<div class="col-lg-3 <?php if($cont >= 5) {echo "mx-auto"; }?>">
 			<!--<h2><a href="#" class="badge badge-secondary">New</a></h2>-->
 			<a href="product-details.php?id=<?php echo $prod->getID()?>"><img class="img-fluid" src="images/<?php echo $prod->getID() ?>.jpg" alt=""></a>
 		
@@ -19,6 +19,5 @@ $cont=0;
 					<br class="clr">
 		</div>
 
-	<?php if($cont==4){ break; }
-	
+<?php if($cont==6){ break; }
 	} ?>

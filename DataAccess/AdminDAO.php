@@ -30,7 +30,7 @@ class AdminDAO extends DAO{
     public function save($datos = array()){
 
         $sql = "INSERT INTO $this->table (status,nombre,apellido,fecha, usuario, pass, email)
-                VALUES ('".$datos['status']."','".$datos['nombre']."','".$datos['apellido']."','".$datos['fecha']."','".$datos['usuario']."','".$datos['pass']."','".$datos['email']."')";
+                VALUES ('0','".$datos['nombre']."','".$datos['apellido']."','".$datos['fecha']."','".$datos['usuario']."','".$datos['pass']."','".$datos['email']."')";
         return $this->con->exec($sql);
 
     }
