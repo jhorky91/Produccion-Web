@@ -1,6 +1,8 @@
 <?php
 require_once('../Helpers/funcs.php');
 require_once('../Helpers/config.php');
+require_once('../Helpers/visitantes.php');
+
 session_start();
 
 require_once('../Business/UserBusiness.php');
@@ -8,6 +10,7 @@ $get = new UserBusiness($con);
 
 
 if(isset($_POST['login'])){
+  
   $ses=$get->getEntradas();
   foreach($ses as $UserB){
   
@@ -17,6 +20,23 @@ if(isset($_POST['login'])){
       $_SESSION['id'] = $UserB->getIDUsuario();
       $_SESSION['error'] = "0";
       redirect('index.php');
+      //write_visita ();
+        /* 
+        $fp = fopen('../DataAccess/ip.json','w');
+        $datosJson = array('id'=>$_SESSION['user'],
+                    'user'=> $_SESSION['user'],
+                    'ip'=>  $_SERVER['REMOTE_ADDR'], 
+                    'fecha'=>format('Y-m-d H:i:s'));
+              
+ */
+        
+        //convierto a json string
+        $datosString = json_encode($datosJson);
+        //guardo el archivo
+        fwrite($fp,$datosString);
+        fclose($fp);
+      
+      
       break;
     }else{
       $_SESSION['error'] = "1";  
