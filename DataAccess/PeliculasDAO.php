@@ -28,11 +28,16 @@ class PeliculasDAO extends DAO{
         
         $sWhere = array();
         $ord='';
-        if(!empty($_GET['genero'])){
-            $sWhere[]=' AND G.id_genero ='.$where['genero'];
+        if(!empty($_GET['genero']) && !empty($_GET['subgenero']) ){
+             $sWhere[]=' AND (GSG.id_genero ='.$where['genero'].' AND GSG.id_subgenero ='.$where['subgenero'].') 
+                         OR (GSG.id_genero ='.$where['genero'].' AND GSG.id_subgenero =NULL 
+                         AND GSG.id_subgenero ='.$where['subgenero'].')'; 
         }
-        if(!empty($_GET['subgenero'])){
-            $sWhere[]=' AND SG.id_subgenero ='.$where['subgenero'];
+        if(!empty($_GET['genero']) && empty($_GET['subgenero']) ){
+            $sWhere[]=' AND GSG.id_genero ='.$where['genero'];
+        }
+        if(!empty($_GET['subgenero']) && empty($_GET['genero'])){
+            $sWhere[]=' AND GSG.id_subgenero ='.$where['subgenero'];
         }
         if(!empty($_GET['clasificacion'])){
             $sWhere[]=' AND P.id_clasificacion ='.$where['clasificacion'];
@@ -46,13 +51,17 @@ class PeliculasDAO extends DAO{
                 $ord=' ORDER BY P.anio';
             }else if($_GET['orden']==4){
                 $ord=' ORDER BY P.anio DESC';
+            }else if($_GET['orden']==5){
+                $ord=' ORDER BY rating DESC, P.nombre';
+            }else if($_GET['orden']==6){
+                $ord=' ORDER BY rating, P.nombre';
             }
         }
         $sWhereStr='';
         if(!empty($sWhere)) { $sWhereStr=' '. implode(' ',$sWhere);
         }
-
-        $sql = "SELECT DISTINCT P.id_pelicula,
+              
+        $sql = "SELECT  P.id_pelicula,
                         P.status,
                         P.nombre,
                         P.precio,
@@ -62,14 +71,12 @@ class PeliculasDAO extends DAO{
                         P.directores,
                         P.actores,
                         P.descripcion,
-                        G.id_genero,
-                        SG.id_subgenero
+                        AVG(C.rating) AS rating  
                 FROM pelicula P
                 INNER JOIN pelicula_genero GP ON P.id_pelicula=GP.id_pelicula
                 INNER JOIN genero_subgenero GSG ON GP.id_genero_subgenero=GSG.id_genero_subgenero
-                INNER JOIN genero G ON GSG.id_genero=G.id_genero
-                INNER JOIN subgenero SG ON GSG.id_subgenero=SG.id_subgenero
-                WHERE P.status = 1 ".$sWhereStr.' GROUP BY  P.nombre '.$ord;
+                INNER JOIN comentario C ON P.id_pelicula = C.id_pelicula 
+                WHERE P.status = 1 ".$sWhereStr.' GROUP BY  P.id_pelicula '.$ord;
 
         $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'PeliculaEntity')->fetchAll();
         
@@ -122,7 +129,7 @@ class PeliculasDAO extends DAO{
         INNER JOIN comentario C ON P.id_pelicula = C.id_pelicula
         WHERE  P.status = 1 
         GROUP BY P.id_pelicula
-        ORDER BY 1 DESC
+        ORDER BY 1 DESC, P.nombre
         LIMIT 10";
         $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'PeliculaEntity')->fetchAll();
         

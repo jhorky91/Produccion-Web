@@ -276,7 +276,45 @@ function cant_imagenes($carpeta,$id,$base ='../' ){
 	}
 	return $i;
 }
+function escribirIP(){
+	$datos = file_get_contents('../DataAccess/ip.json');
 
+	$datosJson = json_decode($datos,true);
+	
+		$fecha= date('Y-m-d H:i:s');
+      
+        $datosJson[$fecha] = array('id'=>$_SESSION['id'],
+                    'user'=> $_SESSION['user'],
+                    'ip'=>  get_client_ip(), 
+                    'fecha'=>$fecha,
+					'id_pelicula'=>$_GET['id']);
+              
+         $fp = fopen('../DataAccess/ip.json',"w");
+        
+        //convierto a json string
+        $datosString = json_encode($datosJson);
+        //guardo el archivo
+        fwrite($fp,$datosString);
+        fclose($fp);
+}
+function get_client_ip() {
+	//$ipaddress = '';
+	if (getenv('HTTP_CLIENT_IP'))
+		$ipaddress = getenv('HTTP_CLIENT_IP');
+	else if(getenv('HTTP_X_FORWARDED_FOR'))
+		$ipaddress = getenv('HTTP_X_FORWARDED_FOR');
+	else if(getenv('HTTP_X_FORWARDED'))
+		$ipaddress = getenv('HTTP_X_FORWARDED');
+	else if(getenv('HTTP_FORWARDED_FOR'))
+		$ipaddress = getenv('HTTP_FORWARDED_FOR');
+	else if(getenv('HTTP_FORWARDED'))
+	   $ipaddress = getenv('HTTP_FORWARDED');
+	else if(getenv('REMOTE_ADDR'))
+		$ipaddress = getenv('REMOTE_ADDR');
+	else
+		$ipaddress = 'UNKNOWN';
+	return $ipaddress;
+}
 
  
 ?>

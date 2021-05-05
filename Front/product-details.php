@@ -7,6 +7,7 @@ $comentsB = new ComentarioBusiness($con);
 
     if(isset($_POST['add'])){
 		
+		escribirIP();
         
 		$datos = array('id_usuario'=>$_SESSION['id'], 'rating'=>$_POST['tRating'],
 		 'titulo'=> $_POST['tTitle'], 'comentario'=>$_POST['tComentario'],'id_pelicula'=> $_GET['id']);
@@ -198,8 +199,41 @@ $comentsB = new ComentarioBusiness($con);
         <div class="col-md-6 mx-auto">
 
 		<?php
-		if(isset($_SESSION['usuario_logueado'])){ ?>
+		
+		if(isset($_SESSION['usuario_logueado'])){ 
+			
+			$d = file_get_contents('../DataAccess/ip.json');
+			$datosJson = json_decode($d,true);
+			$fecha=0;
+			$ip=0;
+			$entrada=1;	
+			foreach($datosJson as $datos){
+				if( $datos['id_pelicula']== $_GET['id']){
+					if($datos['id']== $_SESSION['id'] ){
+						$ip=$datos['ip'];
+						if(  $ip == get_client_ip()){
+							$fecha= $datos['fecha'];
+							$fecha_actual = strtotime(date("Y-m-d H:i:s",time()));
+							$fecha_entrada = strtotime($fecha);
+							if(($fecha_actual-$fecha_entrada) > 86400 ){
+								$entrada=1;
+								break;
+							} else {
+								$entrada=0;
+							}
+							
+						} else {$entrada=1; }				
+					
+					} else {$entrada=1; }				
 
+				} else {$entrada=1; }				
+				
+			}
+			
+			
+			
+			if($entrada==1){					
+			?>
           <form method="POST" action="">
             <div class="form-group">
                 <div class="d-flex justify-content-center"><h4 class="mb-3">Escribe tu comentario</h4></div>
@@ -243,8 +277,9 @@ $comentsB = new ComentarioBusiness($con);
                                 </div>
 
 		  </form>
-		  <?php } ?>
+		  <?php }  } ?>
         </div>
+
       </div>
 </div>
 

@@ -1,10 +1,13 @@
 <?php 
-include_once('functions/funcs.php');
+include_once('../Helpers/funcs.php');
 
 // PREPARO LA CONECCION CON LA BASE DE DATOS
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
 
 $hostname = 'localhost';
-$database = 'produccion';
+$database = 'prueba';
 $username = 'root';
 $password = '';
 $port = '3306';
@@ -20,7 +23,7 @@ $port = '3306';
 
  // PREPARO LA BASE DE DATOS JSON
 
-    $datosJson = json_decode(file_get_contents('../datos/productos.json'),true);
+    $datosJson = json_decode(file_get_contents('../DataAccess/productos.json'),true);
 
 foreach($datosJson as $d){
     $status=1;
@@ -42,6 +45,7 @@ foreach($datosJson as $d){
     VALUES ('$status','$nombre', '$precio', '$clasif', '$dur', '$anio', '$direct', '$actor', '$descripcion');";
     $count = $con->exec($sql);
   
+  }  /* 
  
  //AGARRO EL ID DE LA PELICULA INSERTADA
     $idPelicula = $con->lastInsertId();    
@@ -189,7 +193,7 @@ foreach($resultado as $res){
   }
   
 }
-
+ */
 //###################################################################################################################################
 
 //INTENTO DE MODIFICAR LAS IMAGENES

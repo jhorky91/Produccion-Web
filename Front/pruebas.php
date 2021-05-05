@@ -1,5 +1,69 @@
 <?php 
 
+require_once('../Helpers/funcs.php');
+
+
+$datos = file_get_contents('../DataAccess/ip.json');
+			$datosJson = json_decode($datos,true);
+			foreach($datosJson as $datos){
+				if($datos['id']== 1){
+					$fecha= $datos['fecha'];
+					break;
+				}				
+			
+			
+			}	
+         
+          //echo $fecha;
+			$mifecha = new DateTime();
+         
+         $fecha_actual = strtotime(date("Y-m-d H:i:s",time()));
+         $fecha_entrada = strtotime($fecha);
+         $resultFecha = $fecha_entrada;
+         if(($fecha_actual-$resultFecha)>86400){
+            echo 'HOLA';
+         }else{
+            echo 'CHAU';
+         }
+
+/*
+         $fecha = new DateTime();
+         echo $fecha->format('U = Y-m-d H:i:s') . "\n";
+
+         $fecha->setTimestamp(1171502725);
+         echo $fecha->format('U = Y-m-d H:i:s') . "\n";*/
+
+         
+         //1620194400
+          //1620280800
+         //$fechaC= DateTime::createFromFormat('d/m/Y, H:i:s',$fecha);
+         //$fechaC->format('Y-m-d H:i:s');
+         
+         //echo $fechaC;
+
+
+      /*    echo $fecha_actual.'<br>';
+         echo $resultFecha;
+ */
+         /*$mifecha = $fecha;
+         echo $mifecha;
+         echo '<br>';
+         $mifecha->modify('+24 hours');
+         echo $mifecha;*/
+         //$mifecha->set_state($fecha);
+         /* echo $mifecha->format('Y-m-d H:i:s'); */
+         
+			/* $mifecha->modify('+24 hours');
+			
+         if($fecha != $mifecha->format('Y-m-d H:i:s')){
+            echo "hola";
+         } */
+         
+         
+         
+         /* echo $fecha;
+         echo date_add($fecha, date_interval_create_from_date_string("1 day")); */
+
 //############################################################################################################
 //#########################--MODIFICACION DE TITULOS DE LA TABLA COMENTARIOS--################################
 //############################################################################################################

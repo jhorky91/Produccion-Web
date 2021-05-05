@@ -148,6 +148,32 @@
 
 											</li>
 									</div>
+									<div class="list-group">	
+											<li>
+												<a class="text-white" href="products.php?
+												genero=<?php echo isset($_GET['genero'])?$_GET['genero']:'' ?>
+												&subgenero=<?php echo isset($_GET['subgenero'])?$_GET['subgenero']:'' ?>
+												&clasificacion=<?php echo isset($_GET['clasificacion'])?$_GET['clasificacion']:'' ?>
+												&orden=5">
+													<span class="oi oi-chevron-right"></span>
+													Rating Desc
+												</a>
+
+											</li>
+									</div>
+									<div class="list-group">	
+											<li>
+												<a class="text-white" href="products.php?
+												genero=<?php echo isset($_GET['genero'])?$_GET['genero']:'' ?>
+												&subgenero=<?php echo isset($_GET['subgenero'])?$_GET['subgenero']:'' ?>
+												&clasificacion=<?php echo isset($_GET['clasificacion'])?$_GET['clasificacion']:'' ?>
+												&orden=6">
+													<span class="oi oi-chevron-right"></span>
+													Rating Asc
+												</a>
+
+											</li>
+									</div>
 
 								</ul>
 							 
