@@ -20,13 +20,18 @@ class ClasificacionBusiness {
 
         return $entradas;
     }
-    public function getMod(){
-        $entradas = $this->ClasificacionDAO->modify($_GET["edit"], $_POST=array()); 
+    public function getMod($id, $datos= array()){
+        $entradas = $this->ClasificacionDAO->modify($id, $datos); 
 
         return $entradas;
     }
-    public function getDel(){
-        $entradas = $this->ClasificacionDAO->delete($_GET["del"]); 
+    public function Add($datos=array()){
+        $entradas = $this->ClasificacionDAO->save($datos); 
+
+        return $entradas;
+    }
+    public function getDel($id){
+        $entradas = $this->ClasificacionDAO->delete($id); 
 
         return $entradas;
     }

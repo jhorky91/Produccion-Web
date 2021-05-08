@@ -9,7 +9,6 @@ include_once('header.php');
 
 if(isset($_GET['del'])){
 
-  //eliminacion de generos  
   $id = $_GET['del'];
   $GeneroB->getDel($id);
 
@@ -45,7 +44,7 @@ if(isset($_GET['del'])){
             </div>
             <div class="card-body">
               <div class="table-responsive">
-              <form method="POST" action="edit-pelicula.php" enctype="multipart/form-data">
+              <form method="POST" action="" enctype="multipart/form-data">
                 <table class="table table-xl-responsive-borderless" id="tablajson" width="100%" cellspacing="0">
                   <thead class="thead-dark">
                     <tr align="center">

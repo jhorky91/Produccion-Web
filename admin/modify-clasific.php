@@ -1,77 +1,85 @@
 <?php
 include('header.php');
 include_once('../Helpers/funcs.php');
-
-
-//obtengo el contenido del archivo
-//$datos = file_get_contents('../../DataAccess/clasificacion.json');
-//convierto a un array
-//$datosJson = json_decode($datos,true);
-
 require_once('../Business/ClasificacionBusiness.php');
+
+
+
 $ClasificacionB = new ClasificacionBusiness($con);
 
+    //Guardamos un nuevo Genero
     if(isset($_POST['add'])){
-        
-    
-        if(isset($_GET['edit'])){
-            //modificando
-            $id = $_GET['edit'];
-        }
-
-        $ClasificacionB->getMod();
-    
-        /*//trunco el archivo
-        $fp = fopen('../../DataAccess/clasificacion.json','w');
-        //convierto a json string
-        $datosString = json_encode($datosJson);
-        //guardo el archivo
-        fwrite($fp,$datosString);
-        fclose($fp);*/
+      
+      $datos = array(
+        'status'=>$_POST['status'],
+        'nombre'=>$_POST['nombre'],
+        'descripcion'=> $_POST['descripcion']
+      );
+      $ClasificacionB->Add($datos);
         redirect('clasificacion.php');
+    
     }
 
-    if(isset($_GET['edit'])){
-        //$dato = $datosJson[$_GET['edit']];
-        
-        $dato = $ClasificacionB->getEntrada();
+    //Modificamos un genero ya existente
+    if(isset($_POST['mod'])) {
+            
+      $id = $_GET['edit'];
+      $datos= array(
+        'nombre'=> $_POST['nombre'],
+        'status'=> $_POST['status'],
+        'descripcion'=> $_POST['descripcion']
+      );     
+      $ClasificacionB->getMod($id,$datos);       
+      redirect('clasificacion.php');
     }
 
 ?>
 
-        <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
           <!-- Page Heading -->
+          <?php if(Isset($_GET['edit'])) { 
+          $Edit = true;
+          $Clasificacion = $ClasificacionB->getEntrada($_GET['edit']);?>
+
           <h1 class="h3 mb-2 text-gray-800">Editar Clasificación</h1>
-          <!--<p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>-->
-          
+         
+          <?php } else { ?>
+          <h1 class="h3 mb-2 text-gray-800">Nueva Clasificación</h1>
+          <?php } ?>
+
 
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
+          
+          
+          <?php if(isset($Edit)) { ?>
             <div class="card-header py-1">
-            <a href="new-clasific.php"><input class="btn btn-danger" type="submit" value="Añadir Nuevo" style="float: right;"></a>
+              <a href="modify-clasific.php"><input class="btn btn-danger" type="submit" value="Añadir Nuevo" style="float: right;"></a>
             </div>
+          <?php } ?>
+            
+            
             <div class="card-body">
               <div class="table-responsive">
                     <form method="POST" action="" name="prod" enctype="multipart/form-data">
                       <table class="table bg-gradient-dark text-white" id="dataTable" width="100%" cellspacing="0">
                       <tr>
                           <td align="right"><label for="txtStatus">Status:</label></td>
-                          <td><input type="text" id="txtStatus" name="status" value="<?php echo $dato->getStatus()?>" size="10" class="bg-danger text-white"></td>
+                          <td><input type="text" id="txtStatus" name="status" <?= isset($Edit)?'value="'.$Clasificacion->getStatus().'"':''?> size="10" class="bg-danger text-white"></td>
                       </tr>
                       <tr>
                           <td align="right"><label for="txtName">Nombre:</label></td>
-                          <td><input type="text" id="txtName" name="nombre" value="<?php echo $dato->getNombre()?>" size="50" class="bg-danger text-white"></td>
+                          <td><input type="text" id="txtName" name="nombre" <?= isset($Edit)?'value="'.$Clasificacion->getNombre().'"':''?> size="50" class="bg-danger text-white"></td>
                         </tr>
                         <tr>
                           <td align="right"><label for="txtDescripcion">Descripción:</label></td>
-                          <td align="left"><textarea id="txtDescripcion" name="descripcion" cols="80" rows="5" class="bg-danger text-white"><?php echo $dato->getDescripcion()?></textarea></td>
+                          <td align="left"><textarea id="txtDescripcion" name="descripcion" cols="80" rows="5" class="bg-danger text-white"><?= isset($Edit)? $Clasificacion->getDescripcion():''?></textarea></td>
                         </tr>                            
                         <tr>
-                          <td align="right"><input type="submit" name="add" value="Guardar" class="btn btn-danger"></td>
+                          <td align="right"><input type="submit" name="<?= isset($Edit)?'mod':'add'?>" value="Guardar" class="btn btn-danger"></td>
                           <td align="left"><input type="reset" value="Reset" class="btn btn-danger"></td>
                         </tr>                         
                       </table>

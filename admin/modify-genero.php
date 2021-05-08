@@ -6,6 +6,7 @@ require_once('../Business/GeneroBusiness.php');
 
 $GeneroB = new GeneroBusiness($con);
 
+    //Guardamos un nuevo Genero
     if(isset($_POST['add'])){
       
       $datos = array(
@@ -17,6 +18,7 @@ $GeneroB = new GeneroBusiness($con);
     
     }
 
+    //Modificamos un genero ya existente
     if(isset($_POST['mod'])) {
             
       $id = $_GET['edit'];
@@ -39,7 +41,7 @@ $GeneroB = new GeneroBusiness($con);
           <!-- Page Heading -->
           <?php if (isset($_GET['edit'])) {
             $Edit = true;
-            $Genero = $GeneroB->getEntrada();?>
+            $Genero = $GeneroB->getEntrada($_GET['edit']);?>
             
             <h1 class="h3 mb-2 text-gray-800">Editar Género</h1>
           

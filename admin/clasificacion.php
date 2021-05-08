@@ -1,21 +1,14 @@
 <?php
 include('header.php');
-
-//Devuelve el contenido de la tabla Clasificacion    
-//$clasi = "SELECT id_clasificacion, nombre, descripcion FROM clasificacion;";
-//$resultado = $con->query($clasi); 
-//Fin del Select
 require_once('../Business/ClasificacionBusiness.php');
+
+
 $ClasificacionB = new ClasificacionBusiness($con);
 
-
 if(isset($_GET['del'])){
-  //eliminacion de archivo imagen   
-  $sql = "DELETE FROM clasificacion WHERE id_clasificacion=".$_GET["del"];
-  $count = $con->exec($sql);
   
-
-  //fin eliminacion archivo imagen
+  $id = $_GET['del'];
+  $ClasificacionB->getDel($id);
 
     unset($_GET['del']);
 
@@ -43,13 +36,13 @@ if(isset($_GET['del'])){
               <span class="m-0 font-weight-bold text-primary">Borrador()</span>
               <span class="m-0 font-weight-bold text-primary">|</span>
               <span class="m-0 font-weight-bold text-primary">Pendiente()</span>
-              <a href="new-clasific.php"><input class="btn btn-danger" type="submit" value="Añadir Clasificacion"></a>
+              <a href="modify-clasific.php"><input class="btn btn-danger" type="submit" value="Añadir Clasificacion"></a>
               <input class="btn btn-danger" type="submit" value="Importar">
               <input class="btn btn-danger" type="submit" value="Exportar">
             </div>
             <div class="card-body">
               <div class="table-responsive">
-              <form method="POST" action="edit-clasific.php" enctype="multipart/form-data">
+              <form method="POST" action="" enctype="multipart/form-data">
                 <table class="table table-xl-responsive-borderless" id="tablajson" width="100%" cellspacing="0">
                   <thead class="thead-dark">
                     <tr align="center">
@@ -70,7 +63,7 @@ if(isset($_GET['del'])){
                       <td><?php echo $peli->getNombre(); ?></td>
                       <td><?php echo $peli->getDescripcion(); ?></td>
                       <td><center>
-                      <a href="edit-clasific.php?edit=<?php echo $peli->getID();?>"><i class="fas fa-edit"></a></i>&nbsp;&nbsp;
+                      <a href="modify-clasific.php?edit=<?php echo $peli->getID();?>"><i class="fas fa-edit"></a></i>&nbsp;&nbsp;
                       <a href="clasificacion.php?del=<?php echo $peli->getID();?>"><i class="fas fa-trash-alt"></i></a></i></center>
                       </td>
                     </tr>

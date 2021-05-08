@@ -3,7 +3,7 @@ include('header.php');
 include_once('../Helpers/funcs.php');
 
 //obtengo el contenido del archivo
-$datos = file_get_contents('../../DataAccess/usuarios.json');
+$datos = file_get_contents('../DataAccess/admin.json');
 //convierto a un array
 $datosJson = json_decode($datos,true);
 
@@ -25,7 +25,7 @@ if(isset($_POST['tTipo'])){
          'telefono'=>$_POST['tTel'], 'pedidos'=>$_POST[''], 'gasto'=>$_POST['']);
     
         //trunco el archivo
-        $fp = fopen('../../DataAccess/usuarios.json','w');
+        $fp = fopen('../DataAccess/admin.json','w');
         //convierto a json string
         $datosString = json_encode($datosJson);
         //guardo el archivo
