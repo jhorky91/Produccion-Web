@@ -19,7 +19,7 @@
 		echo !empty($_GET['subgenero'])? ' / '.$SubGeneroB->getEntrada($_GET['subgenero'])->getNombre().' ':'';
 
 		echo !empty($_GET['clasificacion'])? ' / '.$ClasificacionB->getEntrada($_GET['clasificacion'])->getNombre().' ':'';
-		
+			
 		if(!empty($_GET['orden'])){
 			if($_GET['orden']==1){
 			echo '/ A-Z';
@@ -29,7 +29,11 @@
 					echo '/ Año ASC';
 					} else if($_GET['orden']==4){
 						echo '/ Año DESC';
-						}
+						} else if($_GET['orden']==5){
+							echo '/ Rating ASC';
+							} else if($_GET['orden']==6){
+								echo '/ Rating DESC';
+								}
 		}
 		?>
 		

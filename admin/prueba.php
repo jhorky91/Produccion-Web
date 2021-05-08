@@ -1,11 +1,11 @@
 <?php 
 include_once('../Helpers/funcs.php');
 
-// PREPARO LA CONECCION CON LA BASE DE DATOS
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
+// PREPARO LA CONECCION CON LA BASE DE DATOS
 $hostname = 'localhost';
 $database = 'prueba';
 $username = 'root';
@@ -45,7 +45,7 @@ foreach($datosJson as $d){
     VALUES ('$status','$nombre', '$precio', '$clasif', '$dur', '$anio', '$direct', '$actor', '$descripcion');";
     $count = $con->exec($sql);
   
-  }  /* 
+  }  
  
  //AGARRO EL ID DE LA PELICULA INSERTADA
     $idPelicula = $con->lastInsertId();    
@@ -67,7 +67,7 @@ foreach($datosJson as $d){
       if($gen==24){ $gen2=13;}
 
      //iNSERTO EL GENERO
-      $sql2 = "INSERT INTO pelicula_genero(id_pelicula, id_genero)
+      $sql2 = "INSERT INTO pelicula_genero(id_pelicula, id_genero_subgenero)
       VALUES ($idPelicula, $gen2);";
       $count2 = $con->exec($sql2);
 

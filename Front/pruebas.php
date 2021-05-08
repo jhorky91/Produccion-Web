@@ -150,17 +150,4 @@ foreach($PeliB->getEntradas() as $pel){
 }
 
 
-
-//############################################################################################################
-//#########################################--FALTA HACER...--#############################################
-//############################################################################################################
-/* 
-
-filtro por rating
-lista de los 10 destacados(mejor rating) - en los carouseles -> HOME
-modificar nombres de peliculas, actores, directores y descripcion
-crear .json para agregar IPs por cada usuario ->prohibir comentar con la misma IP mas de una vez al dia.
-filtrar comentarios con status en 0, para que no se vean
-
-*/
 ?>

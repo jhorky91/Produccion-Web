@@ -20,8 +20,12 @@ class ClasificacionDAO extends DAO{
     }
 
     public function getAll($where = array()){
+        $cate='';
+        if(isset($_GET['clasificacion']) && !empty($_GET['clasificacion'])){
+            $cate=' AND id_clasificacion != '.$_GET['clasificacion'].'';
+        }
 
-        $sql = "SELECT id_clasificacion,status,nombre,descripcion FROM $this->table WHERE status=1";
+        $sql = "SELECT id_clasificacion,status,nombre,descripcion FROM $this->table WHERE status=1 ".$cate;
         $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'ClasificacionEntity')->fetchAll();
         return $resultado;
 

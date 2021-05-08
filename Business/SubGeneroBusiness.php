@@ -16,8 +16,8 @@ class SubGeneroBusiness {
         return $entradas;
     }
     
-    public function getEntradas(){
-        $entradas = $this->SubGeneroDAO->getAll(); 
+    public function getEntradas($where = array()){
+        $entradas = $this->SubGeneroDAO->getAll($where); 
 
         return $entradas;
     }

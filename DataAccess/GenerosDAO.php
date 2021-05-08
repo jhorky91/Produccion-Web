@@ -27,8 +27,23 @@ class GeneroDAO extends DAO{
     }
 
     public function getAll($where = array()){
+        $gen= array();
+        
+        if(isset($_GET['genero']) && !empty($_GET['genero'])){
+            $gen[]=' AND GS.id_genero = '.$_GET['genero'].' 
+                     AND GS.id_genero != '.$_GET['genero'];
+        }
+        if(isset($_GET['subgenero']) && !empty($_GET['subgenero'])){
+            $gen[]=' AND GS.id_subgenero = '.$_GET['subgenero'];
+        }
+        
+        $sWhereStr='';
+        if(!empty($gen)) { $sWhereStr=' '. implode(' ',$gen);
+        }
 
-        $sql = "SELECT id_genero,status,nombre FROM $this->table WHERE status=1 ";
+        $sql = "SELECT DISTINCT G.id_genero,G.status,G.nombre FROM $this->table G
+        INNER JOIN genero_subgenero GS ON G.id_genero = GS.id_genero
+        WHERE status=1 ".$sWhereStr." ORDER BY nombre ";
         $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'GeneroEntity')->fetchAll();
         return $resultado;
 

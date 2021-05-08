@@ -60,7 +60,7 @@ class PeliculasDAO extends DAO{
         $sWhereStr='';
         if(!empty($sWhere)) { $sWhereStr=' '. implode(' ',$sWhere);
         }
-              
+                     
         $sql = "SELECT  P.id_pelicula,
                         P.status,
                         P.nombre,

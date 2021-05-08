@@ -15,8 +15,8 @@ class ClasificacionBusiness {
         return $entradas;
     }
 
-    public function getEntradas(){
-        $entradas = $this->ClasificacionDAO->getAll(); 
+    public function getEntradas($where = array()){
+        $entradas = $this->ClasificacionDAO->getAll($where); 
 
         return $entradas;
     }

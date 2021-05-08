@@ -17,7 +17,7 @@ class GeneroBusiness {
     }
     
     public function getEntradas($where = array()){
-        $entradas = $this->GeneroDAO->getAll(); 
+        $entradas = $this->GeneroDAO->getAll($where); 
 
         return $entradas;
     }

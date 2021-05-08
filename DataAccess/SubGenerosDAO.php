@@ -29,8 +29,22 @@ class SubGeneroDAO extends DAO{
     }
 
     public function getAll($where = array()){
+        $sgen=array();
+        if(isset($_GET['genero']) && !empty($_GET['genero'])){
+            $sgen[]=' AND GS.id_genero = '.$_GET['genero'];
+        }
+        if(isset($_GET['subgenero']) && !empty($_GET['subgenero'])){
+            $sgen[]=' AND GS.id_subgenero = '.$_GET['subgenero'].'
+                      AND GS.id_subgenero != '.$_GET['subgenero'];
+        }
 
-        $sql = "SELECT id_subgenero,status,nombre FROM $this->table WHERE status=1 ORDER BY nombre";
+        $sWhereStr='';
+        if(!empty($sgen)) { $sWhereStr=' '. implode(' ',$sgen);
+        }
+
+        $sql = "SELECT DISTINCT SG.id_subgenero,SG.status,SG.nombre FROM $this->table SG 
+        INNER JOIN genero_subgenero GS ON SG.id_subgenero= GS.id_subgenero
+        WHERE status=1 ".$sWhereStr." ORDER BY nombre";
         $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'SubGeneroEntity')->fetchAll();
         return $resultado;
 
