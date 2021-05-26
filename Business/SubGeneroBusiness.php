@@ -32,8 +32,8 @@ class SubGeneroBusiness {
 
         return $entradas;
     }
-    public function Add($datos=array()){
-        $entradas = $this->SubGeneroDAO->save($datos); 
+    public function Add($datos=array(), $generos){
+        $entradas = $this->SubGeneroDAO->save($datos,$generos); 
 
         return $entradas;
     }

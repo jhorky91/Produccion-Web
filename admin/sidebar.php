@@ -16,44 +16,49 @@
 
 
       <!-- Nav Item - Tables -->
-      <li class="nav-item active">
+      <li class="nav-item active <?= $IndexSidebar?'bg-danger':'' ?>">
         <a class="nav-link" href="index.php">
         <i class="fas fa-home"></i>
           <span>Home</span></a>
       </li>   
       <!-- Nav Item - Tables -->
-      <li class="nav-item active">
+      <li class="nav-item active <?= $PeliculasSidebar?'bg-danger':'' ?>">
         <a class="nav-link" href="peliculas.php">
         <i class="fas fa-video"></i>
           <span>Peliculas</span></a>
       </li>
       <!-- Nav Item - Tables -->
-      <li class="nav-item active">
+      <li class="nav-item active <?= $GeneroSidebar?'bg-danger':'' ?>">
         <a class="nav-link" href="generos.php">
         <i class="fas fa-cubes"></i>
           <span>Géneros</span></a>
       </li>
+      <li class="nav-item active <?= $SubgeneroSidebar?'bg-danger':'' ?>">
+        <a class="nav-link" href="subgenero.php">
+        <i class="fas fa-cubes"></i>
+          <span>Subgéneros</span></a>
+      </li>
       <!-- Nav Item - Tables -->
-      <li class="nav-item active">
+      <li class="nav-item active <?= $ClasificacionSidebar?'bg-danger':'' ?>">
         <a class="nav-link" href="clasificacion.php">
         <i class="fas fa-cubes"></i>
           <span>Clasificación</span></a>
       </li>             
       <!-- Nav Item - Tables -->
-      <li class="nav-item active">
+      <li class="nav-item active <?= $AdminSidebar?'bg-danger':'' ?>">
         <a class="nav-link" href="admin.php">
           <i class="fas fa-user-circle"></i>
           <span>Admin</span></a>
       </li>
       <!-- Nav Item - Tables -->
-      <li class="nav-item active">
+      <li class="nav-item active <?= $UsuarioSidebar?'bg-danger':'' ?>">
         <a class="nav-link" href="user.php">
           <i class="fas fa-user-circle"></i>
           <span>Usuarios</span></a>
       </li>
       
       <!-- Nav Item - Tables -->
-      <li class="nav-item active">
+      <li class="nav-item active <?= $ComentarioSidebar?'bg-danger':'' ?>">
         <a class="nav-link" href="comentarios.php">
         <i class="fas fa-comment-alt"></i>
           <span>Comentarios</span></a>

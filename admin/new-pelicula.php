@@ -119,6 +119,8 @@ include_once('../Helpers/funcs.php');
                           <?php   } ?>
                           
                           </td>
+                          
+
                         </tr>
                         <tr>
                           <td align="right"><label for="txtAnio">Año:</label</td>

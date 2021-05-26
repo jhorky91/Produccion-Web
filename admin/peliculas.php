@@ -1,4 +1,5 @@
 <?php
+$PeliculasSidebar = true;
   include_once('header.php'); 
   
 

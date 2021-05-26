@@ -20,8 +20,8 @@ class ClasificacionBusiness {
 
         return $entradas;
     }
-    public function getMod(){
-        $entradas = $this->ClasificacionDAO->modify($_GET["edit"], $_POST=array()); 
+    public function getMod($id, $datos){
+        $entradas = $this->ClasificacionDAO->modify($id, $datos); 
 
         return $entradas;
     }
@@ -36,6 +36,10 @@ class ClasificacionBusiness {
 
     public function contarActivos(){
         return $this->ClasificacionDAO->contarActivos();
+    }
+
+    public function Add($datos = array()) {
+        return $this->ClasificacionDAO->save($datos);
     }
 
 }

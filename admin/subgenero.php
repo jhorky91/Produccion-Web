@@ -1,26 +1,24 @@
 <?php
-$ClasificacionSidebar = true;
-include('header.php');
+$SubgeneroSidebar = true;
+include_once('header.php');
 
-//Devuelve el contenido de la tabla Clasificacion    
-//$clasi = "SELECT id_clasificacion, nombre, descripcion FROM clasificacion;";
-//$resultado = $con->query($clasi); 
-//Fin del Select
-require_once('../Business/ClasificacionBusiness.php');
-$ClasificacionB = new ClasificacionBusiness($con);
-
+  //Devuelve el contenido de la tabla Clasificacion    
+  //$generos = "SELECT id_genero, nombre FROM genero;";
+  //$resultado = $con->query($generos); 
+ require_once('../Business/SubGeneroBusiness.php');
+  $SubgeneroB = new SubGeneroBusiness($con);
+  
+  //Fin del Select
 
 if(isset($_GET['del'])){
-  //eliminacion de archivo imagen   
-  $sql = "DELETE FROM clasificacion WHERE id_clasificacion=".$_GET["del"];
-  $count = $con->exec($sql);
-  
 
-  //fin eliminacion archivo imagen
+  //eliminacion de generos  
+  $id = $_GET['del'];
+  $SubgeneroB->getDel($id);
 
-    unset($_GET['del']);
+  unset($_GET['del']);
 
-    redirect('clasificacion.php');
+    redirect('subgenero.php');
 }
 ?>
 
@@ -30,7 +28,7 @@ if(isset($_GET['del'])){
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">Clasificaciones</h1>
+          <h1 class="h3 mb-2 text-gray-800">Géneros</h1>
           <!--<p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>-->
           
 
@@ -44,35 +42,32 @@ if(isset($_GET['del'])){
               <span class="m-0 font-weight-bold text-primary">Borrador()</span>
               <span class="m-0 font-weight-bold text-primary">|</span>
               <span class="m-0 font-weight-bold text-primary">Pendiente()</span>
-              <a href="modify-clasific.php"><input class="btn btn-danger" type="submit" value="Añadir Clasificacion"></a>
+              <a href="modify-subgenero.php"><input class="btn btn-danger" type="submit" value="Añadir Género"></a>
               <input class="btn btn-danger" type="submit" value="Importar">
               <input class="btn btn-danger" type="submit" value="Exportar">
             </div>
             <div class="card-body">
               <div class="table-responsive">
-              <form method="POST" action="edit-clasific.php" enctype="multipart/form-data">
+              <form method="POST" action="" enctype="multipart/form-data">
                 <table class="table table-xl-responsive-borderless" id="tablajson" width="100%" cellspacing="0">
                   <thead class="thead-dark">
                     <tr align="center">
                       <th>ID</th>
                       <th>Status</th>
                       <th>Nombre</th>
-                      <th>Descripcion</th>
                       <th>Acciones</th>
                     </tr>
                   </thead>
                   <tbody>
                   <?php
-                  foreach($ClasificacionB->getEntradas() as $peli){ ?>
-                  
+                  foreach($SubgeneroB->getEntradas() as $cat){ ?>
                     <tr align="center">
-                    <td><?php echo $peli->getID(); ?></td>
-                    <td><?php echo $peli->getStatus(); ?></td>
-                      <td><?php echo $peli->getNombre(); ?></td>
-                      <td><?php echo $peli->getDescripcion(); ?></td>
+                    <td><?php echo $cat->getID(); ?></td>
+                    <td><?php echo $cat->getStatus(); ?></td>
+                      <td><?php echo $cat->getNombre(); ?></td>
                       <td><center>
-                      <a href="modify-clasific.php?edit=<?php echo $peli->getID();?>"><i class="fas fa-edit"></a></i>&nbsp;&nbsp;
-                      <a href="clasificacion.php?del=<?php echo $peli->getID();?>"><i class="fas fa-trash-alt"></i></a></i></center>
+                      <a href="modify-subgenero.php?edit=<?php echo $cat->getID();?>"><i class="fas fa-edit"></a></i>&nbsp;&nbsp;
+                      <a href="subgenero.php?del=<?php echo $cat->getID();?>"><i class="fas fa-trash-alt"></i></a></i></center>
                       </td>
                     </tr>
                   <?php } ?>
@@ -102,10 +97,9 @@ if(isset($_GET['del'])){
     <i class="fas fa-angle-up"></i>
   </a>
 
-
-
-  <?php require_once('footer.php'); ?>
   
+  <?php require_once('footer.php'); ?>
+
   <script>
    $(document).ready(function() {
     $('#tablajson').DataTable();

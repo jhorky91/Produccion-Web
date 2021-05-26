@@ -50,11 +50,15 @@ class SubGeneroDAO extends DAO{
 
     }
 
-    public function save($datos = array()){
+    public function save($datos = array(), $generos = array()){
 
-        $sql = "INSERT INTO $this->table(status,nombre) VALUES ('".$datos['status']."','".$datos['nombre']."')";
-        return $this->con->exec($sql);
-
+        $sql1 = "INSERT INTO $this->table(status,nombre) VALUES ('".$datos['status']."','".$datos['nombre']."')";
+        $this->con->exec($sql1);
+        $id = $this->con->lastInsertId();
+        foreach($generos as $gen) {
+        $sql2 = "INSERT INTO genero_subgenero(id_genero, id_subgenero) VALUES ('".$gen."',".$id.")";
+        $this->con->exec($sql2);
+        }
     }
 
     public function modify($id, $datos = array()){
@@ -63,6 +67,8 @@ class SubGeneroDAO extends DAO{
 
     }
     public function delete($id){
+        $sql1 = "DELETE FROM genero_subgenero WHERE id_subgenero = $id";
+        $this->con->exec($sql1);
         $sql = "DELETE FROM $this->table WHERE id_$this->table = $id";
         return $this->con->exec($sql);
     }

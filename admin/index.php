@@ -1,4 +1,5 @@
 <?php 
+$IndexSidebar = true;
 include_once('header.php'); 
 
 require_once('../Helpers/config.php');

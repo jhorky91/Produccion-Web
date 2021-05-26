@@ -10,7 +10,7 @@ if(isset($_FILES['tImg']))
 //Fin Funcion Carga Imagen
 
 //obtengo el contenido del archivo
-$datos = file_get_contents('../../DataAccess/productos.json');
+$datos = file_get_contents('../DataAccess/productos.json');
 //convierto a un array
 $datosJson = json_decode($datos,true);
 
@@ -95,7 +95,7 @@ $datosJson = json_decode($datos,true);
 
 
 
-                          $clasi=json_decode(file_get_contents('../../DataAccess/clasificacion.json'),true);
+                          $clasi=json_decode(file_get_contents('../DataAccess/clasificacion.json'),true);
                            
                           
                           /* '<pre>';
@@ -119,7 +119,7 @@ $datosJson = json_decode($datos,true);
                           <td>
                           <?php 
                           
-                          $categorias = json_decode(file_get_contents('../../DataAccess/categorias.json'),true);
+                          $categorias = json_decode(file_get_contents('../DataAccess/categorias.json'),true);
                           
                           $cont=0;
                           foreach($categorias as $cat){ ?>

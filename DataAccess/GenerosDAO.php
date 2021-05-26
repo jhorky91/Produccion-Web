@@ -2,6 +2,7 @@
 
 require_once('DAO.php');
 require_once('../Models/GeneroEntity.php');
+require_once('../Models/SubGeneroEntity.php');
 
 class GeneroDAO extends DAO{
     
@@ -49,10 +50,29 @@ class GeneroDAO extends DAO{
 
     }
 
-    public function save($datos = array()){
+    public function generoSubgenero($id){
+        
+        $sql = "SELECT sg.id_subgenero, sg.nombre FROM subgenero sg INNER JOIN genero_subgenero gs ON sg.id_subgenero = gs.id_subgenero 
+        WHERE gs.id_genero = $id";
+        $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'SubGeneroEntity')->fetchAll();
+        return $resultado;
+    }
 
-        $sql = "INSERT INTO $this->table(status,nombre) VALUES ('".$datos['status']."','".$datos['nombre']."')";
-        return $this->con->exec($sql);
+    public function save($datos = array(), $subGen = array()){
+
+        $sql1 = "INSERT INTO $this->table(status,nombre) VALUES ('".$datos['status']."','".$datos['nombre']."')";
+        $this->con->exec($sql1);
+        $genID = $this->con->lastInsertId();
+
+        $sql2 = "INSERT INTO genero_subgenero(id_genero, id_subgenero) VALUES (".$genID.", NULL)";
+        $this->con->exec($sql2);
+        
+        if(!empty($subGen)){
+            foreach($subGen as $gen) {
+                $sql2 = "INSERT INTO genero_subgenero(id_genero, id_subgenero) VALUES ('".$genID."','".$gen."')";
+                $this->con->exec($sql2);
+            }
+        }
 
     }
 
@@ -65,8 +85,10 @@ class GeneroDAO extends DAO{
     }
 
     public function delete($id){
-        $sql = "DELETE FROM $this->table WHERE id_$this->table = $id";
-        return $this->con->exec($sql);
+        $sql1 = "DELETE FROM genero_subgenero WHERE id_genero = $id";
+        $this->con->exec($sql1);
+        $sql2 = "DELETE FROM $this->table WHERE id_$this->table = $id";
+        $this->con->exec($sql2);
     }
 
     

@@ -1,4 +1,5 @@
 <?php
+$AdminSidebar = true;
 include('header.php'); 
 include_once('../Helpers/funcs.php');
 
@@ -44,7 +45,7 @@ if(isset($_GET['deladmin'])){
               <span class="m-0 font-weight-bold text-primary">Borrador()</span>
               <span class="m-0 font-weight-bold text-primary">|</span>
               <span class="m-0 font-weight-bold text-primary">Pendiente()</span>
-              <a href="new-admin.php"><input class="btn btn-danger" type="submit" value="Añadir Admin"></a>
+              <a href="modify-admin.php"><input class="btn btn-danger" type="submit" value="Añadir Admin"></a>
               <input class="btn btn-danger" type="submit" value="Imprimir">
               <input class="btn btn-danger" type="submit" value="PDF">
               <input class="btn btn-danger" type="submit" value="CSV">
@@ -79,7 +80,7 @@ if(isset($_GET['deladmin'])){
                       
 
                       <td><center>
-                      <a href="edit-admin.php?editadmin=<?php echo $adm->getIDAdmin();?>"><i class="fas fa-edit"></a></i>&nbsp;&nbsp;
+                      <a href="modify-admin.php?edit=<?php echo $adm->getIDAdmin();?>"><i class="fas fa-edit"></a></i>&nbsp;&nbsp;
                       <a href="admin.php?deladmin=<?php echo $adm->getIDAdmin();?>"><i class="fas fa-trash-alt"></i></a></i></center>
                       </td>
                     </tr>

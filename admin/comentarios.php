@@ -1,4 +1,5 @@
 <?php
+$ComentarioSidebar = true;
 include('header.php');
 include_once('../Helpers/funcs.php');
 
