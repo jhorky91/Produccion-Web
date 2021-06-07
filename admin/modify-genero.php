@@ -21,13 +21,15 @@ $GeneroB = new GeneroBusiness($con);
 
     //Modificamos un genero ya existente
     if(isset($_POST['mod'])) {
-           
       $id = $_GET['edit'];
+      $GeneroB->getDel($id);
+           
+      $res = $_POST['tGene'];
       $datos= array(
         'nombre'=> $_POST['nombre'],
         'status'=> $_POST['status']
-      );     
-      $GeneroB->getMod($id,$datos);       
+      );
+      $GeneroB->Add($datos, $res);       
       redirect('generos.php');
     }
 

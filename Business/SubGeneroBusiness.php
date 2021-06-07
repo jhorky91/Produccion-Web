@@ -38,6 +38,12 @@ class SubGeneroBusiness {
         return $entradas;
     }
 
+    public function Genero($id){
+        $entradas = $this->SubGeneroDAO->generoSubgenero($id);
+
+        return $entradas;
+    }
+
     public function contar(){
         return $this->SubGeneroDAO->contar();
     }

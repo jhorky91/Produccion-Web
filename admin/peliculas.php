@@ -79,6 +79,26 @@ if(isset($_GET['del'])){
                       <td><?php echo $peli->getIDClasificacion(); ?></td>
                       <td><?php 
 
+                            
+                            require_once('../Business/GeneroBusiness.php');
+                            $genB = new GeneroBusiness($con);
+
+                            $g=$genB->getEntradaIDPeli($peli->getID());
+
+                            require_once('../Business/SubGeneroBusiness.php');
+                            $SubgenB = new SubGeneroBusiness($con);
+
+                            $sg=$SubgenB->getEntradaIDPeli($peli->getID());
+
+                            foreach($g as $gene){
+                            echo $gene->getNombre().' ';
+                            }
+
+                            foreach($sg as $Subgene){
+                            echo $Subgene->getNombre().' ';
+                            }
+
+
 /*                         if (is_array($gen['nombre'])) {
                         
                             foreach ($gen['nombre'] as $gen) {

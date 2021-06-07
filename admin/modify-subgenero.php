@@ -28,15 +28,19 @@ $SubGeneroB = new SubGeneroBusiness($con);
     if(isset($_POST['mod'])) {
       if(!empty($_POST['tGene'])){      
       $id = $_GET['edit'];
+      $SubGeneroB->getDel($id);
+      
+      $generos = $_POST['tGene'];
       $datos= array(
         'nombre'=> $_POST['nombre'],
         'status'=> $_POST['status']
-      );     
-      $SubGeneroB->getMod($id,$datos);       
+        );
+      $SubGeneroB->Add($datos, $generos);       
       redirect('subgenero.php');
-    } else {
-      redirect('modify-subgenero.php?edit='.$_GET['edit']);
-    } }
+      } else {
+        redirect('modify-subgenero.php?edit='.$_GET['edit']);
+      } 
+    }
 
     
 ?>
@@ -89,12 +93,28 @@ $SubGeneroB = new SubGeneroBusiness($con);
                           <td>
                           
                           <?php 
+                          if(isset($Edit)) {
+                           $resultado = $SubGeneroB->Genero($_GET['edit']);
+                          }
                           require_once('../Business/GeneroBusiness.php');
                           $GeneroB = new GeneroBusiness($con);
+                          
+                          
+
+
                           $cont=0;
                           foreach($GeneroB->getEntradas() as $cat){ ?>
 
-                          <input type="checkbox" id="generos" name="tGene[]" value="<?php echo $cat->getID() ?>" size="5" class="bg-danger text-white">
+                          <input 
+                          
+                          <?php if(isset($Edit)){
+                            foreach($resultado as $result){
+                              if($cat->getID() == $result->getID()){
+                                echo 'checked';
+                              }
+                          } }?>
+                          
+                           type="checkbox" id="generos" name="tGene[]" value="<?php echo $cat->getID() ?>" size="5" class="bg-danger text-white">
                           <label class="bg-danger text-white" for="generos"><?php echo $cat->getNombre() ?></label>
                           
                             <?php $cont++; 
@@ -104,6 +124,7 @@ $SubGeneroB = new SubGeneroBusiness($con);
                             }?>
                           
                           <?php   } ?>
+                          
                           
                           </td>
                           
