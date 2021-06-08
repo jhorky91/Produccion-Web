@@ -30,10 +30,10 @@ class PeliculasDAO extends DAO{
         $ord='';
         if(!empty($_GET['genero']) && !empty($_GET['subgenero']) ){
              $sWhere[]=' AND (GSG.id_genero ='.$where['genero'].' AND GSG.id_subgenero ='.$where['subgenero'].')'; 
-        }
+        }else
         if(!empty($_GET['genero']) && empty($_GET['subgenero']) ){
             $sWhere[]=' AND GSG.id_genero ='.$where['genero'];
-        }
+        }else
         if(!empty($_GET['subgenero']) && empty($_GET['genero'])){
             $sWhere[]=' AND GSG.id_subgenero ='.$where['subgenero'];
         }

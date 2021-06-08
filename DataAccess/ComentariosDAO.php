@@ -44,8 +44,8 @@ class ComentariosDAO extends DAO{
 
     public function save($datos = array()){
 
-        $sql = "INSERT INTO $this->table (status,fecha,rating,titulo,comentario, id_pelicula,id_usuario) 
-        VALUES ('0','NOW()','".$datos['rating']."','".$datos['titulo']."','".$datos['comentario']."'
+        $sql = "INSERT INTO $this->table (status,rating,titulo,comentario, id_pelicula,id_usuario) 
+        VALUES ('0','".$datos['rating']."','".$datos['titulo']."','".$datos['comentario']."'
         ,'".$datos['id_pelicula']."','".$datos['id_usuario']."')";
         return $this->con->exec($sql);
 

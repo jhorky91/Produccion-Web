@@ -20,6 +20,23 @@ if(isset($_GET['del'])){
 
     redirect('generos.php');
 }
+if(isset($_GET['status'])){
+  $id = $_GET['status'];
+  
+  $cat=$GeneroB->getEntrada($id);
+
+  if($cat->getStatus()==1){
+    $sta = 0;
+  }else{
+    $sta = 1;
+  }
+  
+  $GeneroB->cambioStatus($id,$sta);
+
+  unset($_GET['status']);
+
+    redirect('generos.php');
+}
 ?>
 
         <!-- End of Topbar -->
@@ -48,6 +65,7 @@ if(isset($_GET['del'])){
             </div>
             <div class="card-body">
               <div class="table-responsive">
+              
               <form method="POST" action="edit-pelicula.php" enctype="multipart/form-data">
                 <table class="table table-xl-responsive-borderless" id="tablajson" width="100%" cellspacing="0">
                   <thead class="thead-dark">
@@ -66,8 +84,12 @@ if(isset($_GET['del'])){
                     <td><?php echo $cat->getStatus(); ?></td>
                       <td><?php echo $cat->getNombre(); ?></td>
                       <td><center>
-                      <a href="modify-genero.php?edit=<?php echo $cat->getID();?>"><i class="fas fa-edit"></a></i>&nbsp;&nbsp;
-                      <a href="generos.php?del=<?php echo $cat->getID();?>"><i class="fas fa-trash-alt"></i></a></i></center>
+                      <a href="modify-genero.php?edit=<?php echo $cat->getID();?>"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;
+                      <a href="generos.php?del=<?php echo $cat->getID();?>"><i class="fas fa-trash-alt"></i></a>&nbsp;&nbsp;
+                      <a href="generos.php?status=<?php echo $cat->getID();?>"> <i class="
+                      <?php if($cat->getStatus() == 0){ echo 'fas fa-circle'; } else { echo 'fas fa-check-circle'; } ?>
+                      "></i></a>
+
                       </td>
                     </tr>
                   <?php } ?>

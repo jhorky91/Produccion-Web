@@ -14,7 +14,7 @@ class GeneroDAO extends DAO{
     }
 
     public function getOne($id){
-        $sql = "SELECT id_genero,status,nombre FROM $this->table WHERE status=1 AND id_genero = $id";
+        $sql = "SELECT id_genero,status,nombre FROM $this->table WHERE id_genero = $id";
         return $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'GeneroEntity')->fetch();
          
         
@@ -44,7 +44,7 @@ class GeneroDAO extends DAO{
 
         $sql = "SELECT DISTINCT G.id_genero,G.status,G.nombre FROM $this->table G
         INNER JOIN genero_subgenero GS ON G.id_genero = GS.id_genero
-        WHERE status=1 ".$sWhereStr." ORDER BY nombre ";
+        WHERE 1+1 ".$sWhereStr." ORDER BY nombre ";
         $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'GeneroEntity')->fetchAll();
         return $resultado;
 

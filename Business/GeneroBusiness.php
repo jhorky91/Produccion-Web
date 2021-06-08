@@ -57,6 +57,12 @@ class GeneroBusiness {
 
         return $entradas;
     }
+    public function cambioStatus($id,$sta){
+        $entradas = $this->GeneroDAO->cambioStatus($id,$sta); 
+
+        return $entradas;
+    }
+    
     
 }
 
