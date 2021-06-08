@@ -10,7 +10,7 @@
      }
   
 
-
+/* 
     $sql = "SELECT id_admin, status, nombre, apellido, fecha, usuario, pass, email FROM admin;";
     $resultado = $con->query($sql);
     
@@ -27,7 +27,7 @@
           redirect('login.php'); 
         }
       }
-    }
+    } */
     
     if(isset($_GET['adminlogout'])){
       unset($_SESSION['admin_usuario_logueado']);

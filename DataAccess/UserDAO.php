@@ -46,10 +46,25 @@ class UserDAO extends DAO{
         return $this->con->exec($sql);
     }
    
-    public function SessionUser($user, $pass){
-        $sql = "SELECT id_usuario, status, nombre, apellido, fecha, fecha_nac, usuario, pass, email, telefono, pedidos, dinero_gastado FROM $this->table WHERE usuario =".$user." AND pass=".$pass;
+    
+    public function userAdmin($datos = array()){
+        $sql = "SELECT U.nombre, U.apellido, U.usuario, U.pass, U.email FROM $this->table U
+        INNER JOIN usuario_perfil UP on U.id_usuario= UP.id_usuario
+        INNER JOIN perfil P on UP.id_perfil= P.id_perfil
+        WHERE U.usuario ='".$datos['adminuser']."' AND U.pass='".$datos['adminpass']."' AND P.nombre='Admin' ";
         $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'UsuarioEntity')->fetch();
         return $resultado;
+
+    }
+
+    public function userCliente($datos = array()){
+        $sql = "SELECT U.id_usuario, U.nombre, U.apellido, U.usuario, U.pass, U.email FROM $this->table U
+        INNER JOIN usuario_perfil UP on U.id_usuario= UP.id_usuario
+        INNER JOIN perfil P on UP.id_perfil= P.id_perfil
+        WHERE U.usuario ='".$datos['user']."' AND U.pass='".$datos['pass']."' AND P.nombre='Cliente' ";
+        $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'UsuarioEntity')->fetch();
+        return $resultado;
+
     }
     
 }

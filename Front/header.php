@@ -10,21 +10,16 @@ $get = new UserBusiness($con);
 
 if(isset($_POST['login'])){
   
-  $ses=$get->getEntradas();
-  foreach($ses as $UserB){
-  
-    if($_POST['pass'] == $UserB->getPass() && $_POST['user'] == $UserB->getUsuario()){
-      $_SESSION['usuario_logueado'] = true;
-      $_SESSION['user'] = $UserB->getNombre()." ".$UserB->getApellido();
-      $_SESSION['id'] = $UserB->getIDUsuario();
-      $_SESSION['error'] = "0";
-      
-         redirect('index.php');
-      break;
-    }else{
-      $_SESSION['error'] = "1";  
-
-    }
+  $resul= $get->SessionUser($_POST);
+  if($resul ==true){
+        $_SESSION['usuario_logueado'] = true;
+        $_SESSION['user'] = $resul->getNombre()." ".$resul->getApellido();
+        $_SESSION['error'] = "0";
+        $_SESSION['id'] = $resul->getIDUsuario();
+        redirect('peliculas.php');
+        
+  }else{
+        $_SESSION['admin_error'] = "1";  
   }
 }
  

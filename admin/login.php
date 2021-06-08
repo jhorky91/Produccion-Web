@@ -4,28 +4,38 @@ include('../Helpers/funcs.php');
 include_once('../Helpers/config.php');
 
 session_start();
-
-
-$sql = "SELECT id_admin, status, nombre, apellido, fecha, usuario, pass, email FROM admin;";
-$resultado = $con->query($sql);
-
-/*echo '<pre>';
-var_dump($resultado);
-echo '</pre>';*/
+require_once('../Business/UserBusiness.php');
+$get = new UserBusiness($con);
 
 if(isset($_POST['adminlogin'])){
-  foreach($resultado as $admin) { 
-    if($_POST['adminpass'] == $admin['pass'] && $_POST['adminuser'] == $admin['usuario']){
-      $_SESSION['admin_usuario_logueado'] = true;
-      $_SESSION['adminuser'] = $admin['nombre']." ".$admin['apellido'];
-      $_SESSION['admin_error'] = "0";
-      redirect('peliculas.php');
-    break;
-    }else{
-      $_SESSION['admin_error'] = "1";  
-      
-    }
+  
+  $resul= $get->SessionAdmin($_POST);
+  if($resul ==true){
+        $_SESSION['admin_usuario_logueado'] = true;
+        $_SESSION['adminuser'] = $resul->getNombre()." ".$resul->getApellido();
+        $_SESSION['admin_error'] = "0";
+        redirect('peliculas.php');
+        
+  }else{
+        $_SESSION['admin_error'] = "1";  
   }
+
+  /* die();
+  foreach($resultado as $admin) { 
+      
+      if($_POST['adminpass'] == $admin['pass'] && $_POST['adminuser'] == $admin['usuario']){
+        $_SESSION['admin_usuario_logueado'] = true;
+        $_SESSION['adminuser'] = $admin['nombre']." ".$admin['apellido'];
+        $_SESSION['admin_error'] = "0";
+        redirect('peliculas.php');
+      break;
+      }else{
+        $_SESSION['admin_error'] = "1";  
+        
+      }
+
+  } */
+
 }
 
 if(isset($_GET['adminlogout'])){
