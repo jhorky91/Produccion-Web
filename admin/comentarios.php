@@ -97,7 +97,7 @@ if(isset($_GET['del'])){
                       <button type='button' onclick="alert('<?php  echo $peli->getComentario(); ?>')" class="btn btn-danger">Detalles</button>
                       </td>
                       <td><center>
-                      <a href="edit-comentario.php?edit=<?php echo $peli->getIDComentario();?>"><i class="fas fa-edit"></a></i>&nbsp;&nbsp;
+                      <a href="modify-comentario.php?edit=<?php echo $peli->getIDComentario();?>"><i class="fas fa-edit"></a></i>&nbsp;&nbsp;
                       <a href="comentarios.php?del=<?php echo $peli->getIDComentario();?>"><i class="fas fa-trash-alt"></i></a></i></center>
                       </td>
                     </tr>

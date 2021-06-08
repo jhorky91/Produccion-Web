@@ -56,6 +56,18 @@
           <i class="fas fa-user-circle"></i>
           <span>Usuarios</span></a>
       </li>
+       <!-- Nav Item - Tables -->
+       <li class="nav-item active <?= $PerfilSidebar?'bg-danger':'' ?>">
+        <a class="nav-link" href="perfiles.php">
+          <i class="fas fa-user-circle"></i>
+          <span>Perfiles</span></a>
+      </li>
+       <!-- Nav Item - Tables -->
+       <li class="nav-item active <?= $PermisoSidebar?'bg-danger':'' ?>">
+        <a class="nav-link" href="permisos.php">
+          <i class="fas fa-user-circle"></i>
+          <span>Permisos</span></a>
+      </li>
       
       <!-- Nav Item - Tables -->
       <li class="nav-item active <?= $ComentarioSidebar?'bg-danger':'' ?>">
