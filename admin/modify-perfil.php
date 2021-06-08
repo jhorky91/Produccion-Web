@@ -1,5 +1,5 @@
 <?php
-$PermisosSidebar = true;
+$PerfilSidebar = true;
 include('header.php');
 include_once('../Helpers/funcs.php');
 require_once('../Business/PerfilBusiness.php');
@@ -12,11 +12,11 @@ $PerfilB = new PerfilBusiness($con);
     if(isset($_POST['add'])){
       
       $datos = array(
-        'nombre'=>$_POST['nombre'],
-        'descripcion'=> $_POST['descripcion']
+        'nombre'=>$_POST['nombre']
       );
-      $PermisoB->Add($datos);
-        redirect('permisos.php');
+      $res = $_POST['tPermisos'];
+      $PerfilB->Add($datos,$res);
+        redirect('perfiles.php');
     
     }
 
@@ -24,13 +24,9 @@ $PerfilB = new PerfilBusiness($con);
     if(isset($_POST['mod'])) {
             
       $id = $_GET['edit'];
-      $datos= array(
-        'nombre'=> $_POST['nombre'],
-        'status'=> $_POST['status'],
-        'descripcion'=> $_POST['descripcion']
-      );     
-      $PermisoB->getMod($id,$datos);       
-      redirect('permisos.php');
+      $res = $_POST['tPermisos'];
+      $PerfilB->getMod($id,$res);      
+      redirect('perfiles.php');
     }
 
 ?>
@@ -70,7 +66,47 @@ $PerfilB = new PerfilBusiness($con);
                           <td align="right"><label for="txtNombre">Nombre:</label></td>
                           <td><input type="text" id="txtNombre" name="nombre" <?= isset($Edit)?'value="'.$Perfil->getNombre().'"':''?> size="50" class="bg-danger text-white"></td>
                       </tr>
-                                            
+                    
+                      
+                      <tr>
+                          <td align="right"><label for="txtGene">Permisos:</label</td>
+                          <td>
+                          
+                          <?php 
+                          if(isset($Edit)) {
+                          $resultado = $PerfilB->PerfilPermisos($_GET['edit']);
+                          }
+                          require_once('../Business/PermisoBusiness.php');
+                          $PermisoB = new PermisoBusiness($con);
+                          
+                          $cont=0;
+                          foreach($PermisoB->getPermisos() as $per){ ?>
+
+                          <input 
+                          
+                          <?php if(isset($Edit)){
+                            foreach($resultado as $result){
+                              if($per->getID() == $result->getID()){
+                                echo 'checked';
+                              }
+                          } }?>
+                          
+                          type="checkbox" id="permisos" name="tPermisos[]" value="<?php echo $per->getID() ?>" size="5" class="bg-danger text-white">
+                          <label class="bg-danger text-white" for="generos"><?php echo $per->getNombre() ?></label>
+                          
+                            <?php $cont++; 
+                            if($cont==3){
+                              $cont=0;
+                              echo "<br/>";
+                            }?>
+                          
+                          <?php   } ?>
+                          
+                          
+                      </td>
+
+                      
+                      
                         <tr>
                           <td align="right"><input type="submit" name="<?= isset($Edit)?'mod':'add'?>" value="Guardar" class="btn btn-danger"></td>
                           <td align="left"><input type="reset" value="Reset" class="btn btn-danger"></td>

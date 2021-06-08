@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-05-2021 a las 23:42:57
+-- Tiempo de generación: 08-06-2021 a las 06:34:00
 -- Versión del servidor: 10.4.18-MariaDB
 -- Versión de PHP: 8.0.3
 
@@ -262,7 +262,9 @@ INSERT INTO `comentario` (`id_comentario`, `status`, `fecha`, `rating`, `titulo`
 (203, 1, '0000-00-00 00:00:00', 4, 'ESPECTACULAR!!!!!!!!!!!!!!!!!!', 'quedo claro?', 36, 13),
 (204, 1, '0000-00-00 00:00:00', 4, 'ESPECTACULAR!!!!!!!!!!!!!!!!!!', 'quedo claro?', 37, 13),
 (205, 1, '0000-00-00 00:00:00', 4, 'ESPECTACULAR!!!!!!!!!!!!!!!!!!', 'quedo claro??', 26, 13),
-(206, 1, '0000-00-00 00:00:00', 4, 'ESPECTACULAR!!!!!!!!!!!!!!!!!!', 'quedo claro??', 28, 13);
+(206, 1, '0000-00-00 00:00:00', 4, 'ESPECTACULAR!!!!!!!!!!!!!!!!!!', 'quedo claro??', 28, 13),
+(207, 0, '0000-00-00 00:00:00', 5, 'RECOMENDABLE!', 'excelente película, muy buenos actores.', 64, 4),
+(208, 0, '0000-00-00 00:00:00', 1, 'ESPECTACULAR!!!!!!!!!!!!!!!!!!', 'fuiasdhuif', 2, 4);
 
 -- --------------------------------------------------------
 
@@ -662,6 +664,83 @@ INSERT INTO `pelicula_genero` (`id_pelicula_genero`, `id_pelicula`, `id_genero_s
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `perfil`
+--
+
+CREATE TABLE `perfil` (
+  `id_perfil` int(11) NOT NULL,
+  `nombre` text COLLATE utf32_unicode_ci NOT NULL,
+  `status` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `perfil`
+--
+
+INSERT INTO `perfil` (`id_perfil`, `nombre`, `status`) VALUES
+(1, 'COMODIN', 0),
+(2, 'Cliente', 1),
+(12, 'Admin', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `perfil_permiso`
+--
+
+CREATE TABLE `perfil_permiso` (
+  `id_perfil` int(11) NOT NULL,
+  `id_permiso` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `perfil_permiso`
+--
+
+INSERT INTO `perfil_permiso` (`id_perfil`, `id_permiso`) VALUES
+(12, 1),
+(12, 2),
+(12, 3),
+(12, 4),
+(12, 5),
+(12, 6),
+(12, 7),
+(12, 8),
+(12, 9),
+(12, 12);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `permiso`
+--
+
+CREATE TABLE `permiso` (
+  `id_permiso` int(11) NOT NULL,
+  `nombre` varchar(30) COLLATE utf32_unicode_ci DEFAULT NULL,
+  `code` varchar(30) COLLATE utf32_unicode_ci NOT NULL,
+  `module` varchar(30) COLLATE utf32_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `permiso`
+--
+
+INSERT INTO `permiso` (`id_permiso`, `nombre`, `code`, `module`) VALUES
+(1, 'Agregar Usuario', 'user.add', 'user'),
+(2, 'Borrar Usuario', 'user.del', 'user'),
+(3, 'Modificar Usuario', 'user.mod', 'user'),
+(4, 'Agregar Pelicula', 'prod.add', 'prod'),
+(5, 'Borrar Pelicula', 'prod.del', 'prod'),
+(6, 'Modificar Pelicula', 'prod.mod', 'prod'),
+(7, 'Agregar Genero', 'gen.add', 'gen'),
+(8, 'Borrar Genero', 'gen.del', 'gen'),
+(9, 'Modificar Genero', 'gen.mod', 'gen'),
+(12, 'Agregar Subgenero', 'subgen.add', 'subgen');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `subgenero`
 --
 
@@ -714,7 +793,7 @@ CREATE TABLE `usuario` (
   `usuario` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `pass` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
-  `telefono` int(15) NOT NULL,
+  `telefono` int(15) DEFAULT NULL,
   `pedidos` int(3) DEFAULT NULL,
   `dinero_gastado` int(5) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -734,7 +813,10 @@ INSERT INTO `usuario` (`id_usuario`, `status`, `nombre`, `apellido`, `fecha`, `f
 (9, 1, 'Matias', 'Garcia', '2020-11-24 00:44:54', '1999-01-11', 'matgarcia', '123456', 'matiasgarcia@gmail.c', 1157489264, NULL, NULL),
 (11, 1, 'Martin', 'Caruso', '2020-11-24 00:46:32', '1999-06-23', 'martincaru', '123456', 'martincaruso@yahoo.c', 1569624185, NULL, NULL),
 (12, 1, 'Joaquin', 'Podestá', '2020-11-24 00:47:25', '1990-04-20', 'joapodesta', '123456', 'joapodesta@gmail.com', 1164859620, NULL, NULL),
-(13, 1, 'Jhorky', 'Escalante', '2020-11-24 01:03:15', '1991-09-14', 'jhorky', '123', 'jhorky.91@gmail.com', 44300200, NULL, NULL);
+(13, 1, 'Jhorky', 'Escalante', '2020-11-24 01:03:15', '1991-09-14', 'jhorky', '123', 'jhorky.91@gmail.com', 44300200, NULL, NULL),
+(14, 1, 'Jhorky', 'Escalante', '2021-06-08 00:18:10', '2020-11-15', 'jhorkyadmin', '123456', 'jhorky.admin@gmail.com', NULL, NULL, NULL),
+(15, 1, 'Sebastian', 'Apellido', '2021-06-08 00:18:10', '2020-11-17', 'seba1799', '12345678', 'seba1799@gmail.com', NULL, NULL, NULL),
+(16, 1, 'Roberto', 'Rocco', '2021-06-08 00:18:10', '1991-04-17', 'roccoadmin', '123456', 'roberto.rocco@davinci.edu.ar', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -755,6 +837,37 @@ CREATE TABLE `usuario_direccion` (
 INSERT INTO `usuario_direccion` (`id_usuario_direccion`, `id_usuario`, `id_direccion`) VALUES
 (1, 1, 1),
 (3, 13, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuario_perfil`
+--
+
+CREATE TABLE `usuario_perfil` (
+  `id_usuario` int(11) NOT NULL,
+  `id_perfil` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `usuario_perfil`
+--
+
+INSERT INTO `usuario_perfil` (`id_usuario`, `id_perfil`) VALUES
+(1, 2),
+(2, 2),
+(4, 2),
+(5, 2),
+(6, 2),
+(7, 2),
+(8, 2),
+(9, 2),
+(11, 2),
+(12, 2),
+(13, 2),
+(14, 12),
+(15, 12),
+(16, 12);
 
 --
 -- Índices para tablas volcadas
@@ -816,6 +929,26 @@ ALTER TABLE `pelicula_genero`
   ADD KEY `id_genero_subgenero` (`id_genero_subgenero`);
 
 --
+-- Indices de la tabla `perfil`
+--
+ALTER TABLE `perfil`
+  ADD PRIMARY KEY (`id_perfil`);
+
+--
+-- Indices de la tabla `perfil_permiso`
+--
+ALTER TABLE `perfil_permiso`
+  ADD PRIMARY KEY (`id_perfil`,`id_permiso`),
+  ADD KEY `id_perfil` (`id_perfil`,`id_permiso`),
+  ADD KEY `id_permiso` (`id_permiso`);
+
+--
+-- Indices de la tabla `permiso`
+--
+ALTER TABLE `permiso`
+  ADD PRIMARY KEY (`id_permiso`);
+
+--
 -- Indices de la tabla `subgenero`
 --
 ALTER TABLE `subgenero`
@@ -834,6 +967,14 @@ ALTER TABLE `usuario_direccion`
   ADD PRIMARY KEY (`id_usuario_direccion`),
   ADD KEY `id_usuario` (`id_usuario`,`id_direccion`),
   ADD KEY `id_direccion` (`id_direccion`);
+
+--
+-- Indices de la tabla `usuario_perfil`
+--
+ALTER TABLE `usuario_perfil`
+  ADD PRIMARY KEY (`id_usuario`,`id_perfil`),
+  ADD KEY `id_usuario` (`id_usuario`,`id_perfil`),
+  ADD KEY `id_perfil` (`id_perfil`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -855,7 +996,7 @@ ALTER TABLE `clasificacion`
 -- AUTO_INCREMENT de la tabla `comentario`
 --
 ALTER TABLE `comentario`
-  MODIFY `id_comentario` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=207;
+  MODIFY `id_comentario` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=209;
 
 --
 -- AUTO_INCREMENT de la tabla `direccion`
@@ -888,6 +1029,18 @@ ALTER TABLE `pelicula_genero`
   MODIFY `id_pelicula_genero` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=177;
 
 --
+-- AUTO_INCREMENT de la tabla `perfil`
+--
+ALTER TABLE `perfil`
+  MODIFY `id_perfil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT de la tabla `permiso`
+--
+ALTER TABLE `permiso`
+  MODIFY `id_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
 -- AUTO_INCREMENT de la tabla `subgenero`
 --
 ALTER TABLE `subgenero`
@@ -897,7 +1050,7 @@ ALTER TABLE `subgenero`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_usuario` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario_direccion`
@@ -938,31 +1091,11 @@ ALTER TABLE `pelicula_genero`
   ADD CONSTRAINT `pelicula_genero_ibfk_2` FOREIGN KEY (`id_genero_subgenero`) REFERENCES `genero_subgenero` (`id_genero_subgenero`);
 
 --
--- Filtros para la tabla `usuario_direccion`
+-- Filtros para la tabla `perfil_permiso`
 --
-ALTER TABLE `usuario_direccion`
-  ADD CONSTRAINT `usuario_direccion_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
-  ADD CONSTRAINT `usuario_direccion_ibfk_2` FOREIGN KEY (`id_direccion`) REFERENCES `direccion` (`id_direccion`);
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-  ADD CONSTRAINT `genero_subgenero_ibfk_2` FOREIGN KEY (`id_subgenero`) REFERENCES `subgenero` (`id_subgenero`);
-
---
--- Filtros para la tabla `pelicula`
---
-ALTER TABLE `pelicula`
-  ADD CONSTRAINT `pelicula_ibfk_1` FOREIGN KEY (`id_clasificacion`) REFERENCES `clasificacion` (`id_clasificacion`),
-  ADD CONSTRAINT `pelicula_ibfk_3` FOREIGN KEY (`id_clasificacion`) REFERENCES `clasificacion` (`id_clasificacion`);
-
---
--- Filtros para la tabla `pelicula_genero`
---
-ALTER TABLE `pelicula_genero`
-  ADD CONSTRAINT `pelicula_genero_ibfk_1` FOREIGN KEY (`id_pelicula`) REFERENCES `pelicula` (`id_pelicula`),
-  ADD CONSTRAINT `pelicula_genero_ibfk_2` FOREIGN KEY (`id_genero_subgenero`) REFERENCES `genero_subgenero` (`id_genero_subgenero`);
+ALTER TABLE `perfil_permiso`
+  ADD CONSTRAINT `perfil_permiso_ibfk_1` FOREIGN KEY (`id_perfil`) REFERENCES `perfil` (`id_perfil`),
+  ADD CONSTRAINT `perfil_permiso_ibfk_2` FOREIGN KEY (`id_permiso`) REFERENCES `permiso` (`id_permiso`);
 
 --
 -- Filtros para la tabla `usuario_direccion`
@@ -970,6 +1103,13 @@ ALTER TABLE `pelicula_genero`
 ALTER TABLE `usuario_direccion`
   ADD CONSTRAINT `usuario_direccion_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
   ADD CONSTRAINT `usuario_direccion_ibfk_2` FOREIGN KEY (`id_direccion`) REFERENCES `direccion` (`id_direccion`);
+
+--
+-- Filtros para la tabla `usuario_perfil`
+--
+ALTER TABLE `usuario_perfil`
+  ADD CONSTRAINT `usuario_perfil_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
+  ADD CONSTRAINT `usuario_perfil_ibfk_2` FOREIGN KEY (`id_perfil`) REFERENCES `perfil` (`id_perfil`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

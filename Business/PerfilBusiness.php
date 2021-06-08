@@ -32,8 +32,8 @@ class PerfilBusiness{
 
         return $perfil;
     }
-    public function Add($datos=array()){
-        $perfil = $this->PerfilDAO->save($datos); 
+    public function Add($datos=array(), $permisos = array()){
+        $perfil = $this->PerfilDAO->save($datos,$permisos); 
 
         return $perfil;
     }
@@ -41,6 +41,11 @@ class PerfilBusiness{
         return $this->PerfilDAO->contar();
     }
 
+    public function PerfilPermisos($id){
+        $perfil = $this->PerfilDAO->PerfilPermisos($id); 
+
+        return $perfil;
+    }
     
 
 }

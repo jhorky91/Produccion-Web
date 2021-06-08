@@ -21,11 +21,7 @@ class PermisosDAO extends DAO{
 
     public function getAll($where = array()){
         $sql = "SELECT id_permiso, nombre, code, module FROM ".$this->table;
-        if(!empty($where)){
-            $sql .= ' WHERE '.implode(' ',$where);
-        } 
-        $sql.= " ORDER BY module, nombre ASC" ;
-        $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'PermisosEntity');
+        $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'PermisosEntity')->fetchAll();
         return $resultado;
 
     }

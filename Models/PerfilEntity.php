@@ -4,6 +4,7 @@
 class PerfilEntity {
     private $id_perfil;
     private $nombre;
+    private $status;
 
  
     public function __construct(){
@@ -25,6 +26,15 @@ class PerfilEntity {
     public function setNombre($nombre){
         $this->nombre = $nombre;
     }
+
+    public function getStatus(){
+        return $this->status;
+    }
+
+    public function setStatus($status){
+        $this->status = $status;
+    }
+
 
   
 

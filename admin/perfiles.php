@@ -9,15 +9,10 @@ $PerfilB = new PerfilBusiness($con);
 
 
 if(isset($_GET['del'])){
-    
-  
-  // FALTA AGREGAR EL METODO DEL
 
-  
+  $PerfilB->getDel($_GET['del']);
 
-    
-
-    redirect('perfiles.php');
+  redirect('perfiles.php');
 }
 ?>
 
@@ -41,7 +36,7 @@ if(isset($_GET['del'])){
               <span class="m-0 font-weight-bold text-primary">Borrador()</span>
               <span class="m-0 font-weight-bold text-primary">|</span>
               <span class="m-0 font-weight-bold text-primary">Pendiente()</span>
-              <a href="modify-clasific.php"><input class="btn btn-danger" type="submit" value="Añadir Clasificacion"></a>
+              <a href="modify-perfil.php"><input class="btn btn-danger" type="submit" value="Añadir Perfil"></a>
               <input class="btn btn-danger" type="submit" value="Importar">
               <input class="btn btn-danger" type="submit" value="Exportar">
             </div>
