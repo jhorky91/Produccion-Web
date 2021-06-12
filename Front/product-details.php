@@ -3,12 +3,18 @@ include_once('header.php');
 
 require_once('../Business/ComentarioBusiness.php');
 $comentsB = new ComentarioBusiness($con);
-
+require_once('../Business/IPBusiness.php');
+$IPB = new IPBusiness($con);
 
     if(isset($_POST['add'])){
 		
-		escribirIP();
-        
+		$datosip = array('id_usuario'=>$_SESSION['id'],
+						'nombre_usuario'=> $_SESSION['user'],
+						'ip'=>  get_client_ip(), 
+						'id_pelicula'=>$_GET['id']);
+		
+		$IPB->save($datosip);
+       
 		$datos = array('id_usuario'=>$_SESSION['id'], 'rating'=>$_POST['tRating'],
 		 'titulo'=> $_POST['tTitle'], 'comentario'=>$_POST['tComentario'],'id_pelicula'=> $_GET['id']);
 		 
@@ -43,18 +49,10 @@ $comentsB = new ComentarioBusiness($con);
                         <div class="row">
                             <div class="col-5">
 
-                                <img class="img-fluid" src="
-				  <?php 
-					echo 'images/'.$b->getID().'.jpg';
-                          ?>
-				  
-				  " alt="">
+                                <img class="img-fluid" src="  <?php echo 'images/'.$b->getID().'.jpg'; ?> " alt="">
                             </div>
                             <div class="col-7">
                                 <h3><?php echo $b->getNombre()?></h3>
-                                <!--<hr class="soft"/>-->
-
-
                                 <p class="text-dark"><strong>Genero:</strong>
                                     <?php 
                           require_once('../Business/GeneroBusiness.php');
@@ -74,9 +72,6 @@ $comentsB = new ComentarioBusiness($con);
 						  foreach($sg as $Subgene){
 							echo $Subgene->getNombre().' ';
 						  }
-
-                        
-                          
 
                       ?>
                                 </p>
@@ -201,18 +196,16 @@ $comentsB = new ComentarioBusiness($con);
 		<?php
 		
 		if(isset($_SESSION['usuario_logueado'])){ 
-			
-			$d = file_get_contents('../DataAccess/ip.json');
-			$datosJson = json_decode($d,true);
+						
 			$fecha=0;
 			$ip=0;
 			$entrada=1;	
-			foreach($datosJson as $datos){
-				if( $datos['id_pelicula']== $_GET['id']){
-					if($datos['id']== $_SESSION['id'] ){
-						$ip=$datos['ip'];
+			foreach($IPB->getEntradas() as $datos){
+				if( $datos->getIDPelicula()== $_GET['id']){
+					if($datos->getIDUsuario() == $_SESSION['id'] ){
+						$ip=$datos->getIP();
 						if(  $ip == get_client_ip()){
-							$fecha= $datos['fecha'];
+							$fecha= $datos->getFecha();
 							$fecha_actual = strtotime(date("Y-m-d H:i:s",time()));
 							$fecha_entrada = strtotime($fecha);
 							if(($fecha_actual-$fecha_entrada) > 86400 ){
