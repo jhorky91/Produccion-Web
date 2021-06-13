@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-06-2021 a las 06:34:00
+-- Tiempo de generación: 13-06-2021 a las 03:20:52
 -- Versión del servidor: 10.4.18-MariaDB
 -- Versión de PHP: 8.0.3
 
@@ -264,7 +264,10 @@ INSERT INTO `comentario` (`id_comentario`, `status`, `fecha`, `rating`, `titulo`
 (205, 1, '0000-00-00 00:00:00', 4, 'ESPECTACULAR!!!!!!!!!!!!!!!!!!', 'quedo claro??', 26, 13),
 (206, 1, '0000-00-00 00:00:00', 4, 'ESPECTACULAR!!!!!!!!!!!!!!!!!!', 'quedo claro??', 28, 13),
 (207, 0, '0000-00-00 00:00:00', 5, 'RECOMENDABLE!', 'excelente película, muy buenos actores.', 64, 4),
-(208, 0, '0000-00-00 00:00:00', 1, 'ESPECTACULAR!!!!!!!!!!!!!!!!!!', 'fuiasdhuif', 2, 4);
+(208, 0, '0000-00-00 00:00:00', 1, 'ESPECTACULAR!!!!!!!!!!!!!!!!!!', 'fuiasdhuif', 2, 4),
+(209, 0, '0000-00-00 00:00:00', 5, 'MUY BUENA!', 'que buena película!!!', 1, 1),
+(210, 0, '2021-06-08 13:14:09', 1, 'Te deja pensando', 'muy buena peli, con un final abierto como ninguna otra', 10, 1),
+(213, 1, '2021-06-12 19:12:22', 1, 'BUENISIMA!!', 'ojala hicieran mas películas así!!', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -377,6 +380,28 @@ INSERT INTO `genero_subgenero` (`id_genero_subgenero`, `id_genero`, `id_subgener
 (40, 13, NULL),
 (8, 13, 6),
 (19, 13, 14);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `ip`
+--
+
+CREATE TABLE `ip` (
+  `id_ip` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
+  `nombre_usuario` varchar(100) COLLATE utf32_unicode_ci NOT NULL,
+  `ip` varchar(30) COLLATE utf32_unicode_ci NOT NULL,
+  `fecha` datetime NOT NULL DEFAULT current_timestamp(),
+  `id_pelicula` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `ip`
+--
+
+INSERT INTO `ip` (`id_ip`, `id_usuario`, `nombre_usuario`, `ip`, `fecha`, `id_pelicula`) VALUES
+(1, 1, 'Roberto Rocco', '::1', '2021-06-12 19:12:22', 1);
 
 -- --------------------------------------------------------
 
@@ -914,6 +939,14 @@ ALTER TABLE `genero_subgenero`
   ADD KEY `id_subgenero` (`id_subgenero`);
 
 --
+-- Indices de la tabla `ip`
+--
+ALTER TABLE `ip`
+  ADD PRIMARY KEY (`id_ip`),
+  ADD KEY `id_usuario` (`id_usuario`,`id_pelicula`),
+  ADD KEY `id_pelicula` (`id_pelicula`);
+
+--
 -- Indices de la tabla `pelicula`
 --
 ALTER TABLE `pelicula`
@@ -996,7 +1029,7 @@ ALTER TABLE `clasificacion`
 -- AUTO_INCREMENT de la tabla `comentario`
 --
 ALTER TABLE `comentario`
-  MODIFY `id_comentario` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=209;
+  MODIFY `id_comentario` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=214;
 
 --
 -- AUTO_INCREMENT de la tabla `direccion`
@@ -1015,6 +1048,12 @@ ALTER TABLE `genero`
 --
 ALTER TABLE `genero_subgenero`
   MODIFY `id_genero_subgenero` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+
+--
+-- AUTO_INCREMENT de la tabla `ip`
+--
+ALTER TABLE `ip`
+  MODIFY `id_ip` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `pelicula`
@@ -1075,6 +1114,13 @@ ALTER TABLE `comentario`
 ALTER TABLE `genero_subgenero`
   ADD CONSTRAINT `genero_subgenero_ibfk_1` FOREIGN KEY (`id_genero`) REFERENCES `genero` (`id_genero`),
   ADD CONSTRAINT `genero_subgenero_ibfk_2` FOREIGN KEY (`id_subgenero`) REFERENCES `subgenero` (`id_subgenero`);
+
+--
+-- Filtros para la tabla `ip`
+--
+ALTER TABLE `ip`
+  ADD CONSTRAINT `ip_ibfk_1` FOREIGN KEY (`id_pelicula`) REFERENCES `pelicula` (`id_pelicula`),
+  ADD CONSTRAINT `ip_ibfk_2` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`);
 
 --
 -- Filtros para la tabla `pelicula`
