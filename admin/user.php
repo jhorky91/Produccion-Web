@@ -35,6 +35,23 @@ if(isset($_GET['del'])){
     unset($_GET['del']);
     redirect('user.php');
 }
+if(isset($_GET['status'])){
+  $id = $_GET['status'];
+  
+  $cat=$UserB->getEntrada($id);
+
+  if($cat->getStatus()==1){
+    $sta = 0;
+  }else{
+    $sta = 1;
+  }
+  
+  $UserB->cambioStatus($id,$sta);
+
+  unset($_GET['status']);
+
+  redirect('user.php');
+}
 
 ?>
 
@@ -59,7 +76,7 @@ if(isset($_GET['del'])){
               <span class="m-0 font-weight-bold text-primary">Borrador()</span>
               <span class="m-0 font-weight-bold text-primary">|</span>
               <span class="m-0 font-weight-bold text-primary">Pendiente()</span>
-              <a href="new-user.php"><input class="btn btn-danger" type="submit" value="Añadir Cliente"></a>
+              <a href="modify-usuario.php"><input class="btn btn-danger" type="submit" value="Añadir Cliente"></a>
               <input class="btn btn-danger" type="submit" value="Imprimir">
               <input class="btn btn-danger" type="submit" value="PDF">
               <input class="btn btn-danger" type="submit" value="CSV">
@@ -86,8 +103,8 @@ if(isset($_GET['del'])){
                   <tbody>
                   <?php
 
-
-                  foreach($UserB->getEntradas() as $us){ ?>
+                  $dato = array('tipo'=>'Cliente');
+                  foreach($UserB->getEntradas($dato) as $us){ ?>
                   <?php
                   
                   $direccion = "SELECT calle,altura,piso,dpto,barrio FROM direccion
@@ -120,8 +137,11 @@ if(isset($_GET['del'])){
                       <td><?php echo $us->getDineroGastado(); ?></td>
 
                       <td><center>
-                      <a href="edit-user.php?edit=<?php echo $us->getIDUsuario();?>"><i class="fas fa-edit"></a></i>&nbsp;&nbsp;
-                      <a href="user.php?del=<?php echo $us->getIDUsuario();?>"><i class="fas fa-trash-alt"></i></a></i></center>
+                      <a href="modify-usuario.php?edit=<?php echo $us->getIDUsuario();?>&user"><i class="fas fa-edit"></a></i>&nbsp;&nbsp;
+                      <a href="user.php?del=<?php echo $us->getIDUsuario();?>"><i class="fas fa-trash-alt"></a></i>&nbsp;&nbsp;
+                      <a href="user.php?status=<?php echo $us->getIDUsuario();?>"> <i class="
+                      <?php if($us->getStatus() == 0){ echo 'fas fa-circle'; } else { echo 'fas fa-check-circle'; } ?>
+                      "></i></a>
                       </td>
                     </tr>
                   <?php } ?>

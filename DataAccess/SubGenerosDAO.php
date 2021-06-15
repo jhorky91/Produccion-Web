@@ -13,7 +13,7 @@ class SubGeneroDAO extends DAO{
     }
 
     public function getOne($id){
-        $sql = "SELECT id_subgenero,status,nombre FROM $this->table WHERE status=1 AND id_subgenero = $id";
+        $sql = "SELECT id_subgenero,status,nombre FROM $this->table WHERE id_subgenero = $id";
         $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'SubGeneroEntity')->fetch();
         return $resultado;
 
@@ -44,7 +44,7 @@ class SubGeneroDAO extends DAO{
 
         $sql = "SELECT DISTINCT SG.id_subgenero,SG.status,SG.nombre FROM $this->table SG 
         INNER JOIN genero_subgenero GS ON SG.id_subgenero= GS.id_subgenero
-        WHERE status=1 ".$sWhereStr." ORDER BY nombre";
+        WHERE 1+1 ".$sWhereStr." ORDER BY nombre";
         $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'SubGeneroEntity')->fetchAll();
         return $resultado;
 

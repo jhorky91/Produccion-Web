@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-06-2021 a las 03:20:52
+-- Tiempo de generación: 15-06-2021 a las 08:07:32
 -- Versión del servidor: 10.4.18-MariaDB
 -- Versión de PHP: 8.0.3
 
@@ -68,7 +68,8 @@ INSERT INTO `clasificacion` (`id_clasificacion`, `status`, `nombre`, `descripcio
 (1, 1, 'ATP', 'Todas las edades pueden ver. No hay desnudez ni sangre y/o alcohol. El lenguaje es cortés sin el uso de insultos o con ofensas muy suaves que caen en lo gracioso.'),
 (2, 1, '+13', 'Desnudez parcial, sangre leve, muertes poco violentas, lenguaje regularizado e imágenes intensas suelen aparecer en las películas de esta clasificación. Pueden ingresar menores si van acompañados por un familiar o tutor.'),
 (3, 1, '+16', 'Desnudez fuerte y explícita pero no pornográfica, escenas fuertes, alcohol y drogas, insultos, imágenes muy intensas, muertes muy violentas y sangre en mucha cantidad. Se recomienda discreción para los menores de 16 años.'),
-(4, 1, '+18', 'Los menores de edad no están destinados a ver la película. Desnudez fuerte pornografía, violencia extrema, muertes extremadamente violentas, lenguaje ofensivo, derramamiento de sangre extremo, imágenes intensas frecuentes, escenas intensamente fuertes, insultos intensos y alcohol, drogas y tabaco.');
+(4, 1, '+18', 'Los menores de edad no están destinados a ver la película. Desnudez fuerte pornografía, violencia extrema, muertes extremadamente violentas, lenguaje ofensivo, derramamiento de sangre extremo, imágenes intensas frecuentes, escenas intensamente fuertes, insultos intensos y alcohol, drogas y tabaco.'),
+(5, 0, 'Prueba', 'texto de prueba.');
 
 -- --------------------------------------------------------
 
@@ -322,7 +323,8 @@ INSERT INTO `genero` (`id_genero`, `status`, `nombre`) VALUES
 (10, 1, 'Musical'),
 (11, 1, 'Romance'),
 (12, 1, 'Suspenso'),
-(13, 1, 'Terror');
+(13, 1, 'Terror'),
+(14, 0, 'Genero de prueba');
 
 -- --------------------------------------------------------
 
@@ -379,7 +381,12 @@ INSERT INTO `genero_subgenero` (`id_genero_subgenero`, `id_genero`, `id_subgener
 (27, 12, 21),
 (40, 13, NULL),
 (8, 13, 6),
-(19, 13, 14);
+(19, 13, 14),
+(41, 14, NULL),
+(45, 14, 6),
+(44, 14, 10),
+(42, 14, 17),
+(43, 14, 18);
 
 -- --------------------------------------------------------
 
@@ -841,7 +848,9 @@ INSERT INTO `usuario` (`id_usuario`, `status`, `nombre`, `apellido`, `fecha`, `f
 (13, 1, 'Jhorky', 'Escalante', '2020-11-24 01:03:15', '1991-09-14', 'jhorky', '123', 'jhorky.91@gmail.com', 44300200, NULL, NULL),
 (14, 1, 'Jhorky', 'Escalante', '2021-06-08 00:18:10', '2020-11-15', 'jhorkyadmin', '123456', 'jhorky.admin@gmail.com', NULL, NULL, NULL),
 (15, 1, 'Sebastian', 'Apellido', '2021-06-08 00:18:10', '2020-11-17', 'seba1799', '12345678', 'seba1799@gmail.com', NULL, NULL, NULL),
-(16, 1, 'Roberto', 'Rocco', '2021-06-08 00:18:10', '1991-04-17', 'roccoadmin', '123456', 'roberto.rocco@davinci.edu.ar', NULL, NULL, NULL);
+(16, 1, 'Roberto', 'Rocco', '2021-06-15 00:03:50', '1991-04-17', 'roccoadmin', '123456', 'roberto.rocco@davinci.edu.ar', NULL, NULL, NULL),
+(22, 0, 'sevita', 'fernet', '2021-06-15 02:49:24', '1911-11-11', 'sevita11', 'sevita11', 'sevita@fernet.com', NULL, NULL, NULL),
+(23, 1, 'sevita', 'fernet', '2021-06-15 02:51:38', '1911-11-11', 'sevita11', 'sevita11', 'sevita@fernet.com', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -892,7 +901,9 @@ INSERT INTO `usuario_perfil` (`id_usuario`, `id_perfil`) VALUES
 (13, 2),
 (14, 12),
 (15, 12),
-(16, 12);
+(16, 12),
+(23, 2),
+(23, 12);
 
 --
 -- Índices para tablas volcadas
@@ -1023,7 +1034,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT de la tabla `clasificacion`
 --
 ALTER TABLE `clasificacion`
-  MODIFY `id_clasificacion` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_clasificacion` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `comentario`
@@ -1041,13 +1052,13 @@ ALTER TABLE `direccion`
 -- AUTO_INCREMENT de la tabla `genero`
 --
 ALTER TABLE `genero`
-  MODIFY `id_genero` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_genero` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `genero_subgenero`
 --
 ALTER TABLE `genero_subgenero`
-  MODIFY `id_genero_subgenero` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id_genero_subgenero` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT de la tabla `ip`
@@ -1089,7 +1100,7 @@ ALTER TABLE `subgenero`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_usuario` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario_direccion`

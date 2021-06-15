@@ -20,6 +20,23 @@ if(isset($_GET['del'])){
 
     redirect('subgenero.php');
 }
+if(isset($_GET['status'])){
+  $id = $_GET['status'];
+  
+  $cat=$SubgeneroB->getEntrada($id);
+
+  if($cat->getStatus()==1){
+    $sta = 0;
+  }else{
+    $sta = 1;
+  }
+  
+  $SubgeneroB->cambioStatus($id,$sta);
+
+  unset($_GET['status']);
+
+  redirect('subgenero.php');
+}
 ?>
 
         <!-- End of Topbar -->
@@ -67,7 +84,10 @@ if(isset($_GET['del'])){
                       <td><?php echo $cat->getNombre(); ?></td>
                       <td><center>
                       <a href="modify-subgenero.php?edit=<?php echo $cat->getID();?>"><i class="fas fa-edit"></a></i>&nbsp;&nbsp;
-                      <a href="subgenero.php?del=<?php echo $cat->getID();?>"><i class="fas fa-trash-alt"></i></a></i></center>
+                      <a href="subgenero.php?del=<?php echo $cat->getID();?>"><i class="fas fa-trash-alt"></a></i>&nbsp;&nbsp;
+                       <a href="subgenero.php?status=<?php echo $cat->getID();?>"> <i class="
+                      <?php if($cat->getStatus() == 0){ echo 'fas fa-circle'; } else { echo 'fas fa-check-circle'; } ?>
+                      "></i></a>
                       </td>
                     </tr>
                   <?php } ?>

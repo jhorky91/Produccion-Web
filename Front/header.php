@@ -12,6 +12,7 @@ if(isset($_POST['login'])){
   
   $resul= $get->SessionUser($_POST);
   if($resul ==true){
+
         $_SESSION['usuario_logueado'] = true;
         $_SESSION['user'] = $resul->getNombre()." ".$resul->getApellido();
         $_SESSION['error'] = "0";
@@ -101,7 +102,9 @@ if(isset($_GET['logout'])){
                                      <a href="register.php"><button class="dropdown-item" type="button">Register</button></a>
                                   <?php } ?>
 
+
                                   <?php if(isset($_SESSION['user'])) { ?> 
+                                  
                                   <a href="index.php?logout"><button class="dropdown-item" name="logout" type="button">Logout</button></a>
                                   <?php } ?>
 

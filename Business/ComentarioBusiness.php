@@ -50,6 +50,11 @@ class ComentarioBusiness {
 
         return $entradas;
     }
+    public function cambioStatus($id,$sta){
+        $entradas = $this->AdminDAO->cambioStatus($id,$sta); 
+
+        return $entradas;
+    }
 
 }
 

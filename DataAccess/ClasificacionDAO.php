@@ -13,7 +13,7 @@ class ClasificacionDAO extends DAO{
     }
 
     public function getOne($id){
-        $sql = "SELECT id_clasificacion,status,nombre,descripcion FROM $this->table WHERE status=1 AND id_clasificacion = $id";
+        $sql = "SELECT id_clasificacion,status,nombre,descripcion FROM $this->table WHERE id_clasificacion = $id";
         $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'ClasificacionEntity')->fetch();
         return $resultado;
 
@@ -25,7 +25,7 @@ class ClasificacionDAO extends DAO{
             $cate=' AND id_clasificacion != '.$_GET['clasificacion'].'';
         }
 
-        $sql = "SELECT id_clasificacion,status,nombre,descripcion FROM $this->table WHERE status=1 ".$cate;
+        $sql = "SELECT id_clasificacion,status,nombre,descripcion FROM $this->table WHERE 1+1 ".$cate;
         $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'ClasificacionEntity')->fetchAll();
         return $resultado;
 

@@ -35,19 +35,19 @@ class DireccionEntity{
     public function setIDDireccion(){
         $this->id_direccion=$id_direccion;
     }
-    public function setCalle(){
+    public function setCalle($calle){
         $this->calle=$calle;
     }
-    public function setAltura(){
+    public function setAltura($altura){
         $this->altura=$altura;
     }
-    public function setPiso(){
+    public function setPiso($piso){
         $this->piso=$piso;
     }
-    public function setDpto(){
+    public function setDpto($dpto){
         $this->dpto=$dpto;
     }
-    public function setBarrio(){
+    public function setBarrio($barrio){
         $this->barrio=$barrio;
     }
     

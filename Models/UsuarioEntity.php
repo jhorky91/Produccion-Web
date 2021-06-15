@@ -14,6 +14,7 @@ class UsuarioEntity{
     private $telefono;
     private $pedidos;
     private $dinero_gastado;
+ 
 
     public function __construct(){
 
@@ -55,9 +56,7 @@ class UsuarioEntity{
     public function getDineroGastado(){
         return $this->dinero_gastado;
     }
-
-
-
+    
     public function setIDUsuario($id_usuario){
         $this->id_usuario=$id_usuario;
     }
@@ -94,7 +93,7 @@ class UsuarioEntity{
     public function setDineroGastado($dinero_gastado){
         $this->dinero_gastado=$dinero_gastado;
     }
-
+    
 
     
     

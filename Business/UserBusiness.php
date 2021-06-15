@@ -16,8 +16,8 @@ class UserBusiness {
         return $entradas;
     }
 
-    public function getEntradas(){
-        $entradas = $this->UserDAO->getAll(); 
+    public function getEntradas($where=array()){
+        $entradas = $this->UserDAO->getAll($where); 
 
         return $entradas;
     }
@@ -36,6 +36,28 @@ class UserBusiness {
         $entradas = $this->UserDAO->userAdmin($datos);
         return $entradas;
     }
+    public function cambioStatus($id,$sta){
+        $entradas = $this->UserDAO->cambioStatus($id,$sta); 
+
+        return $entradas;
+    }
+    public function delete($id) {
+        $entradas = $this->UserDAO->delete($id);
+
+        $entradas;
+    }
+    public function Add($datos) {
+        $entradas = $this->UserDAO->save($datos);
+
+        $entradas;
+    }
+    public function getMod($id,$datos) {
+        $entradas = $this->UserDAO->modify($id,$datos);
+
+        $entradas;
+    }
+    
+
 }
 
 

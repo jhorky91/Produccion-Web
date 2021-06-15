@@ -9,18 +9,33 @@ include_once('../Helpers/funcs.php');
   //$resultado = $con->query($admins); 
   //Fin del Select
   
-  require_once('../Business/AdminBusiness.php');
-  $AdminB = new AdminBusiness($con);
+  require_once('../Business/UserBusiness.php');
+  $UserB = new UserBusiness($con);
   
 
 
 if(isset($_GET['deladmin'])){
-  
-    $deleteAdm = "DELETE FROM admin WHERE id_admin=".$_GET["deladmin"];
-    $count = $con->exec($deleteAdm);
-
+    $id=$_GET['deladmin'];
+    $UserB->delete($id);
     unset($_GET['deladmin']);
     redirect('admin.php');
+}
+if(isset($_GET['status'])){
+  $id = $_GET['status'];
+  
+  $user=$UserB->getEntrada($id);
+
+  if($user->getStatus()==1){
+    $sta = 0;
+  }else{
+    $sta = 1;
+  }
+  
+  $UserB->cambioStatus($id,$sta);
+
+  unset($_GET['status']);
+
+  redirect('admin.php');
 }
  
 ?>
@@ -45,7 +60,7 @@ if(isset($_GET['deladmin'])){
               <span class="m-0 font-weight-bold text-primary">Borrador()</span>
               <span class="m-0 font-weight-bold text-primary">|</span>
               <span class="m-0 font-weight-bold text-primary">Pendiente()</span>
-              <a href="modify-admin.php"><input class="btn btn-danger" type="submit" value="Añadir Admin"></a>
+              <a href="modify-usuario.php"><input class="btn btn-danger" type="submit" value="Añadir Admin"></a>
               <input class="btn btn-danger" type="submit" value="Imprimir">
               <input class="btn btn-danger" type="submit" value="PDF">
               <input class="btn btn-danger" type="submit" value="CSV">
@@ -67,9 +82,10 @@ if(isset($_GET['deladmin'])){
                   </thead>
                   <tbody>
                   <?php
-                  foreach($AdminB->getEntradas() as $adm){ ?>
+                  $dato = array('tipo'=>'Admin');
+                  foreach($UserB->getEntradas($dato) as $adm){ ?>
                     <tr align="center">
-                      <td><?php echo $adm->getIDAdmin(); ?></td>
+                      <td><?php echo $adm->getIDUsuario(); ?></td>
                       <td><?php echo $adm->getStatus(); ?></td>
                       <td><?php echo $adm->getNombre(); ?></td>
                       <td><?php echo $adm->getApellido(); ?></td>
@@ -80,8 +96,11 @@ if(isset($_GET['deladmin'])){
                       
 
                       <td><center>
-                      <a href="modify-admin.php?edit=<?php echo $adm->getIDAdmin();?>"><i class="fas fa-edit"></a></i>&nbsp;&nbsp;
-                      <a href="admin.php?deladmin=<?php echo $adm->getIDAdmin();?>"><i class="fas fa-trash-alt"></i></a></i></center>
+                      <a href="modify-usuario.php?edit=<?php echo $adm->getIDUsuario();?>&admin"><i class="fas fa-edit"></a></i>&nbsp;&nbsp;
+                      <a href="admin.php?deladmin=<?php echo $adm->getIDUsuario();?>"><i class="fas fa-trash-alt"></i></a></i>&nbsp;&nbsp;
+                      <a href="admin.php?status=<?php echo $adm->getIDUsuario();?>"><i class="
+                      <?php if($adm->getStatus() == 0){ echo 'fas fa-circle'; } else { echo 'fas fa-check-circle'; } ?>
+                      "></i></a>
                       </td>
                     </tr>
                   <?php } ?>

@@ -46,6 +46,12 @@ class PerfilBusiness{
 
         return $perfil;
     }
+    public function getPerfilUsuario($id){
+        $perfil = $this->PerfilDAO->getAllByUser($id); 
+
+        return $perfil;
+    }
+
     
 
 }

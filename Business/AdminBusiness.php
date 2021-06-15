@@ -16,8 +16,8 @@ class AdminBusiness {
         return $entrada;
     }
 
-    public function getEntradas(){
-        $entradas = $this->AdminDAO->getAll(); 
+    public function getEntradas($dato){
+        $entradas = $this->AdminDAO->getAll($dato); 
 
         return $entradas;
     }
@@ -28,6 +28,11 @@ class AdminBusiness {
 
     public function contarActivos(){
         return $this->AdminDAO->contarActivos();
+    }
+    public function cambioStatus($id,$sta){
+        $entradas = $this->AdminDAO->cambioStatus($id,$sta); 
+
+        return $entradas;
     }
 
 }

@@ -18,6 +18,7 @@
 										$ClasificacionB = new ClasificacionBusiness($con);
 
 										foreach($GeneroB->getEntradas($_GET) as $cat){ 
+											if($cat->getStatus()==1){
 											if(!empty($cat->getNombre())){?>
 
 									<div class="list-group">	
@@ -34,7 +35,7 @@
 
 											</li>
 									</div>
-										<?php } }?>
+										<?php } } }?>
 										
 											<li>
 												<a class="text-white" href="products.php?genero=
@@ -64,6 +65,7 @@
 										
 
 										foreach($SubGeneroB->getEntradas($_GET) as $subcat){ 
+										if($subcat->getStatus()==1){
 										if(!empty($subcat->getNombre())){?>
 									<div class="list-group">	
 											<li>
@@ -79,7 +81,7 @@
 
 											</li>
 									</div>
-										<?php }} ?>
+										<?php } } } ?>
 										
 											<li>
 												<a class="text-white" href="products.php?
@@ -105,7 +107,9 @@
 										<?php 
 											
 													
-											foreach($ClasificacionB->getEntradas($_GET) as $mar){ ?>
+											foreach($ClasificacionB->getEntradas($_GET) as $mar){ 
+												if($mar->getStatus()==1){?>
+											
 									<div class="list-group">												
 											<li>
 													<a class="text-white" href="products.php?
@@ -118,7 +122,7 @@
 														<?php echo $mar->getNombre()?></a>
 											</li>
 									</div>
-										<?php }?>
+										<?php }}?>
 											<li>
 												<a class="text-white" href="products.php?
 												genero=<?php echo isset($_GET['genero'])?$_GET['genero']:'' ?>

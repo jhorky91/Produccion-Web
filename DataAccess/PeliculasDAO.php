@@ -74,7 +74,7 @@ class PeliculasDAO extends DAO{
                 INNER JOIN pelicula_genero GP ON P.id_pelicula=GP.id_pelicula
                 INNER JOIN genero_subgenero GSG ON GP.id_genero_subgenero=GSG.id_genero_subgenero
                 INNER JOIN comentario C ON P.id_pelicula = C.id_pelicula 
-                WHERE P.status = 1 ".$sWhereStr.' GROUP BY  P.id_pelicula '.$ord;
+                WHERE 1+1 ".$sWhereStr.' GROUP BY  P.id_pelicula '.$ord;
 
         $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'PeliculaEntity')->fetchAll();
         

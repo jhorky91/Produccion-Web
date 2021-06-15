@@ -49,6 +49,11 @@ class PeliculaBusiness {
 
         return $entradas;
     }
+    public function cambioStatus($id,$sta){
+        $entradas = $this->PeliculasDAO->cambioStatus($id,$sta); 
+
+        return $entradas;
+    }
 }
 
 

@@ -41,6 +41,11 @@ class ClasificacionBusiness {
     public function Add($datos = array()) {
         return $this->ClasificacionDAO->save($datos);
     }
+    public function cambioStatus($id,$sta){
+        $entradas = $this->ClasificacionDAO->cambioStatus($id,$sta); 
+
+        return $entradas;
+    }
 
 }
 

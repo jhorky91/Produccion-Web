@@ -57,6 +57,11 @@ class SubGeneroBusiness {
 
         return $entradas;
     }
+    public function cambioStatus($id,$sta){
+        $entradas = $this->SubGeneroDAO->cambioStatus($id,$sta); 
+
+        return $entradas;
+    }
 }
 
 

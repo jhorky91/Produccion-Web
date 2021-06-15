@@ -18,6 +18,24 @@ if(isset($_GET['del'])){
 
     redirect('peliculas.php');
 }
+
+if(isset($_GET['status'])){
+  $id = $_GET['status'];
+  
+  $peli = $PeliculaB->getEntrada($id);
+
+  if($peli->getStatus()==1){
+    $sta = 0;
+  }else{
+    $sta = 1;
+  }
+  
+  $PeliculaB->cambioStatus($id,$sta);
+
+  unset($_GET['status']);
+
+  redirect('peliculas.php');
+}
 ?>
   
         <!-- End of Topbar -->
@@ -98,46 +116,6 @@ if(isset($_GET['del'])){
                             echo $Subgene->getNombre().' ';
                             }
 
-
-/*                         if (is_array($gen['nombre'])) {
-                        
-                            foreach ($gen['nombre'] as $gen) {
-                              
-                              //$categorias = json_decode(file_get_contents('../datos/categorias.json'),true);
-                              //Devuelve el contenido de la tabla Clasificacion    
-                              $categorias = "SELECT id_genero, nombre 
-                                              FROM genero;
-                                              WHERE ";
-                              $resultado2 = $con->query($categorias); 
-                              //Fin del Select                          
-                              
-                              echo ''.$categorias[$gen]['nombre'].'<br>'; 
-                              
-                            };
-                        }  */
-                        /*$categorias = "SELECT genero.nombre
-                        FROM pelicula_genero INNER JOIN genero ON pelicula_genero.id_genero = genero.id_genero
-                        where pelicula_genero.id_pelicula=".$peli['id_pelicula'];*/
-                        
-                        /*Arreglar esto*/
-
-###########################################################################################################################
-###########################################################################################################################
-###########################################################################################################################
-###########################################################################################################################
-
-                        /*$categorias = "SELECT genero.nombre
-                        FROM pelicula_genero 
-                        INNER JOIN genero_subgenero ON pelicula_genero.id_genero_subgenero = genero_subgenero.id_genero_subgenero
-                        INNER JOIN genero ON genero_subgenero.id_genero = genero.id_genero
-                        INNER JOIN subgenero ON genero_subgenero.id_subgenero = subgenero.id_subgenero                        
-                        where pelicula_genero.id_pelicula=".$peli['id_pelicula'];
-
-                        $gen = $con->query($categorias);
-                        $b = $gen->fetchAll(PDO::FETCH_COLUMN, 0);
-                        $c = implode(', ', $b);
-                        echo $c;*/
-
                       ?>
                       </td>
                       <td><?php echo $peli->getDuracion(); ?></td>
@@ -149,7 +127,10 @@ if(isset($_GET['del'])){
                       </td>
                       <td><center>
                       <a href="edit-pelicula.php?edit=<?php echo $peli->getID();?>"><i class="fas fa-edit"></a></i>&nbsp;&nbsp;
-                      <a href="peliculas.php?del=<?php echo $peli->getID();?>"><i class="fas fa-trash-alt"></i></a></i></center>
+                      <a href="peliculas.php?del=<?php echo $peli->getID();?>"><i class="fas fa-trash-alt"></a></i>&nbsp;&nbsp;
+                       <a href="peliculas.php?status=<?php echo $peli->getID();?>"> <i class="
+                      <?php if($peli->getStatus() == 0){ echo 'fas fa-circle'; } else { echo 'fas fa-check-circle'; } ?>
+                      "></i></a>
                       </td>
                     </tr>
                   <?php } ?>

@@ -22,6 +22,23 @@ if(isset($_GET['del'])){
 
     redirect('clasificacion.php');
 }
+if(isset($_GET['status'])){
+  $id = $_GET['status'];
+  
+  $cat=$ClasificacionB->getEntrada($id);
+
+  if($cat->getStatus()==1){
+    $sta = 0;
+  }else{
+    $sta = 1;
+  }
+  
+  $ClasificacionB->cambioStatus($id,$sta);
+
+  unset($_GET['status']);
+
+  redirect('clasificacion.php');
+}
 ?>
 
         <!-- End of Topbar -->
@@ -72,7 +89,10 @@ if(isset($_GET['del'])){
                       <td><?php echo $peli->getDescripcion(); ?></td>
                       <td><center>
                       <a href="modify-clasific.php?edit=<?php echo $peli->getID();?>"><i class="fas fa-edit"></a></i>&nbsp;&nbsp;
-                      <a href="clasificacion.php?del=<?php echo $peli->getID();?>"><i class="fas fa-trash-alt"></i></a></i></center>
+                      <a href="clasificacion.php?del=<?php echo $peli->getID();?>"><i class="fas fa-trash-alt"></a></i>&nbsp;&nbsp;
+                      <a href="clasificacion.php?status=<?php echo $peli->getID();?>"> <i class="
+                      <?php if($peli->getStatus() == 0){ echo 'fas fa-circle'; } else { echo 'fas fa-check-circle'; } ?>
+                      "></i></a>
                       </td>
                     </tr>
                   <?php } ?>

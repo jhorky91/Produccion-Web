@@ -41,7 +41,10 @@
 
 		<div class="row">
 		
-			<?php foreach($PeliculaB->getEntradas($_GET) as $prod){ ?>
+			<?php foreach($PeliculaB->getEntradas($_GET) as $prod){ 
+				if($prod->getStatus()==1){
+				?>
+					
 					<div class="col-lg-3">
 						<a href="product-details.php?id=<?php echo $prod->getID()?>" class="overlay"></a>
 						<a href="product-details.php?id=<?php echo $prod->getID()?>"><center><img class="img-fluid" src="<?php echo 'images/'.$prod->getID().'.jpg' ?>" alt=""></center></a>
@@ -53,7 +56,8 @@
 								<br class="clr">
 							</div>
 					</div>
-			<?php } ?>
+			<?php }
+				 } ?>
 		</div>
 	
 	</div>
