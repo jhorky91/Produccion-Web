@@ -126,7 +126,7 @@ if(isset($_GET['status'])){
                       <button type='button' onclick="alert('<?php echo $peli->getDescripcion(); ?>')" class="btn btn-danger">Descripcion</button>
                       </td>
                       <td><center>
-                      <a href="edit-pelicula.php?edit=<?php echo $peli->getID();?>"><i class="fas fa-edit"></a></i>&nbsp;&nbsp;
+                      <a href="modify-pelicula.php?edit=<?php echo $peli->getID();?>"><i class="fas fa-edit"></a></i>&nbsp;&nbsp;
                       <a href="peliculas.php?del=<?php echo $peli->getID();?>"><i class="fas fa-trash-alt"></a></i>&nbsp;&nbsp;
                        <a href="peliculas.php?status=<?php echo $peli->getID();?>"> <i class="
                       <?php if($peli->getStatus() == 0){ echo 'fas fa-circle'; } else { echo 'fas fa-check-circle'; } ?>

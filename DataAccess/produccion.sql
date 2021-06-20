@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-06-2021 a las 08:07:32
+-- Tiempo de generación: 20-06-2021 a las 08:34:31
 -- Versión del servidor: 10.4.18-MariaDB
 -- Versión de PHP: 8.0.3
 
@@ -50,6 +50,18 @@ INSERT INTO `admin` (`id_admin`, `status`, `nombre`, `apellido`, `fecha`, `usuar
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `campo_dinamico_pelicula`
+--
+
+CREATE TABLE `campo_dinamico_pelicula` (
+  `id_pelicula` int(11) NOT NULL,
+  `nombre` varchar(30) COLLATE utf32_unicode_ci NOT NULL,
+  `detalle` varchar(300) COLLATE utf32_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `clasificacion`
 --
 
@@ -69,7 +81,7 @@ INSERT INTO `clasificacion` (`id_clasificacion`, `status`, `nombre`, `descripcio
 (2, 1, '+13', 'Desnudez parcial, sangre leve, muertes poco violentas, lenguaje regularizado e imágenes intensas suelen aparecer en las películas de esta clasificación. Pueden ingresar menores si van acompañados por un familiar o tutor.'),
 (3, 1, '+16', 'Desnudez fuerte y explícita pero no pornográfica, escenas fuertes, alcohol y drogas, insultos, imágenes muy intensas, muertes muy violentas y sangre en mucha cantidad. Se recomienda discreción para los menores de 16 años.'),
 (4, 1, '+18', 'Los menores de edad no están destinados a ver la película. Desnudez fuerte pornografía, violencia extrema, muertes extremadamente violentas, lenguaje ofensivo, derramamiento de sangre extremo, imágenes intensas frecuentes, escenas intensamente fuertes, insultos intensos y alcohol, drogas y tabaco.'),
-(5, 0, 'Prueba', 'texto de prueba.');
+(6, 0, 'Prueba', 'Texto de prueba');
 
 -- --------------------------------------------------------
 
@@ -916,6 +928,12 @@ ALTER TABLE `admin`
   ADD PRIMARY KEY (`id_admin`);
 
 --
+-- Indices de la tabla `campo_dinamico_pelicula`
+--
+ALTER TABLE `campo_dinamico_pelicula`
+  ADD KEY `id_pelicula` (`id_pelicula`);
+
+--
 -- Indices de la tabla `clasificacion`
 --
 ALTER TABLE `clasificacion`
@@ -1034,7 +1052,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT de la tabla `clasificacion`
 --
 ALTER TABLE `clasificacion`
-  MODIFY `id_clasificacion` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_clasificacion` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `comentario`
@@ -1111,6 +1129,12 @@ ALTER TABLE `usuario_direccion`
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `campo_dinamico_pelicula`
+--
+ALTER TABLE `campo_dinamico_pelicula`
+  ADD CONSTRAINT `campo_dinamico_pelicula_ibfk_1` FOREIGN KEY (`id_pelicula`) REFERENCES `pelicula` (`id_pelicula`);
 
 --
 -- Filtros para la tabla `comentario`
