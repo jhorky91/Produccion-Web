@@ -25,41 +25,64 @@ class PeliculasDAO extends DAO{
     }
 
     public function getAll($where = array()){
-        
-        $sWhere = array();
-        $ord='';
-        if(!empty($_GET['genero']) && !empty($_GET['subgenero']) ){
-             $sWhere[]=' AND (GSG.id_genero ='.$where['genero'].' AND GSG.id_subgenero ='.$where['subgenero'].')'; 
-        }else
-        if(!empty($_GET['genero']) && empty($_GET['subgenero']) ){
-            $sWhere[]=' AND GSG.id_genero ='.$where['genero'];
-        }else
-        if(!empty($_GET['subgenero']) && empty($_GET['genero'])){
-            $sWhere[]=' AND GSG.id_subgenero ='.$where['subgenero'];
-        }
-        if(!empty($_GET['clasificacion'])){
-            $sWhere[]=' AND P.id_clasificacion ='.$where['clasificacion'];
-        }
-        if(!empty($_GET['orden'])){
-            if($_GET['orden']==1){
-                $ord=' ORDER BY P.nombre';
-            }else if($_GET['orden']==2){
-                $ord=' ORDER BY P.nombre DESC';
-            }else if($_GET['orden']==3){
-                $ord=' ORDER BY P.anio';
-            }else if($_GET['orden']==4){
-                $ord=' ORDER BY P.anio DESC';
-            }else if($_GET['orden']==5){
-                $ord=' ORDER BY rating DESC, P.nombre';
-            }else if($_GET['orden']==6){
-                $ord=' ORDER BY rating, P.nombre';
+        if(!empty($where)){
+
+            $sWhere = array();
+            $ord='';
+            if(!empty($_GET['genero']) && !empty($_GET['subgenero']) ){
+                $sWhere[]=' AND (GSG.id_genero ='.$where['genero'].' AND GSG.id_subgenero ='.$where['subgenero'].')'; 
+            }else
+            if(!empty($_GET['genero']) && empty($_GET['subgenero']) ){
+                $sWhere[]=' AND GSG.id_genero ='.$where['genero'];
+            }else
+            if(!empty($_GET['subgenero']) && empty($_GET['genero'])){
+                $sWhere[]=' AND GSG.id_subgenero ='.$where['subgenero'];
             }
-        }
-        $sWhereStr='';
-        if(!empty($sWhere)) { $sWhereStr=' '. implode(' ',$sWhere);
-        }
-                     
-        $sql = "SELECT  P.id_pelicula,
+            if(!empty($_GET['clasificacion'])){
+                $sWhere[]=' AND P.id_clasificacion ='.$where['clasificacion'];
+            }
+            if(!empty($_GET['orden'])){
+                if($_GET['orden']==1){
+                    $ord=' ORDER BY P.nombre';
+                }else if($_GET['orden']==2){
+                    $ord=' ORDER BY P.nombre DESC';
+                }else if($_GET['orden']==3){
+                    $ord=' ORDER BY P.anio';
+                }else if($_GET['orden']==4){
+                    $ord=' ORDER BY P.anio DESC';
+                }else if($_GET['orden']==5){
+                    $ord=' ORDER BY rating DESC, P.nombre';
+                }else if($_GET['orden']==6){
+                    $ord=' ORDER BY rating, P.nombre';
+                }
+            }
+            $sWhereStr='';
+            if(!empty($sWhere)) { $sWhereStr=' '. implode(' ',$sWhere);
+            }
+                        
+            $sql = "SELECT  P.id_pelicula,
+                            P.status,
+                            P.nombre,
+                            P.precio,
+                            P.id_clasificacion,
+                            P.duracion,
+                            P.anio,
+                            P.directores,
+                            P.actores,
+                            P.descripcion,
+                            AVG(C.rating) AS rating  
+                            
+                    FROM pelicula P
+                    INNER JOIN pelicula_genero GP ON P.id_pelicula=GP.id_pelicula
+                    INNER JOIN genero_subgenero GSG ON GP.id_genero_subgenero=GSG.id_genero_subgenero
+                    INNER JOIN comentario C ON P.id_pelicula = C.id_pelicula 
+                    WHERE 1+1 ".$sWhereStr.' GROUP BY  P.id_pelicula '.$ord;
+
+            $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'PeliculaEntity')->fetchAll();
+        
+            return $resultado;
+        }else {
+            $sql = "SELECT DISTINCT  P.id_pelicula,
                         P.status,
                         P.nombre,
                         P.precio,
@@ -68,18 +91,16 @@ class PeliculasDAO extends DAO{
                         P.anio,
                         P.directores,
                         P.actores,
-                        P.descripcion,
-                        AVG(C.rating) AS rating  
+                        P.descripcion                        
+                        
                 FROM pelicula P
                 INNER JOIN pelicula_genero GP ON P.id_pelicula=GP.id_pelicula
-                INNER JOIN genero_subgenero GSG ON GP.id_genero_subgenero=GSG.id_genero_subgenero
-                INNER JOIN comentario C ON P.id_pelicula = C.id_pelicula 
-                WHERE 1+1 ".$sWhereStr.' GROUP BY  P.id_pelicula '.$ord;
+                INNER JOIN genero_subgenero GSG ON GP.id_genero_subgenero=GSG.id_genero_subgenero";
 
         $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'PeliculaEntity')->fetchAll();
-        
+     
         return $resultado;
-
+        }
 
     }
 
@@ -87,7 +108,20 @@ class PeliculasDAO extends DAO{
 
         $sql = "INSERT INTO $this->table(status,nombre,precio,id_clasificacion,duracion,anio,directores,actores,descripcion)
                  VALUES ('0','".$datos['nombre']."','".$datos['precio']."','".$datos['id_clasificacion']."','".$datos['duracion']."','".$datos['anio']."','".$datos['directores']."','".$datos['actores']."','".$datos['descripcion']."')";
-        return $this->con->exec($sql);
+        $this->con->exec($sql);
+        $id = $this->con->lastInsertId();
+       
+        foreach($datos['generos'] as $gen){
+            foreach($datos['subgeneros'] as $subgen){
+                $sql = "SELECT id_genero_subgenero FROM genero_subgenero
+                        WHERE (id_genero = ".$gen." AND id_subgenero = ".$subgen.") OR (id_genero = ".$gen." AND id_subgenero IS NULL)";
+                $result=$this->con->query($sql)->fetch();
+        
+                $sql = "INSERT INTO pelicula_genero(id_pelicula,id_genero_subgenero) 
+                        VALUES ('".$id."','".$result['id_genero_subgenero']."')";
+                $this->con->exec($sql);
+            }
+        }
 
     }
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-06-2021 a las 08:34:31
+-- Tiempo de generación: 22-06-2021 a las 08:04:04
 -- Versión del servidor: 10.4.18-MariaDB
 -- Versión de PHP: 8.0.3
 
@@ -46,6 +46,22 @@ INSERT INTO `admin` (`id_admin`, `status`, `nombre`, `apellido`, `fecha`, `usuar
 (1, 1, 'Jhorky', 'Escalante', '2020-11-15', 'jhorkyadmi', '123456', 'jhorky.admin@gmail.c'),
 (3, 1, 'Sebastian', 'Apellido', '2020-11-17', 'seba1799', '12345678', 'seba1799@gmail.com'),
 (4, 1, 'Roberto', 'Rocco', '2021-05-01', 'roccoadmin', '123456', 'roberto.rocco@davinci.edu.ar');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `campo_dinamico_comentario`
+--
+
+CREATE TABLE `campo_dinamico_comentario` (
+  `id_campo_dinamico_comentario` int(11) NOT NULL,
+  `nombre` varchar(100) COLLATE utf32_unicode_ci NOT NULL,
+  `campo` varchar(300) COLLATE utf32_unicode_ci NOT NULL,
+  `tipo` int(11) NOT NULL,
+  `status` int(11) NOT NULL,
+  `obligatorio` int(11) NOT NULL,
+  `id_comentario` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -336,7 +352,8 @@ INSERT INTO `genero` (`id_genero`, `status`, `nombre`) VALUES
 (11, 1, 'Romance'),
 (12, 1, 'Suspenso'),
 (13, 1, 'Terror'),
-(14, 0, 'Genero de prueba');
+(14, 0, 'Genero de prueba'),
+(15, 0, '');
 
 -- --------------------------------------------------------
 
@@ -398,7 +415,9 @@ INSERT INTO `genero_subgenero` (`id_genero_subgenero`, `id_genero`, `id_subgener
 (45, 14, 6),
 (44, 14, 10),
 (42, 14, 17),
-(43, 14, 18);
+(43, 14, 18),
+(46, 15, NULL),
+(47, 15, 8);
 
 -- --------------------------------------------------------
 
@@ -446,7 +465,7 @@ CREATE TABLE `pelicula` (
 --
 
 INSERT INTO `pelicula` (`id_pelicula`, `status`, `nombre`, `precio`, `id_clasificacion`, `duracion`, `anio`, `directores`, `actores`, `descripcion`) VALUES
-(1, 1, 'The Godfather', 200, 4, '2h 55min', '1972', 'Francis Ford Coppola', 'Marlon Brando, Al Pacino, James Caan', 'Don Vito Corleone es el jefe de una de las cinco familias que ejercen el mando de la Cosa Nostra en Nueva York en los años 40. Don Corleone tiene cuatro hijos; una chica, Connie, y tres varones, Santino, o Sonny, como le gusta que le llamen, Michael y Freddie, al que envían exiliado a Las Vegas, dada su incapacidad para asumir puestos de mando en la Familia. Cuando otro capo, Sollozzo, al rechazar el Padrino intervenir en el negocio de estupefacientes, intenta asesinar a éste, empieza una cruenta lucha de violentos episodios entre los distintos grupos.'),
+(1, 1, 'The Godfather', 200, 4, '2h 55min', '1972', 'Francis Ford Coppola', 'Marlon Brando, Al Pacino, James Caan', 'Don Vito Corleone es el jefe de una de las cinco familias que ejercen el mando de la Cosa Nostra en Nueva York en los años 40. Don Corleone tiene cuatro hijos; una chica, Connie, y tres varones, Santino, o Sonny, como le gusta que le llamen, Michael y Freddie, al que envían exiliado a Las Vegas, dada su incapacidad para asumir puestos de mando en la Familia. Cuando otro capo, Sollozzo, al rechazar el Padrino intervenir en el negocio de estupefacientes, intenta asesinar a éste, empieza una cruenta lucha de violentos episodios entre los distintos grupos.'),
 (2, 1, 'The Godfather II', 200, 4, '3h 22min', '1974', 'Francis Ford Coppola', 'Al Pacino, Robert De Niro, Robert Duvall', 'Michael Corleone lidera el imperio criminal de su padre, mientras que se recuerda el ascenso al poder del joven Vito.'),
 (3, 1, 'Centigrade', 150, 3, '1h 38min', '2020', 'Brendan Walsh', 'Mavis Simpson-Ernst, Vincent Piazza, Genesis Rodriguez', 'Un matrimonio se queda atrapado en su vehículo congelado después de una tormenta y tiene que luchar para sobrevivir.'),
 (4, 1, 'Harpoon', 200, 4, '1h 23min', '2019', 'Rob Grant', 'Munro Chambers, Christopher Gray, Emily Tyra', 'Tres amigos se quedan en un yate a la deriva en medio del océano. Sin escapatoria y luchando por sobrevivir, con mucho alcohol pero poca comida y agua, con el tiempo los tres jóvenes se dejarán llevar por la rivalidad, la envidia y por la tensión sexual.'),
@@ -860,7 +879,7 @@ INSERT INTO `usuario` (`id_usuario`, `status`, `nombre`, `apellido`, `fecha`, `f
 (13, 1, 'Jhorky', 'Escalante', '2020-11-24 01:03:15', '1991-09-14', 'jhorky', '123', 'jhorky.91@gmail.com', 44300200, NULL, NULL),
 (14, 1, 'Jhorky', 'Escalante', '2021-06-08 00:18:10', '2020-11-15', 'jhorkyadmin', '123456', 'jhorky.admin@gmail.com', NULL, NULL, NULL),
 (15, 1, 'Sebastian', 'Apellido', '2021-06-08 00:18:10', '2020-11-17', 'seba1799', '12345678', 'seba1799@gmail.com', NULL, NULL, NULL),
-(16, 1, 'Roberto', 'Rocco', '2021-06-15 00:03:50', '1991-04-17', 'roccoadmin', '123456', 'roberto.rocco@davinci.edu.ar', NULL, NULL, NULL),
+(16, 1, 'Roberto', 'Rocco', '2021-06-15 00:03:50', '1991-04-17', 'roccoadmin', '12345678', 'roberto.rocco@davinci.edu.ar', NULL, NULL, NULL),
 (22, 0, 'sevita', 'fernet', '2021-06-15 02:49:24', '1911-11-11', 'sevita11', 'sevita11', 'sevita@fernet.com', NULL, NULL, NULL),
 (23, 1, 'sevita', 'fernet', '2021-06-15 02:51:38', '1911-11-11', 'sevita11', 'sevita11', 'sevita@fernet.com', NULL, NULL, NULL);
 
@@ -926,6 +945,13 @@ INSERT INTO `usuario_perfil` (`id_usuario`, `id_perfil`) VALUES
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`id_admin`);
+
+--
+-- Indices de la tabla `campo_dinamico_comentario`
+--
+ALTER TABLE `campo_dinamico_comentario`
+  ADD PRIMARY KEY (`id_campo_dinamico_comentario`),
+  ADD KEY `id_comentario` (`id_comentario`);
 
 --
 -- Indices de la tabla `campo_dinamico_pelicula`
@@ -1049,6 +1075,12 @@ ALTER TABLE `admin`
   MODIFY `id_admin` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT de la tabla `campo_dinamico_comentario`
+--
+ALTER TABLE `campo_dinamico_comentario`
+  MODIFY `id_campo_dinamico_comentario` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `clasificacion`
 --
 ALTER TABLE `clasificacion`
@@ -1070,13 +1102,13 @@ ALTER TABLE `direccion`
 -- AUTO_INCREMENT de la tabla `genero`
 --
 ALTER TABLE `genero`
-  MODIFY `id_genero` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_genero` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `genero_subgenero`
 --
 ALTER TABLE `genero_subgenero`
-  MODIFY `id_genero_subgenero` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id_genero_subgenero` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT de la tabla `ip`
@@ -1088,13 +1120,13 @@ ALTER TABLE `ip`
 -- AUTO_INCREMENT de la tabla `pelicula`
 --
 ALTER TABLE `pelicula`
-  MODIFY `id_pelicula` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+  MODIFY `id_pelicula` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT de la tabla `pelicula_genero`
 --
 ALTER TABLE `pelicula_genero`
-  MODIFY `id_pelicula_genero` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=177;
+  MODIFY `id_pelicula_genero` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=186;
 
 --
 -- AUTO_INCREMENT de la tabla `perfil`
@@ -1131,6 +1163,12 @@ ALTER TABLE `usuario_direccion`
 --
 
 --
+-- Filtros para la tabla `campo_dinamico_comentario`
+--
+ALTER TABLE `campo_dinamico_comentario`
+  ADD CONSTRAINT `campo_dinamico_comentario_ibfk_1` FOREIGN KEY (`id_comentario`) REFERENCES `comentario` (`id_comentario`);
+
+--
 -- Filtros para la tabla `campo_dinamico_pelicula`
 --
 ALTER TABLE `campo_dinamico_pelicula`
@@ -1161,8 +1199,7 @@ ALTER TABLE `ip`
 -- Filtros para la tabla `pelicula`
 --
 ALTER TABLE `pelicula`
-  ADD CONSTRAINT `pelicula_ibfk_1` FOREIGN KEY (`id_clasificacion`) REFERENCES `clasificacion` (`id_clasificacion`),
-  ADD CONSTRAINT `pelicula_ibfk_3` FOREIGN KEY (`id_clasificacion`) REFERENCES `clasificacion` (`id_clasificacion`);
+  ADD CONSTRAINT `pelicula_ibfk_1` FOREIGN KEY (`id_clasificacion`) REFERENCES `clasificacion` (`id_clasificacion`);
 
 --
 -- Filtros para la tabla `pelicula_genero`

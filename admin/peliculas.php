@@ -1,15 +1,10 @@
 <?php
 $PeliculasSidebar = true;
   include_once('header.php'); 
-  
-
-  //Devuelve el contenido de la tabla peliculas  
-  /*$peliculas = "SELECT *
-                FROM pelicula;";
-  $resultado = $con->query($peliculas); */
-
+  include_once('../Business/ClasificacionBusiness.php');
   require_once('../Business/PeliculaBusiness.php');
   $PeliculaB = new PeliculaBusiness($con);
+  $ClasificacionB = new ClasificacionBusiness($con);
 
 if(isset($_GET['del'])){
 
@@ -58,7 +53,7 @@ if(isset($_GET['status'])){
               <span class="m-0 font-weight-bold text-primary">Borrador()</span>
               <span class="m-0 font-weight-bold text-primary">|</span>
               <span class="m-0 font-weight-bold text-primary">Pendiente()</span>
-              <a href="new-pelicula.php"><input class="btn btn-danger" type="submit" value="Añadir Pelicula"></a>
+              <a href="modify-pelicula.php"><input class="btn btn-danger" type="submit" value="Añadir Pelicula"></a>
               <input class="btn btn-danger" type="submit" value="Importar">
               <input class="btn btn-danger" type="submit" value="Exportar">
             </div>
@@ -87,14 +82,16 @@ if(isset($_GET['status'])){
                   </thead>
                   <tbody>
                   <?php
-                  foreach($PeliculaB->getEntradas() as $peli){ ?>
+                  foreach($PeliculaB->getEntradas() as $peli){ 
+                    $result=$ClasificacionB->getEntrada($peli->getIDClasificacion());?>
+                  
                     <tr align="center">
                     <td><?php echo $peli->getID(); ?></td>
                     <td><?php echo $peli->getStatus(); ?></td>
                       <td><?php echo $peli->getNombre(); ?></td>
                       <td><img class="img-fluid" src="../Front/images/<?php echo $peli->getID() ?>.jpg" alt=""></td>
                       <td><?php echo $peli->getPrecio(); ?></td>
-                      <td><?php echo $peli->getIDClasificacion(); ?></td>
+                      <td><?php echo $result->getNombre(); ?></td>
                       <td><?php 
 
                             

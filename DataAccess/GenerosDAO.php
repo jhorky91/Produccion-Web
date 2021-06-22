@@ -20,7 +20,7 @@ class GeneroDAO extends DAO{
         
     }
     public function getOneIDPeli($id){
-        $sql = "SELECT G.id_genero, G.nombre FROM genero G
+        $sql = "SELECT DISTINCT G.id_genero, G.nombre FROM genero G
         INNER JOIN genero_subgenero GS ON G.id_genero = GS.id_genero
         INNER JOIN pelicula_genero PG ON GS.id_genero_subgenero = PG.id_genero_subgenero
         WHERE G.status=1 AND PG.id_pelicula=".$id;

@@ -9,7 +9,11 @@ class PeliculaBusiness {
     function __construct($con){
         $this->PeliculasDAO = new PeliculasDAO($con);
     }
-    
+
+    public function Add($datos){
+        $entrada = $this->PeliculasDAO->save($datos);
+    }
+  
     public function getEntrada($id){
         $entrada = $this->PeliculasDAO->getOne($id); 
 

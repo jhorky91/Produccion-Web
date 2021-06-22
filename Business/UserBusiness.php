@@ -29,13 +29,10 @@ class UserBusiness {
         return $this->UserDAO->contarActivos();
     }
     public function SessionUser($datos = array()){
-        $entradas = $this->UserDAO->userCliente($datos);
+        $entradas = $this->UserDAO->sessionUser($datos);
         return $entradas;
     }
-    public function SessionAdmin($datos = array()){
-        $entradas = $this->UserDAO->userAdmin($datos);
-        return $entradas;
-    }
+    
     public function cambioStatus($id,$sta){
         $entradas = $this->UserDAO->cambioStatus($id,$sta); 
 

@@ -6,12 +6,19 @@ session_start();
 
 require_once('../Business/UserBusiness.php');
 $get = new UserBusiness($con);
-
+require_once('../Business/PerfilBusiness.php');
+$perfil = new PerfilBusiness($con);
 
 if(isset($_POST['login'])){
   
   $resul= $get->SessionUser($_POST);
   if($resul ==true){
+    foreach($perfil->getPerfilUsuario($resul->getIDUsuario()) as $res){
+      if($res->getNombre()=='Admin'){
+        $_SESSION['admin'] = true;
+      }
+    }
+    
 
         $_SESSION['usuario_logueado'] = true;
         $_SESSION['user'] = $resul->getNombre()." ".$resul->getApellido();
@@ -28,6 +35,8 @@ if(isset($_POST['login'])){
 if(isset($_GET['logout'])){
   unset($_SESSION['usuario_logueado']);
   unset($_SESSION['user']);
+  unset($_SESSION['admin']);
+  unset($_SESSION['id']);
   $_SESSION['error'] = "0";
 }
 ?>
@@ -101,7 +110,11 @@ if(isset($_GET['logout'])){
                                      <a href="login.php"><button class="dropdown-item" type="button" >Login</button></a>
                                      <a href="register.php"><button class="dropdown-item" type="button">Register</button></a>
                                   <?php } ?>
-
+                                  
+                                  <?php if(isset($_SESSION['admin'])&&$_SESSION['admin']==true) { ?> 
+                                  
+                                  <a href="admin/index.php"><button class="dropdown-item" name="panelAdmin" type="button">Panel Admin</button></a>
+                                  <?php } ?>
 
                                   <?php if(isset($_SESSION['user'])) { ?> 
                                   
