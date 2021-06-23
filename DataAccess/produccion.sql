@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-06-2021 a las 08:04:04
+-- Tiempo de generación: 23-06-2021 a las 23:51:32
 -- Versión del servidor: 10.4.18-MariaDB
 -- Versión de PHP: 8.0.3
 
@@ -70,6 +70,7 @@ CREATE TABLE `campo_dinamico_comentario` (
 --
 
 CREATE TABLE `campo_dinamico_pelicula` (
+  `id_campo_dinamico_pelicula` int(11) NOT NULL,
   `id_pelicula` int(11) NOT NULL,
   `nombre` varchar(30) COLLATE utf32_unicode_ci NOT NULL,
   `detalle` varchar(300) COLLATE utf32_unicode_ci NOT NULL
@@ -957,6 +958,7 @@ ALTER TABLE `campo_dinamico_comentario`
 -- Indices de la tabla `campo_dinamico_pelicula`
 --
 ALTER TABLE `campo_dinamico_pelicula`
+  ADD PRIMARY KEY (`id_campo_dinamico_pelicula`),
   ADD KEY `id_pelicula` (`id_pelicula`);
 
 --
@@ -1079,6 +1081,12 @@ ALTER TABLE `admin`
 --
 ALTER TABLE `campo_dinamico_comentario`
   MODIFY `id_campo_dinamico_comentario` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `campo_dinamico_pelicula`
+--
+ALTER TABLE `campo_dinamico_pelicula`
+  MODIFY `id_campo_dinamico_pelicula` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `clasificacion`
