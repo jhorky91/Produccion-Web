@@ -28,8 +28,13 @@ $ClasificacionB = new ClasificacionBusiness($con);
                      'subgeneros' => $_POST['tSubGene']);
     
 
-      $PeliculaB->Add($datos);
-      //IMAGENES y CAMPOS DINAMICOS
+      $id=$PeliculaB->Add($datos);
+
+      //IMAGENES
+      if(!empty($_FILES['imagen'])){
+        $PeliculaB->saveImage($id,$_FILES['imagen']);
+      }
+      // y CAMPOS DINAMICOS
       redirect('peliculas.php');
     
     }
@@ -56,6 +61,12 @@ $ClasificacionB = new ClasificacionBusiness($con);
         'status'=> $_POST['status']
       );
       $GeneroB->Add($datos, $res);
+      
+      //IMAGENES
+      if(!empty($_FILES['imagen'])){
+        $PeliculaB->saveImage($id,$_FILES['imagen']);
+      }
+
       redirect('generos.php');
     }
   ?>
@@ -239,7 +250,7 @@ $ClasificacionB = new ClasificacionBusiness($con);
                         </tr>                                                  
                         <tr>
                           <td align="right"><label for="txtImg">Imagen:</label></td>
-                          <td><input type="file" id="txtImg" name="tImg" value="Examinar" accept="image/*" class="bg-danger text-white"></td>
+                          <td><input type="file" id="txtImg" name="imagen[]" value="Examinar" accept="image/*" class="bg-danger text-white" multiple></td>
                         </tr>
                         <tr>
                           <td align="right"><label for="txtDescripcion">Descripción:</label></td>

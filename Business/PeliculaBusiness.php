@@ -58,6 +58,32 @@ class PeliculaBusiness {
 
         return $entradas;
     }
+
+    public function saveImage($id,$imagenes){
+        var_dump($imagenes);
+        $tamanhos = array(0 => array('nombre'=>'big','ancho'=>'100','alto'=>'200'),
+                          1 => array('nombre'=>'small','ancho'=>'50','alto'=>'100'),
+                          2 => array('nombre'=>'xl','ancho'=>'500','alto'=>'1000'));
+        $ruta = DIR_BASE.'Front/imagenes/'.$id.'/';
+        if(!is_dir($ruta)){
+            mkdir($ruta);
+        }
+        $imgCant = cant_imagenes($ruta);
+        if(is_array($imagenes['name'])){
+            foreach($imagenes['name'] as $index=>$valor){
+                redimensionar($ruta,$imagenes['name'][$index],$imagenes['tmp_name'][$index],$imgCant+$index,$tamanhos);
+            }
+        }else{
+            redimensionar($ruta,$imagenes['name'],$imagenes['tmp_name'],$imgCant,$tamanhos);
+        }
+ 
+
+    }
+
+    public function getImagenes($id){
+        return obtener_imagenes('Front/imagenes/'.$id);
+    }
+
 }
 
 

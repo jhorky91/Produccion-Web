@@ -122,7 +122,7 @@ class PeliculasDAO extends DAO{
                 $this->con->exec($sql);
             }
         }
-
+        return $id ;
     }
 
     public function modify($id, $datos = array()){

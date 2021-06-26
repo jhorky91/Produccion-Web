@@ -22,19 +22,13 @@ function redirect($pURL)
 //					  1 => array('nombre'=>'small','ancho'=>'500','alto'=>'1000'),
 //					  2 => array('nombre'=>'thumb','ancho'=>'50','alto'=>'70'));
 				  
-function redimensionar($ruta,$file_name,$uploadedfile,$id,$tamanhos){
+function redimensionar($ruta,$file_name,$uploadedfile,$posicion,$tamanhos){
 	$filename = stripslashes($file_name);
  	$extension = getExtension($filename);
  	$extension = strtolower($extension);
 	if (($extension != "jpg") && ($extension != "jpeg") && ($extension != "png") && ($extension != "gif")) {
  		$errors=1;
- 	}else{
-		$size=filesize($uploadedfile);
-        
-		if ($size > 2*1024){
-			$errors=2;
-		}
-		 
+ 	}else{ 
 		if($extension=="jpg" || $extension=="jpeg" ){ 
 			$src = imagecreatefromjpeg($uploadedfile);
 		}else if($extension=="png"){ 
@@ -44,12 +38,7 @@ function redimensionar($ruta,$file_name,$uploadedfile,$id,$tamanhos){
 		}else{
 			$src = imagecreatefromgif($uploadedfile);
 		}
-// 		echo $scr;
-         
-		// $size = getimagesize($uploadedfile);
-		//  $width = $size[0];
-		//  $height = $size[1];
-		 
+
 		list($width,$height)=getimagesize($uploadedfile);
 		foreach($tamanhos as $tam){
 			$newwidth = $tam['ancho'];
@@ -59,23 +48,22 @@ function redimensionar($ruta,$file_name,$uploadedfile,$id,$tamanhos){
 				$newheight = $tam['alto'];
 				$newwidth=($width/$height)*$newheight;
 				if($newwidth > $tam['ancho']){
-					$height = $newheight;
-					$width = $newwidth;
-					$newheight=($height/$width)*$newwidth;
+					$nheight = $newheight;
+					$nwidth = $newwidth;
+					$newheight=($nheight/$nwidth)*$tam['ancho'];
 				}
 			}
 			$tmp=imagecreatetruecolor($newwidth,$newheight);
 			if($extension == "png"){
-				$rojo = imagecolorallocate($tmp, 234, 234, 234);
-				imagefill($tmp, 0, 0, $rojo);
+				$gris = imagecolorallocate($tmp, 234, 234, 234);
+				imagefill($tmp, 0, 0, $gris);
 			}
 			imagecopyresampled($tmp,$src,0,0,0,0,$newwidth,$newheight,$width,$height);
 			
-			// img_0_small.png
-			$filename = $ruta.'img_'.$id.'_'.$tam['nombre'].'.'.$extension;
+			$filename = $ruta.'img_'.$posicion.'_'.$tam['nombre'].'.'.$extension;
+			//$filename = $ruta.$tam['nombre'].$file_name;
 			if($extension == "png"){
-				$rojo = imagecolorallocate($tmp, 234, 234, 234);
-				imagecolortransparent($tmp,$rojo);
+				imagecolortransparent($tmp,$gris);
 				imagepng($tmp,$filename,9);
 			}elseif($extension == 'gif'){
 				imagegif($tmp,$filename,100);
@@ -89,19 +77,51 @@ function redimensionar($ruta,$file_name,$uploadedfile,$id,$tamanhos){
 	}
 }
 
+function obtener_imagenes($ruta){
+	$galeria = array();
+	if(is_dir(DIR_BASE.$ruta)){
+		$directorio=opendir(DIR_BASE.$ruta); 
+		while ($archivo = readdir($directorio) ){
+			if( $archivo != '.' and $archivo != '..' and stristr($archivo,'small') !== false){
+				//img_1_small.png
+				//$data = explode('_',$archivo);
+				list($img,$pos,$resto) = explode('_',$archivo);
+				$galeria[$pos] = URL_BASE.$ruta.$archivo;
+			}
+		}
+		closedir($directorio); 
+	}
+    sort($galeria);
+	return $galeria;
+}
+
+function cant_imagenes($dir){ 
+	$i = 0;
+	if(is_dir($dir)){
+		$dh = opendir($dir);
+		while (($file = readdir($dh)) !== false){
+			if ($file!="." && $file!=".."){ 
+				if(stristr($file,'small') !== false)
+				$i++;
+			}
+		}
+	}
+	return $i;
+}
+
 //funcion para obtener la extension
- function getExtension($str) {
-         $i = strrpos($str,".");
-         if (!$i) { return ""; }
-         $l = strlen($str) - $i;
-         $ext = substr($str,$i+1,$l);
-         return $ext;
- }
+function getExtension($str) {
+    $i = strrpos($str,".");
+    if (!$i) { return ""; }
+    $l = strlen($str) - $i;
+    $ext = substr($str,$i+1,$l);
+    return $ext;
+}
  
  //Funcion para borrar imagenes
-function eliminar_archivos($carpeta,$id)
+ function eliminar_archivos($dir)
 {
-	$dir = '../file_sitio/'.$carpeta.'/'.$id.'/';
+
 	if(is_dir($dir)){
 		$directorio=opendir($dir); 
 		while ($archivo = readdir($directorio))
@@ -230,21 +250,7 @@ function obtener_archivos($ruta){
 	return $file;
 }
 
-function obtener_imagenes($ruta){
-	$galeria = '';
-	if(is_dir($ruta)){
-		$directorio=opendir($ruta); 
-		while ($archivo = readdir($directorio) ){
-			if( $archivo != '.' and $archivo != '..' and stristr($archivo,'big') !== false){
-				$galeria .= '<li>
-					<img src="'.$ruta.$archivo.'" alt="'.$archivo.'">
-				</li>';
-			}
-		}
-		closedir($directorio); 
-	}
-	return $galeria;
-}
+
 
 
 
@@ -262,20 +268,6 @@ function rellenar_izq($long_total,$valor='',$relleno=' '){
 }
 
 
-function cant_imagenes($carpeta,$id,$base ='../' ){
-	$ruta = $base.'file_sitio/'.$carpeta.'/'.$id.'/';
-	$i = 0;
-	if(is_dir($ruta)){
-		$dh = opendir($ruta);
-		while (($file = readdir($dh)) !== false){
-			if ($file!="." && $file!=".."){ 
-				if(stristr($file,'mini') !== false)
-				$i++;
-			}
-		}
-	}
-	return $i;
-}
 
 function get_client_ip() {
 	//$ipaddress = '';
