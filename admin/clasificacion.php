@@ -54,13 +54,11 @@ if(isset($_GET['status'])){
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-1">
-              <span class="m-0 font-weight-bold text-primary">Todo()</span>
-              <span class="m-0 font-weight-bold text-primary">|</span>
-              <span class="m-0 font-weight-bold text-primary">Publicado()</span>
-              <span class="m-0 font-weight-bold text-primary">|</span>
-              <span class="m-0 font-weight-bold text-primary">Borrador()</span>
-              <span class="m-0 font-weight-bold text-primary">|</span>
-              <span class="m-0 font-weight-bold text-primary">Pendiente()</span>
+            <span class="m-0 font-weight-bold text-danger">Todo(<?php echo $ClasificacionB->contar(); ?>)</span>
+              <span class="m-0 font-weight-bold text-danger">|</span>
+              <span class="m-0 font-weight-bold text-danger">Publicado(<?php echo $ClasificacionB->contarActivos(); ?>)</span>
+              <span class="m-0 font-weight-bold text-danger">|</span>
+              <span class="m-0 font-weight-bold text-danger">Pendiente(<?php echo $ClasificacionB->contarInactivos(); ?>)</span>
               <a href="modify-clasific.php"><input class="btn btn-danger" type="submit" value="Añadir Clasificacion"></a>
               <input class="btn btn-danger" type="submit" value="Importar">
               <input class="btn btn-danger" type="submit" value="Exportar">
@@ -88,10 +86,10 @@ if(isset($_GET['status'])){
                       <td><?php echo $peli->getNombre(); ?></td>
                       <td><?php echo $peli->getDescripcion(); ?></td>
                       <td><center>
-                      <a href="modify-clasific.php?edit=<?php echo $peli->getID();?>"><i class="fas fa-edit"></a></i>&nbsp;&nbsp;
-                      <a href="clasificacion.php?del=<?php echo $peli->getID();?>"><i class="fas fa-trash-alt"></a></i>&nbsp;&nbsp;
+                      <a href="modify-clasific.php?edit=<?php echo $peli->getID();?>"><i class="fas fa-edit text-danger"></a></i>&nbsp;&nbsp;
+                      <a href="clasificacion.php?del=<?php echo $peli->getID();?>"><i class="fas fa-trash-alt text-danger"></a></i>&nbsp;&nbsp;
                       <a href="clasificacion.php?status=<?php echo $peli->getID();?>"> <i class="
-                      <?php if($peli->getStatus() == 0){ echo 'fas fa-circle'; } else { echo 'fas fa-check-circle'; } ?>
+                      <?php if($peli->getStatus() == 0){ echo 'fas fa-circle'; } else { echo 'fas fa-check-circle text-danger'; } ?>
                       "></i></a>
                       </td>
                     </tr>

@@ -4,24 +4,11 @@ include_once('header.php');
 
 require_once('../Helpers/config.php');
 
-require_once('../Business/AdminBusiness.php');
 require_once('../Business/UserBusiness.php');
 require_once('../Business/PeliculaBusiness.php');
-$AdminB = new AdminBusiness($con);
+
 $UserB = new UserBusiness($con);
 $PeliB = new PeliculaBusiness($con);
-/*
-$contAdmin = "SELECT COUNT(*) as cont_admin
-                FROM admin;";
-  $resultAdmin = $con->query($contAdmin);
-
-$contUser = "SELECT COUNT(*) as cont_user
-                FROM usuario;";
-  $resultUser = $con->query($contUser);
-
-$contPeli = "SELECT COUNT(*) as cont_peli
-                FROM pelicula;";
-  $resultPeli = $con->query($contPeli);*/
 
 ?>
 
@@ -47,7 +34,7 @@ $contPeli = "SELECT COUNT(*) as cont_peli
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Admin (Registrados)</div>
                                           
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $AdminB->contar(); ?></div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $UserB->contar($Perfil="Admin"); ?></div>
                                            
                                         </div>
                                         <div class="col-auto">
@@ -68,7 +55,7 @@ $contPeli = "SELECT COUNT(*) as cont_peli
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 Usuarios (Registrados)</div>
                                                                                  
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $UserB->contar(); ?></div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $UserB->contar($Perfil='Cliente') ?></div>
                                           
                                         </div>
                                         <div class="col-auto">

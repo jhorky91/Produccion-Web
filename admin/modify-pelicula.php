@@ -35,7 +35,7 @@ $ClasificacionB = new ClasificacionBusiness($con);
         $PeliculaB->saveImage($id,$_FILES['imagen']);
       }
       // y CAMPOS DINAMICOS
-      redirect('peliculas.php');
+      //redirect('peliculas.php');
     
     }
 

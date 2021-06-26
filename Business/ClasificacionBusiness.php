@@ -38,6 +38,10 @@ class ClasificacionBusiness {
         return $this->ClasificacionDAO->contarActivos();
     }
 
+    public function contarInactivos(){
+        return $this->ClasificacionDAO->contarInactivos();
+    }
+
     public function Add($datos = array()) {
         return $this->ClasificacionDAO->save($datos);
     }

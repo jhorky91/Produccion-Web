@@ -41,6 +41,14 @@ class PerfilBusiness{
         return $this->PerfilDAO->contar();
     }
 
+    public function contarActivos(){
+        return $this->PerfilDAO->contarActivos();
+    }
+
+    public function contarInactivos(){
+        return $this->PerfilDAO->contarInactivos();
+    }
+
     public function PerfilPermisos($id){
         $perfil = $this->PerfilDAO->PerfilPermisos($id); 
 
@@ -50,6 +58,11 @@ class PerfilBusiness{
         $perfil = $this->PerfilDAO->getAllByUser($id); 
 
         return $perfil;
+    }
+    public function cambioStatus($id,$sta){
+        $entradas = $this->PerfilDAO->cambioStatus($id,$sta); 
+
+        return $entradas;
     }
 
     

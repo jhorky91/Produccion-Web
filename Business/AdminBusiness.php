@@ -23,11 +23,15 @@ class AdminBusiness {
     }
 
     public function contar(){
-        return $this->AdminDAO->contar();
+        return $this->AdminDAO->contarUsuarios();
     }
 
     public function contarActivos(){
-        return $this->AdminDAO->contarActivos();
+        return $this->AdminDAO->contarUsuariosActivos();
+    }
+
+    public function contarInactivos(){
+        return $this->AdminDAO->contarUsuariosInactivos();
     }
     public function cambioStatus($id,$sta){
         $entradas = $this->AdminDAO->cambioStatus($id,$sta); 

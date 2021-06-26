@@ -52,13 +52,11 @@ if(isset($_GET['status'])){
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-1">
-              <span class="m-0 font-weight-bold text-primary">Todo()</span>
-              <span class="m-0 font-weight-bold text-primary">|</span>
-              <span class="m-0 font-weight-bold text-primary">Publicado()</span>
-              <span class="m-0 font-weight-bold text-primary">|</span>
-              <span class="m-0 font-weight-bold text-primary">Borrador()</span>
-              <span class="m-0 font-weight-bold text-primary">|</span>
-              <span class="m-0 font-weight-bold text-primary">Pendiente()</span>
+            <span class="m-0 font-weight-bold text-danger">Todo(<?php echo $GeneroB->contar(); ?>)</span>
+              <span class="m-0 font-weight-bold text-danger">|</span>
+              <span class="m-0 font-weight-bold text-danger">Publicado(<?php echo $GeneroB->contarActivos(); ?>)</span>
+              <span class="m-0 font-weight-bold text-danger">|</span>
+              <span class="m-0 font-weight-bold text-danger">Pendiente(<?php echo $GeneroB->contarInactivos(); ?>)</span>
               <a href="modify-genero.php"><input class="btn btn-danger" type="submit" value="Añadir Género"></a>
               <input class="btn btn-danger" type="submit" value="Importar">
               <input class="btn btn-danger" type="submit" value="Exportar">
@@ -84,10 +82,10 @@ if(isset($_GET['status'])){
                     <td><?php echo $cat->getStatus(); ?></td>
                       <td><?php echo $cat->getNombre(); ?></td>
                       <td><center>
-                      <a href="modify-genero.php?edit=<?php echo $cat->getID();?>"><i class="fas fa-edit"></i></a>&nbsp;&nbsp;
-                      <a href="generos.php?del=<?php echo $cat->getID();?>"><i class="fas fa-trash-alt"></i></a>&nbsp;&nbsp;
+                      <a href="modify-genero.php?edit=<?php echo $cat->getID();?>"><i class="fas fa-edit text-danger"></i></a>&nbsp;&nbsp;
+                      <a href="generos.php?del=<?php echo $cat->getID();?>"><i class="fas fa-trash-alt text-danger"></i></a>&nbsp;&nbsp;
                       <a href="generos.php?status=<?php echo $cat->getID();?>"> <i class="
-                      <?php if($cat->getStatus() == 0){ echo 'fas fa-circle'; } else { echo 'fas fa-check-circle'; } ?>
+                      <?php if($cat->getStatus() == 0){ echo 'fas fa-circle'; } else { echo 'fas fa-check-circle text-danger'; } ?>
                       "></i></a>
 
                       </td>

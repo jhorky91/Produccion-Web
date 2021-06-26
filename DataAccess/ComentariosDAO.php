@@ -2,6 +2,8 @@
 
 require_once('DAO.php');
 require_once('../Models/ComentarioEntity.php');
+require_once('../Models/UsuarioEntity.php');
+require_once('../Business/UserBusiness.php');
 
 class ComentariosDAO extends DAO{
 
@@ -21,7 +23,7 @@ class ComentariosDAO extends DAO{
 
     public function getAll($where = array()){
 
-        $sql = "SELECT id_comentario,status,fecha,rating,titulo,comentario, id_pelicula,id_usuario FROM $this->table WHERE status=1";
+        $sql = "SELECT id_comentario,status,fecha,rating,titulo,comentario, id_pelicula,id_usuario FROM $this->table";
         $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'ComentarioEntity')->fetchAll();
         return $resultado;
 
@@ -32,6 +34,13 @@ class ComentariosDAO extends DAO{
 
         $sql = "SELECT * FROM $this->table WHERE status=1 AND id_usuario=".$id;
         return $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'ComentarioEntity')->fetchAll();   
+
+    }
+
+    public function getNombreUser($id){
+
+        $sql = "SELECT nombre, apellido FROM usuario WHERE id_usuario = $id";
+        return $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'UsuarioEntity')->fetch();   
 
     }
 

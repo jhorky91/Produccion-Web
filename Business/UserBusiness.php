@@ -21,12 +21,16 @@ class UserBusiness {
 
         return $entradas;
     }
-    public function contar(){
-        return $this->UserDAO->contar();
+    public function contar($dato){
+        return $this->UserDAO->contarUsuarios($dato);
     }
 
-    public function contarActivos(){
-        return $this->UserDAO->contarActivos();
+    public function contarActivos($dato){
+        return $this->UserDAO->contarUsuariosActivos($dato);
+    }
+
+    public function contarInactivos($dato){
+        return $this->UserDAO->contarUsuariosInactivos($dato);
     }
     public function SessionUser($datos = array()){
         $entradas = $this->UserDAO->sessionUser($datos);

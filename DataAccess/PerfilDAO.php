@@ -17,14 +17,14 @@ class PerfilDAO extends DAO{
 
 
     public function getAll($where = array()){
-        $sql = "SELECT id_perfil, nombre FROM $this->table WHERE status = 1 "; 
+        $sql = "SELECT id_perfil, status, nombre FROM $this->table "; 
         $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'PerfilEntity')->fetchAll();
         return $resultado;
 
     }
 
     public function getAllByUser($userId){
-        $sql = "SELECT P.id_perfil, P.nombre  
+        $sql = "SELECT P.id_perfil, P.nombre, status  
                 FROM perfil P
                 INNER JOIN usuario_perfil UP ON UP.id_perfil = P.id_perfil
                 WHERE UP.id_usuario = ".$userId ;  
@@ -45,10 +45,8 @@ class PerfilDAO extends DAO{
     }
     
     public function getOne($id){
-            $sql = "SELECT id_perfil, nombre FROM $this->table WHERE id_perfil = ".$id;
+            $sql = "SELECT id_perfil, nombre, status FROM $this->table WHERE id_perfil = ".$id;
             $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'PerfilEntity')->fetch();
-            //$resultado->setPermisos($this->permisoDAO->getAllByPerfil($id));
-
             return $resultado;
     }
 

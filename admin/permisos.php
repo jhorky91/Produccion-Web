@@ -38,13 +38,8 @@ if(isset($_GET['del'])){
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-1">
-              <span class="m-0 font-weight-bold text-primary">Todo()</span>
-              <span class="m-0 font-weight-bold text-primary">|</span>
-              <span class="m-0 font-weight-bold text-primary">Publicado()</span>
-              <span class="m-0 font-weight-bold text-primary">|</span>
-              <span class="m-0 font-weight-bold text-primary">Borrador()</span>
-              <span class="m-0 font-weight-bold text-primary">|</span>
-              <span class="m-0 font-weight-bold text-primary">Pendiente()</span>
+            <span class="m-0 font-weight-bold text-danger">Todo(<?php echo $PermisoB->contar(); ?>)</span>
+             
               <a href="modify-permiso.php"><input class="btn btn-danger" type="submit" value="Añadir Clasificacion"></a>
               <input class="btn btn-danger" type="submit" value="Importar">
               <input class="btn btn-danger" type="submit" value="Exportar">
@@ -72,8 +67,8 @@ if(isset($_GET['del'])){
                       <td><?php echo $peli->getCode(); ?></td>
                       <td><?php echo $peli->getModule(); ?></td>
                       <td><center>
-                      <a href="modify-permiso.php?edit=<?php echo $peli->getID();?>"><i class="fas fa-edit"></a></i>&nbsp;&nbsp;
-                      <a href="permisos.php?del=<?php echo $peli->getID();?>"><i class="fas fa-trash-alt"></i></a></i></center>
+                      <a href="modify-permiso.php?edit=<?php echo $peli->getID();?>"><i class="fas fa-edit text-danger"></a></i>&nbsp;&nbsp;
+                      <a href="permisos.php?del=<?php echo $peli->getID();?>"><i class="fas fa-trash-alt text-danger"></i></a></i></center>
                       </td>
                     </tr>
                   <?php } ?>

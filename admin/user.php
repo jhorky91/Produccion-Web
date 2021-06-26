@@ -2,7 +2,7 @@
 $UsuarioSidebar = true;
 include('header.php'); 
 include_once('../Helpers/funcs.php');
-
+$Perfil="Cliente";
 //Devuelve el contenido de la tabla Usuarios    
 
 /*$usuarios = "SELECT id_usuario,status,nombre,apellido,fecha,fecha_nac,usuario,email,telefono,pedidos,dinero_gastado FROM usuario";
@@ -69,13 +69,11 @@ if(isset($_GET['status'])){
        <h1 class="h3 mb-2 text-gray-800">Gestionar Clientes</h1>
           <div class="card shadow mb-4">
             <div class="card-header py-1">
-              <span class="m-0 font-weight-bold text-primary">Todo()</span>
-              <span class="m-0 font-weight-bold text-primary">|</span>
-              <span class="m-0 font-weight-bold text-primary">Publicado()</span>
-              <span class="m-0 font-weight-bold text-primary">|</span>
-              <span class="m-0 font-weight-bold text-primary">Borrador()</span>
-              <span class="m-0 font-weight-bold text-primary">|</span>
-              <span class="m-0 font-weight-bold text-primary">Pendiente()</span>
+            <span class="m-0 font-weight-bold text-danger">Todo(<?php echo $UserB->contar($Perfil); ?>)</span>
+              <span class="m-0 font-weight-bold text-danger">|</span>
+              <span class="m-0 font-weight-bold text-danger">Publicado(<?php echo $UserB->contarActivos($Perfil); ?>)</span>
+              <span class="m-0 font-weight-bold text-danger">|</span>
+              <span class="m-0 font-weight-bold text-danger">Pendiente(<?php echo $UserB->contarInactivos($Perfil); ?>)</span>
               <a href="modify-usuario.php"><input class="btn btn-danger" type="submit" value="Añadir Cliente"></a>
               <input class="btn btn-danger" type="submit" value="Imprimir">
               <input class="btn btn-danger" type="submit" value="PDF">
@@ -137,10 +135,10 @@ if(isset($_GET['status'])){
                       <td><?php echo $us->getDineroGastado(); ?></td>
 
                       <td><center>
-                      <a href="modify-usuario.php?edit=<?php echo $us->getIDUsuario();?>&user"><i class="fas fa-edit"></a></i>&nbsp;&nbsp;
-                      <a href="user.php?del=<?php echo $us->getIDUsuario();?>"><i class="fas fa-trash-alt"></a></i>&nbsp;&nbsp;
+                      <a href="modify-usuario.php?edit=<?php echo $us->getIDUsuario();?>&user"><i class="fas fa-edit text-danger"></a></i>&nbsp;&nbsp;
+                      <a href="user.php?del=<?php echo $us->getIDUsuario();?>"><i class="fas fa-trash-alt text-danger"></a></i>&nbsp;&nbsp;
                       <a href="user.php?status=<?php echo $us->getIDUsuario();?>"> <i class="
-                      <?php if($us->getStatus() == 0){ echo 'fas fa-circle'; } else { echo 'fas fa-check-circle'; } ?>
+                      <?php if($us->getStatus() == 0){ echo 'fas fa-circle'; } else { echo 'fas fa-check-circle text-danger'; } ?>
                       "></i></a>
                       </td>
                     </tr>

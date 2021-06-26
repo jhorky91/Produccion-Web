@@ -32,6 +32,12 @@ abstract class DAO{
         return $cont['total'];
     }
 
+    public function contarInactivos(){
+        $sql = "SELECT count(*) as total FROM $this->table WHERE status=0";
+        $cont=$this->con->query($sql)->fetch();
+        return $cont['total'];
+    }
+
     public function cambioStatus($id,$sta){
         $sql = "UPDATE $this->table SET status=$sta WHERE id_$this->table = $id";
         $cont=$this->con->exec($sql);

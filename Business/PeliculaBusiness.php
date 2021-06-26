@@ -26,13 +26,7 @@ class PeliculaBusiness {
         return $entradas;
     }
 
-    public function contar(){
-        return $this->PeliculasDAO->contar();
-    }
-
-    public function contarActivos(){
-        return $this->PeliculasDAO->contarActivos();
-    }
+    
     public function getMod($id,$datos = array()){
         $entradas = $this->PeliculasDAO->modify($id, $datos); 
 
@@ -57,6 +51,18 @@ class PeliculaBusiness {
         $entradas = $this->PeliculasDAO->cambioStatus($id,$sta); 
 
         return $entradas;
+    }
+
+    public function contar(){
+        return $this->PeliculasDAO->contar();
+    }
+
+    public function contarActivos(){
+        return $this->PeliculasDAO->contarActivos();
+    }
+
+    public function contarInactivos(){
+        return $this->PeliculasDAO->contarInactivos();
     }
 
     public function saveImage($id,$imagenes){

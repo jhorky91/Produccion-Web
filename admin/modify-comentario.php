@@ -2,42 +2,10 @@
 include('header.php');
 include_once('../Helpers/funcs.php');
 
-//obtengo el contenido del archivo
-$datos = file_get_contents('../../DataAccess/comentarios.json');
-//convierto a un array
-$datosJson = json_decode($datos,true);
-
-    if(isset($_POST['add'])){
-        
-    
-        if(isset($_GET['edit'])){
-            //modificando
-            $id = $_GET['edit'];
-        }else{
-            //agrego 
-            $id = date('Ymdhis');
-        }
-                
-        
-      
-
-        $datosJson[$id] = array('id'=>$id,'user'=>$_POST['tUser'], 'rating'=>$_POST['tRating'], 'comentario'=>$_POST['tComentario']);
-         
-        //echo '<pre>';
-        // var_dump($datosJson);
-        // echo '</pre>';
-        //trunco el archivo
-        $fp = fopen('../../DataAccess/comentaios.json','w');
-        //convierto a json string
-        $datosString = json_encode($datosJson);
-        //guardo el archivo
-        fwrite($fp,$datosString);
-        fclose($fp);
-        redirect('comentarios.php');
-    }
+include_once(DIR_BASE.'Business/ComentarioBusiness.php');
 
     if(isset($_GET['edit'])){
-        $dato = $datosJson[$_GET['edit']];
+        
     }
 ?>
 
@@ -61,23 +29,34 @@ $datosJson = json_decode($datos,true);
                     <form method="POST" action="" name="com" enctype="multipart/form-data">
                       <table class="table bg-gradient-dark text-white" id="dataTable" width="100%" cellspacing="0">
                         <tr>
+                          <td align="right"><label for="txtStatus">Status:</label</td>
+                          <td><input type="text" id="txtStatus" name="tStatus" value="<?php echo isset($dato)?$dato->getStatus():''?>" size="50" class="bg-danger text-white"></td>
+                        </tr>
+                        
+                        <tr>
                           <td align="right"><label for="txtUser">Usuario:</label</td>
-                          <td><input type="text" id="txtUser" name="tUser" value="<?php echo isset($dato)?$dato['user']:''?>" size="50" class="bg-danger text-white"></td>
+                          <td><input type="text" id="txtUser" name="tUser" value="<?php echo isset($dato)?$dato->getIDUsuario():''?>" size="50" class="bg-danger text-white"></td>
                         </tr>
 
                         <tr>
                           <td align="right"><label for="txtRating">ID Pelicula:</label</td>
-                          <td><input type="text" id="txtRating" name="tRating" value="<?php echo isset($dato)?$dato['peli']:''?>" size="50" class="bg-danger text-white"></td>
+                          <td><input type="text" id="txtRating" name="tRating" value="<?php echo isset($dato)?$dato->getIDPelicula():''?>" size="50" class="bg-danger text-white"></td>
                         </tr>
 
                         <tr>
                           <td align="right"><label for="txtRating">Rating:</label</td>
-                          <td><input type="text" id="txtRating" name="tRating" value="<?php echo isset($dato)?$dato['rating']:''?>" size="50" class="bg-danger text-white"></td>
+                          <td><input type="text" id="txtRating" name="tRating" value="<?php echo isset($dato)?$dato->getRating():''?>" size="50" class="bg-danger text-white"></td>
                         </tr>
 
                         <tr>
+                          <td align="right"><label for="txtTitulo">Titulo:</label</td>
+                          <td align="left"><textarea id="txtTitulo" name="tTitulo" cols="80" rows="5" class="bg-danger text-white"><?php echo isset($dato)?$dato->getTitulo():''?></textarea></td>
+                        </tr>                            
+                        <tr>
+
+                        <tr>
                           <td align="right"><label for="txtComentario">Comentario:</label</td>
-                          <td align="left"><textarea id="txtComentario" name="tComentario" cols="80" rows="5" class="bg-danger text-white"><?php echo isset($dato)?$dato['comentario']:''?></textarea></td>
+                          <td align="left"><textarea id="txtComentario" name="tComentario" cols="80" rows="5" class="bg-danger text-white"><?php echo isset($dato)?$dato->getComentario():''?></textarea></td>
                         </tr>                            
                         <tr>
 

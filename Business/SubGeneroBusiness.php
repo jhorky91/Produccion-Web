@@ -52,6 +52,10 @@ class SubGeneroBusiness {
         return $this->SubGeneroDAO->contarActivos();
     }
 
+    public function contarInactivos(){
+        return $this->SubGeneroDAO->contarInactivos();
+    }
+
     public function getEntradaIDPeli($id){
         $entradas = $this->SubGeneroDAO->getOneIDPeli($id); 
 

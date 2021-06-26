@@ -109,6 +109,54 @@ class UserDAO extends DAO{
         return $resultado;
 
     }
+
+    public function contarUsuarios($dato){
+        if($dato=='Admin'){
+            $sql = "SELECT count(*) as total FROM $this->table U 
+            INNER JOIN usuario_perfil UP ON U.id_usuario=UP.id_usuario
+            WHERE UP.id_perfil=12";
+            $cont=$this->con->query($sql)->fetch();
+            return $cont['total'];
+        }else{
+            $sql = "SELECT count(*) as total FROM $this->table U 
+            INNER JOIN usuario_perfil UP ON U.id_usuario=UP.id_usuario
+            WHERE UP.id_perfil=2";
+            $cont=$this->con->query($sql)->fetch();
+            return $cont['total'];
+        }
+    }
+
+    public function contarUsuariosActivos($dato){
+        if($dato=='Admin'){
+            $sql = "SELECT count(*) as total FROM $this->table U
+            INNER JOIN usuario_perfil UP ON U.id_usuario=UP.id_usuario
+            WHERE status=1 AND UP.id_perfil=12";
+            $cont=$this->con->query($sql)->fetch();
+            return $cont['total'];
+        }else{
+            $sql = "SELECT count(*) as total FROM $this->table U
+            INNER JOIN usuario_perfil UP ON U.id_usuario=UP.id_usuario
+            WHERE status=1 AND UP.id_perfil=2";
+            $cont=$this->con->query($sql)->fetch();
+            return $cont['total'];
+        }
+    }
+
+    public function contarUsuariosInactivos($dato){
+        if($dato=='Admin'){
+            $sql = "SELECT count(*) as total FROM $this->table U
+            INNER JOIN usuario_perfil UP ON U.id_usuario=UP.id_usuario
+            WHERE status=0 AND UP.id_perfil=12";
+            $cont=$this->con->query($sql)->fetch();
+            return $cont['total'];
+        }else{
+            $sql = "SELECT count(*) as total FROM $this->table U
+            INNER JOIN usuario_perfil UP ON U.id_usuario=UP.id_usuario
+            WHERE status=0 AND UP.id_perfil=2";
+            $cont=$this->con->query($sql)->fetch();
+            return $cont['total'];
+        }
+    }
     
 }
 

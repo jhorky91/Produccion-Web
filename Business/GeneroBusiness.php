@@ -52,6 +52,10 @@ class GeneroBusiness {
         return $this->GeneroDAO->contarActivos();
     }
 
+    public function contarInactivos(){
+        return $this->GeneroDAO->contarInactivos();
+    }
+
     public function getEntradaIDPeli($id){
         $entradas = $this->GeneroDAO->getOneIDPeli($id); 
 

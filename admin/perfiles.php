@@ -14,6 +14,25 @@ if(isset($_GET['del'])){
 
   redirect('perfiles.php');
 }
+
+if(isset($_GET['status'])){
+  $id = $_GET['status'];
+  
+  $perf = $PerfilB->getPerfil($id);
+
+  if($perf->getStatus()==1){
+    $sta = 0;
+  }else{
+    $sta = 1;
+  }
+  
+  $PerfilB->cambioStatus($id,$sta);
+
+  unset($_GET['status']);
+
+  redirect('perfiles.php');
+}
+
 ?>
 
         <!-- End of Topbar -->
@@ -29,25 +48,23 @@ if(isset($_GET['del'])){
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-1">
-              <span class="m-0 font-weight-bold text-primary">Todo()</span>
-              <span class="m-0 font-weight-bold text-primary">|</span>
-              <span class="m-0 font-weight-bold text-primary">Publicado()</span>
-              <span class="m-0 font-weight-bold text-primary">|</span>
-              <span class="m-0 font-weight-bold text-primary">Borrador()</span>
-              <span class="m-0 font-weight-bold text-primary">|</span>
-              <span class="m-0 font-weight-bold text-primary">Pendiente()</span>
+              <span class="m-0 font-weight-bold text-danger">Todo(<?php echo $PerfilB->contar(); ?>)</span>
+              <span class="m-0 font-weight-bold text-danger">|</span>
+              <span class="m-0 font-weight-bold text-danger">Publicado(<?php echo $PerfilB->contarActivos(); ?>)</span>
+              <span class="m-0 font-weight-bold text-danger">|</span>
+              <span class="m-0 font-weight-bold text-danger">Pendiente(<?php echo $PerfilB->contarInactivos(); ?>)</span>
               <a href="modify-perfil.php"><input class="btn btn-danger" type="submit" value="Añadir Perfil"></a>
               <input class="btn btn-danger" type="submit" value="Importar">
               <input class="btn btn-danger" type="submit" value="Exportar">
             </div>
             <div class="card-body">
               <div class="table-responsive">
-              <form method="POST" action="edit-clasific.php" enctype="multipart/form-data">
+              <form method="POST" action="" enctype="multipart/form-data">
                 <table class="table table-xl-responsive-borderless" id="tablajson" width="100%" cellspacing="0">
                   <thead class="thead-dark">
                     <tr align="center">
                       <th>ID</th>
-                      
+                      <th>Status</th>
                       <th>Nombre</th>
                       
                       <th>Acciones</th>
@@ -59,12 +76,15 @@ if(isset($_GET['del'])){
                   
                     <tr align="center">
                     <td><?php echo $perfil->getID(); ?></td>
-                    
+                    <td><?php echo $perfil->getStatus(); ?></td>
                       <td><?php echo $perfil->getNombre(); ?></td>
                       
                       <td><center>
-                      <a href="modify-perfil.php?edit=<?php echo $perfil->getID();?>"><i class="fas fa-edit"></a></i>&nbsp;&nbsp;
-                      <a href="perfiles.php?del=<?php echo $perfil->getID();?>"><i class="fas fa-trash-alt"></i></a></i></center>
+                      <a href="modify-perfil.php?edit=<?php echo $perfil->getID();?>"><i class="fas fa-edit text-danger"></i></a>&nbsp;
+                      <a href="perfiles.php?del=<?php echo $perfil->getID();?>"><i class="fas fa-trash-alt text-danger"></i></a>&nbsp;
+                      <a href="perfiles.php?status=<?php echo $perfil->getID();?>"> <i class="
+                      <?php if($perfil->getStatus() == 0){ echo 'fas fa-circle'; } else { echo 'fas fa-check-circle text-danger'; } ?>
+                      "></i></a>
                       </td>
                     </tr>
                   <?php } ?>

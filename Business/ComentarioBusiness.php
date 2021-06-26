@@ -16,13 +16,7 @@ class ComentarioBusiness {
         return $entradas;
     }
 
-    public function contar(){
-        return $this->ComentariosDAO->contar();
-    }
-
-    public function contarActivos(){
-        return $this->ComentariosDAO->contarActivos();
-    }
+    
 
     public function getEntradaIDPeli($id){
         $entradas = $this->ComentariosDAO->getAllIDPeli($id); 
@@ -32,6 +26,10 @@ class ComentarioBusiness {
     public function getEntradaIDUser($id){
         $entradas = $this->ComentariosDAO->getAllIDUser($id); 
 
+        return $entradas;
+    }
+    public function getNombre($id){
+        $entradas = $this->ComentariosDAO->getNombreUser($id);
         return $entradas;
     }
     public function getMod($id,$datos = array()){
@@ -51,11 +49,27 @@ class ComentarioBusiness {
         return $entradas;
     }
     public function cambioStatus($id,$sta){
-        $entradas = $this->AdminDAO->cambioStatus($id,$sta); 
+        $entradas = $this->ComentariosDAO->cambioStatus($id,$sta); 
+
+        return $entradas;
+    }
+    public function getDel($id){
+        $entradas = $this->ComentariosDAO->delete($id); 
 
         return $entradas;
     }
 
+    public function contar(){
+        return $this->ComentariosDAO->contar();
+    }
+
+    public function contarActivos(){
+        return $this->ComentariosDAO->contarActivos();
+    }
+
+    public function contarInactivos(){
+        return $this->ComentariosDAO->contarInactivos();
+    }
 }
 
 

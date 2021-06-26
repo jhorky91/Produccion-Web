@@ -13,14 +13,15 @@ $IPB = new IPBusiness($con);
 						'ip'=>  get_client_ip(), 
 						'id_pelicula'=>$_GET['id']);
 		
-		$IPB->save($datosip);
-       
 		$datos = array('id_usuario'=>$_SESSION['id'], 'rating'=>$_POST['tRating'],
 		 'titulo'=> $_POST['tTitle'], 'comentario'=>$_POST['tComentario'],'id_pelicula'=> $_GET['id']);
-		 
-		 $comentsB->getAdd($datos);
-  
 
+echo $cadenalimpia;
+
+		$res=$comentsB->getAdd($datos);
+		if($res==true){
+		 $IPB->save($datosip);
+		}
         redirect('product-details.php?id='.$_GET['id'] );
 	}
 	

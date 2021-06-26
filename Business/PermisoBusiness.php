@@ -41,6 +41,14 @@ class PermisoBusiness{
         return $this->PermisoDAO->contar();
     }
 
+    public function contarActivos(){
+        return $this->PermisoDAO->contarActivos();
+    }
+
+    public function contarInactivos(){
+        return $this->PermisoDAO->contarInactivos();
+    }
+
     
 
     
