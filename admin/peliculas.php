@@ -7,11 +7,10 @@ $PeliculasSidebar = true;
   $ClasificacionB = new ClasificacionBusiness($con);
 
 if(isset($_GET['del'])){
-
-  $sql = "DELETE FROM pelicula WHERE id_pelicula=".$_GET["del"];
-  $count = $con->exec($sql);
-
+      
+  if($PeliculaB->getDel($_GET['del'])==true){
     redirect('peliculas.php');
+  }
 }
 
 if(isset($_GET['status'])){
@@ -80,6 +79,7 @@ if(isset($_GET['status'])){
                   </thead>
                   <tbody>
                   <?php
+                  $contador=0;
                   foreach($PeliculaB->getEntradas() as $peli){ 
                     $result=$ClasificacionB->getEntrada($peli->getIDClasificacion());?>
                   
@@ -118,7 +118,31 @@ if(isset($_GET['status'])){
                       <td><?php echo $peli->getDirectores(); ?></td>
                       <td><?php echo $peli->getActores(); ?></td>
                       <td>
-                      <button type='button' onclick="alert('<?php echo $peli->getDescripcion(); ?>')" class="btn btn-danger">Descripcion</button>
+                            
+                                            <!-- Button trigger modal -->
+                      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter<?php echo $contador; ?>">
+                       Ver Descripcion
+                      </button>
+
+                      <!-- Modal -->
+                      <div class="modal fade" id="exampleModalCenter<?php echo $contador; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header bg-danger">
+                              <h5 class="modal-title text-white" id="exampleModalLongTitle">Descripcion:</h5>
+                              
+                            </div>
+                            <div class="modal-body" style="background-color:#5a5c69;">
+                              <p class="text-white"><?php echo $peli->getDescripcion(); ?></p>
+                              <button type="button" class="btn btn-danger float-right" data-dismiss="modal">Cerrar</button>
+                            </div>
+                            
+                          </div>
+                        </div>
+                      </div>
+
+                      <?php $contador++; ?>
+
                       </td>
                       <td><center>
                       <a href="modify-pelicula.php?edit=<?php echo $peli->getID();?>"><i class="fas fa-edit text-danger"></a></i>&nbsp;&nbsp;

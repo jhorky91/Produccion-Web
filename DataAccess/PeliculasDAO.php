@@ -124,6 +124,13 @@ class PeliculasDAO extends DAO{
         }
         return $id ;
     }
+    public function camposDinamicos($datos=array()){
+        foreach($datos as $dat){
+            $sql = "INSERT INTO campo_dinamico_pelicula(id_pelicula,nombre,detalle)
+            VALUES ('0','".$dat['id']."','".$dat['nombre']."','".$dat['detalle']."')";
+            $this->con->exec($sql);
+        }
+    }
 
     public function modify($id, $datos = array()){
         $sql = "UPDATE $this->table SET 
@@ -137,12 +144,34 @@ class PeliculasDAO extends DAO{
                 actores = '".$datos['actores']."',
                 descripcion ='".$datos['descripcion']."' 
                     WHERE id_pelicula = ".$id;
-        return $this->con->exec($sql);
+        $this->con->exec($sql);
+
+               $sql = 'DELETE FROM pelicula_genero WHERE id_pelicula='.$id;
+               $this->con->exec($sql);
+        
+        foreach($datos['generos'] as $gen){
+            foreach($datos['subgeneros'] as $subgen){
+                $sql = "SELECT id_genero_subgenero FROM genero_subgenero
+                        WHERE (id_genero = ".$gen." AND id_subgenero = ".$subgen.") OR (id_genero = ".$gen." AND id_subgenero IS NULL)";
+                $result=$this->con->query($sql)->fetch();
+        
+                $sql = "INSERT INTO pelicula_genero(id_pelicula,id_genero_subgenero) 
+                        VALUES ('".$id."','".$result['id_genero_subgenero']."')";
+                $this->con->exec($sql);
+            }
+        }
+
 
     }
 
     public function delete($id){
-        $sql = "DELETE FROM $this->table WHERE id_$this->table = $id";
+        $sql = "DELETE FROM comentario WHERE id_pelicula= $id";
+        $this->con->exec($sql);
+
+        $sql = "DELETE FROM pelicula_genero WHERE id_pelicula = $id";
+        $this->con->exec($sql);
+
+        $sql = "DELETE FROM pelicula WHERE id_pelicula = $id";
         return $this->con->exec($sql);
     }
     public function destacados(){

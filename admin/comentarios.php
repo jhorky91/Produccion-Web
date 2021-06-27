@@ -4,7 +4,7 @@ include('header.php');
 include_once('../Helpers/funcs.php');
 
  
- require_once(DIR_BASE.'Business/PeliculaBusiness.php');
+ require_once('../Business/PeliculaBusiness.php');
  $PeliculaB = new PeliculaBusiness($con);
 
  require_once('../Business/ComentarioBusiness.php');

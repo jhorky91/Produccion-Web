@@ -1,6 +1,9 @@
 <?php
 
 require_once('../DataAccess/PeliculasDAO.php');
+require_once('../DataAccess/GenerosDAO.php');
+require_once('../Models/GeneroEntity.php');
+require_once('../Models/SubGeneroEntity.php');
 
 class PeliculaBusiness {
 
@@ -8,10 +11,22 @@ class PeliculaBusiness {
 
     function __construct($con){
         $this->PeliculasDAO = new PeliculasDAO($con);
+        $this->GenerosDAO = new GeneroDAO($con);
     }
 
     public function Add($datos){
         $entrada = $this->PeliculasDAO->save($datos);
+        
+        if(!empty($datos['imagen'])){
+            $this->saveImage($entrada,$datos['imagen']);
+        }
+        return $entrada;
+      
+    }
+    public function AddCampos($datos=array()){
+        $entrada = $this->PeliculasDAO->camposDinamicos($datos);
+        return $entrada;
+      
     }
   
     public function getEntrada($id){
@@ -29,9 +44,18 @@ class PeliculaBusiness {
     
     public function getMod($id,$datos = array()){
         $entradas = $this->PeliculasDAO->modify($id, $datos); 
+        
+        if(!empty($datos['imagen'])){
+            $this->saveImage($entradas,$datos['imagen']);
+        }
+    }
+
+    public function getDel($id){
+        $entradas = $this->PeliculasDAO->delete($id); 
 
         return $entradas;
     }
+
     public function getDestacados(){
         $entradas = $this->PeliculasDAO->destacados(); 
 
@@ -66,11 +90,11 @@ class PeliculaBusiness {
     }
 
     public function saveImage($id,$imagenes){
-        var_dump($imagenes);
-        $tamanhos = array(0 => array('nombre'=>'big','ancho'=>'100','alto'=>'200'),
-                          1 => array('nombre'=>'small','ancho'=>'50','alto'=>'100'),
-                          2 => array('nombre'=>'xl','ancho'=>'500','alto'=>'1000'));
-        $ruta = DIR_BASE.'Front/imagenes/'.$id.'/';
+        
+        $tamanhos = array(0 => array('nombre'=>'big','ancho'=>'260','alto'=>'380'),
+                          1 => array('nombre'=>'small','ancho'=>'70','alto'=>'100'),
+                          2 => array('nombre'=>'xl','ancho'=>'350','alto'=>'500'));
+        $ruta = "../Front/imagenes/".$id."/";
         if(!is_dir($ruta)){
             mkdir($ruta);
         }

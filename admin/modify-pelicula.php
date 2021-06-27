@@ -14,8 +14,7 @@ $SubGeneroB = new SubGeneroBusiness($con);
 $ClasificacionB = new ClasificacionBusiness($con);  
 
     if(isset($_POST['add'])){
-      $res = $_POST['tGene'];
-      
+            
       $datos = array('nombre'=>$_POST['tName'],
                      'precio'=>$_POST['tPrecio'], 
                      'id_clasificacion'=>$_POST['tClasi'], 
@@ -25,49 +24,56 @@ $ClasificacionB = new ClasificacionBusiness($con);
                      'duracion'=>$_POST['tDur'], 
                      'descripcion'=>$_POST['tDescripcion'],
                      'generos' => $_POST['tGene'],
-                     'subgeneros' => $_POST['tSubGene']);
+                     'subgeneros' => $_POST['tSubGene'],
+                     'imagen' => $_FILES['imagen']);
     
 
       $id=$PeliculaB->Add($datos);
+      
+      $campos= array(
+        'id'=> $id,
+        'nombre'=> $_POST['nombre'],
+        'status'=> $_POST['status']
+      );
 
-      //IMAGENES
-      if(!empty($_FILES['imagen'])){
-        $PeliculaB->saveImage($id,$_FILES['imagen']);
-      }
-      // y CAMPOS DINAMICOS
-      //redirect('peliculas.php');
+      $PeliculaB->AddCampos($campos);
+
+       // y CAMPOS DINAMICOS
+       
+
+    redirect('peliculas.php');
     
     }
 
     //FALTA HACER EL MODD DE PELICULA
     if(isset($_POST['mod'])) {
+  
+      $datos = array('status'=>$_POST['tStatus'],
+                     'nombre'=>$_POST['tName'],
+                     'precio'=>$_POST['tPrecio'], 
+                     'id_clasificacion'=>$_POST['tClasi'], 
+                     'anio'=>$_POST['tAnio'], 
+                     'directores'=>$_POST['tDirect'], 
+                     'actores'=>$_POST['tActor'],
+                     'duracion'=>$_POST['tDur'], 
+                     'descripcion'=>$_POST['tDescripcion'],
+                     'generos' => $_POST['tGene'],
+                     'subgeneros' => $_POST['tSubGene'],
+                     'imagen' => $_FILES['imagen']);
 
-      $datos = array('status'=>$_POST['status'], 
-                    'nombre'=>$_POST['tName'],
-                    'precio'=>$_POST['tPrecio'], 
-                    'id_clasificacion'=>$_POST['tClasi'], 
-                    'anio'=>$_POST['tAnio'], 
-                    'directores'=>$_POST['tDirect'], 
-                    'actores'=>$_POST['tActor'],
-                    'duracion'=>$_POST['tDur'], 
-                    'descripcion'=>$_POST['tDescripcion']);
+      $id = $_GET['edit'];           
 
-      $id = $_GET['edit'];
-      $GeneroB->getDel($id);
+      $PeliculaB->getMod($id,$datos);
 
-      $res = $_POST['tGene'];
-      $datos= array(
-        'nombre'=> $_POST['nombre'],
-        'status'=> $_POST['status']
-      );
-      $GeneroB->Add($datos, $res);
+           
+      
       
       //IMAGENES
-      if(!empty($_FILES['imagen'])){
-        $PeliculaB->saveImage($id,$_FILES['imagen']);
+      if(!empty($datos['imagen'])){
+        $PeliculaB->saveImage($id,$datos['imagen']);
       }
 
-      redirect('generos.php');
+      redirect('peliculas.php');
     }
   ?>
 
@@ -80,7 +86,7 @@ $ClasificacionB = new ClasificacionBusiness($con);
             $Pelicula = $PeliculaB->getEntrada($_GET['edit']);
             ?>
             
-            <h1 class="h3 mb-2 text-gray-800">Editar Género</h1>
+            <h1 class="h3 mb-2 text-gray-800">Editar Pelicula</h1>
           
           <?php } else { ?>
 

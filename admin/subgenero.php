@@ -45,7 +45,7 @@ if(isset($_GET['status'])){
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">Géneros</h1>
+          <h1 class="h3 mb-2 text-gray-800">Subgéneros</h1>
           <!--<p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>-->
           
 
@@ -57,7 +57,7 @@ if(isset($_GET['status'])){
               <span class="m-0 font-weight-bold text-danger">Publicado(<?php echo $SubgeneroB->contarActivos(); ?>)</span>
               <span class="m-0 font-weight-bold text-danger">|</span>
               <span class="m-0 font-weight-bold text-danger">Pendiente(<?php echo $SubgeneroB->contarInactivos(); ?>)</span>
-              <a href="modify-subgenero.php"><input class="btn btn-danger" type="submit" value="Añadir Género"></a>
+              <a href="modify-subgenero.php"><input class="btn btn-danger" type="submit" value="Añadir Subgénero"></a>
               <input class="btn btn-danger" type="submit" value="Importar">
               <input class="btn btn-danger" type="submit" value="Exportar">
             </div>
