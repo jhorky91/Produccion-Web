@@ -12,8 +12,7 @@ $SubGeneroB = new SubGeneroBusiness($con);
       if(!empty($_POST['tGene'])){
         $generos = $_POST['tGene'];
         $datos = array(
-          'status'=>$_POST['status'],
-          'nombre'=>$_POST['nombre'],
+          'nombre'=>$_POST['nombre']
         );
         $SubGeneroB->Add($datos, $generos);
       
@@ -28,16 +27,16 @@ $SubGeneroB = new SubGeneroBusiness($con);
     if(isset($_POST['mod'])) {
       if(!empty($_POST['tGene'])){      
       $id = $_GET['edit'];
-      $SubGeneroB->getDel($id);
-      
-      $generos = $_POST['tGene'];
+                  
       $datos= array(
         'nombre'=> $_POST['nombre'],
-        'status'=> $_POST['status']
+        'genero'=>$_POST['tGene']
         );
-      $SubGeneroB->Add($datos, $generos);       
+
+      $SubGeneroB->getMod($id,$datos);       
       redirect('subgenero.php');
       } else {
+        
         redirect('modify-subgenero.php?edit='.$_GET['edit']);
       } 
     }
@@ -78,12 +77,7 @@ $SubGeneroB = new SubGeneroBusiness($con);
             <div class="card-body">
               <div class="table-responsive">
                     <form method="POST" action="" name="prod" enctype="multipart/form-data">
-                      <table class="table bg-gradient-dark text-white" id="dataTable" width="100%" cellspacing="0">
-                      <tr>
-                          <td align="right"><label for="txtStatus">Status:</label</td>
-                          <td><input type="text" id="txtStatus" name="status" <?= isset($Edit)?'value="'.$SubGenero->getStatus().'"':''?> size="50" class="bg-danger text-white" required></td>
-                        </tr>
-                        
+                      <table class="table bg-gradient-dark text-white" id="dataTable" width="100%" cellspacing="0">                        
                         <tr>
                           <td align="right"><label for="txtName">Nombre:</label</td>
                           <td><input type="text" id="txtName" name="nombre" <?= isset($Edit)?'value="'.$SubGenero->getNombre().'"':''?> size="50" class="bg-danger text-white" required></td>

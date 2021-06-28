@@ -40,7 +40,7 @@ class ClasificacionDAO extends DAO{
     }
 
     public function modify($id, $datos = array()){
-        $sql = "UPDATE $this->table SET status = '".$datos['status']."',nombre = '".$datos['nombre']."',descripcion = '".$datos['descripcion']."' WHERE id_clasificacion = ".$id;
+        $sql = "UPDATE $this->table SET nombre = '".$datos['nombre']."',descripcion = '".$datos['descripcion']."' WHERE id_clasificacion = ".$id;
         return $this->con->exec($sql);
 
     }

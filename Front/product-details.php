@@ -5,6 +5,8 @@ require_once('../Business/ComentarioBusiness.php');
 $comentsB = new ComentarioBusiness($con);
 require_once('../Business/IPBusiness.php');
 $IPB = new IPBusiness($con);
+require_once('../Business/ClasificacionBusiness.php');
+$ClasificacionB = new ClasificacionBusiness($con);
 
     if(isset($_POST['add'])){
 		
@@ -78,7 +80,7 @@ $IPB = new IPBusiness($con);
                                 <br>
                                 <p class="text-dark"> <strong>Precio:</strong> $<?php echo $b['precio']?></p>
                                 <br>
-                                <p class="text-dark"><strong>Clasificacion por edades:</strong> <?php echo $b['clasificacion']?></p>
+                                <p class="text-dark"><strong>Clasificacion por edades:</strong> <?php echo $ClasificacionB->getEntrada($b['clasificacion'])->getNombre();?></p>
                                 <br>
                                 <p class="text-dark"><strong>Año:</strong> <?php echo $b['anio']?></p>
 								<input class="btn btn-warning w-25 font-weight-bold"  type="submit" name="addCart" value="ADD TO CART">
@@ -166,6 +168,7 @@ $IPB = new IPBusiness($con);
 							require_once('../Business/UserBusiness.php');
 							$UserB = new UserBusiness($con);
 							$User = $UserB->getEntrada($comen->getIDUsuario());
+							if($comen->getStatus()==1){
 						  ?>
 
 					<div class="container-fluid border rounded border-dark mb-3" style="box-shadow: inset 0 0 10px; word-wrap: break-word;">
@@ -201,7 +204,7 @@ $IPB = new IPBusiness($con);
 							
 				    </div>
 
-					<?php }?>
+					<?php } }?>
 				</div>
 
 		<div class="container-fluid">

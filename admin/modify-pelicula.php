@@ -43,7 +43,7 @@ $ComentarioB = new ComentarioBusiness($con);
     //FALTA HACER EL MODD DE PELICULA
     if(isset($_POST['mod'])) {
   
-      $datos = array('status'=>$_POST['tStatus'],
+      $datos = array(
                      'nombre'=>$_POST['tName'],
                      'precio'=>$_POST['tPrecio'], 
                      'id_clasificacion'=>$_POST['tClasi'], 
@@ -110,12 +110,6 @@ $ComentarioB = new ComentarioBusiness($con);
               <div class="table-responsive">
                     <form method="POST" action="" name="prod" enctype="multipart/form-data">
                       <table class="table bg-gradient-dark text-white" id="dataTable" width="100%" cellspacing="0">
-                        <?php if(isset($Edit)) { ?>
-                        <tr>
-                          <td align="right"><label for="txtStatus">Status:</label</td>
-                          <td><input type="text" id="txtStatus" name="tStatus" value="<?= $Pelicula['status']?>" size="50" class="bg-danger text-white" required></td>
-                        </tr>
-                        <?php } ?>
                         <tr>
                           <td align="right"><label for="txtName">Nombre:</label</td>
                           <td><input type="text" id="txtName" name="tName" <?= isset($Edit)?'value="'.$Pelicula['nombre'].'"':''?> size="50" class="bg-danger text-white" required></td>

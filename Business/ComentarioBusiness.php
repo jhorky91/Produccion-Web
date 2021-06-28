@@ -9,14 +9,18 @@ class ComentarioBusiness {
     function __construct($con){
         $this->ComentariosDAO = new ComentariosDAO($con);
     }
+
+    public function getEntrada($id){
+        $entradas = $this->ComentariosDAO->getOne($id); 
+
+        return $entradas;
+    }
     
     public function getEntradas(){
         $entradas = $this->ComentariosDAO->getAll(); 
 
         return $entradas;
-    }
-
-    
+    }    
 
     public function getEntradaIDPeli($id){
         $entradas = $this->ComentariosDAO->getAllIDPeli($id); 

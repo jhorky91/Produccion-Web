@@ -18,7 +18,7 @@ if(isset($_GET['status'])){
   
   $peli = $PeliculaB->getEntrada($id);
 
-  if($peli->getStatus()==1){
+  if($peli['status']==1){
     $sta = 0;
   }else{
     $sta = 1;

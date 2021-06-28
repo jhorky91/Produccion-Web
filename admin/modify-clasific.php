@@ -10,7 +10,6 @@ $ClasificacionB = new ClasificacionBusiness($con);
     if(isset($_POST['add'])){
       
       $datos = array(
-        'status'=>$_POST['status'],
         'nombre'=>$_POST['nombre'],
         'descripcion'=> $_POST['descripcion']
       );
@@ -25,7 +24,6 @@ $ClasificacionB = new ClasificacionBusiness($con);
       $id = $_GET['edit'];
       $datos= array(
         'nombre'=> $_POST['nombre'],
-        'status'=> $_POST['status'],
         'descripcion'=> $_POST['descripcion']
       );     
       $ClasificacionB->getMod($id,$datos);       
@@ -65,10 +63,6 @@ $ClasificacionB = new ClasificacionBusiness($con);
               <div class="table-responsive">
                     <form method="POST" action="" name="prod" enctype="multipart/form-data">
                       <table class="table bg-gradient-dark text-white" id="dataTable" width="100%" cellspacing="0">
-                      <tr>
-                          <td align="right"><label for="txtStatus">Status:</label></td>
-                          <td><input type="text" id="txtStatus" name="status" <?= isset($Edit)?'value="'.$Clasificacion->getStatus().'"':''?> size="10" class="bg-danger text-white" required></td>
-                      </tr>
                       <tr>
                           <td align="right"><label for="txtName">Nombre:</label></td>
                           <td><input type="text" id="txtName" name="nombre" <?= isset($Edit)?'value="'.$Clasificacion->getNombre().'"':''?> size="50" class="bg-danger text-white" required></td>

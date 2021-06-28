@@ -61,20 +61,56 @@ class SubGeneroDAO extends DAO{
 
     public function save($datos = array(), $generos = array()){
 
-        $sql1 = "INSERT INTO $this->table(status,nombre) VALUES ('".$datos['status']."','".$datos['nombre']."')";
+        $sql1 = "INSERT INTO $this->table(status,nombre) VALUES (1,'".$datos['nombre']."')";
         $this->con->exec($sql1);
         $id = $this->con->lastInsertId();
+        
         foreach($generos as $gen) {
-        $sql2 = "INSERT INTO genero_subgenero(id_genero, id_subgenero) VALUES ('".$gen."',".$id.")";
-        $this->con->exec($sql2);
+            $sql2 = "INSERT INTO genero_subgenero(id_genero, id_subgenero) VALUES ('".$gen."','".$id."')";
+            $this->con->exec($sql2);
         }
+
     }
 
     public function modify($id, $datos = array()){
-        $sql = "UPDATE $this->table SET status = '".$datos['status']."', nombre ='".$datos['nombre']."' WHERE id = ".$id;
-        return $this->con->exec($sql);
+        
+        $sql = "UPDATE $this->table SET nombre ='".$datos['nombre']."' WHERE id_subgenero = $id";
+        $this->con->exec($sql);
+        
+        $sql = "SELECT id_genero FROM genero_subgenero WHERE id_subgenero = $id";
+        $generosantiguos=$this->con->query($sql,PDO::FETCH_ASSOC)->fetchAll();    //4 //2
+        
+        
+            foreach($generosantiguos as $geneA){
+                foreach($datos['genero'] as $genero){
+                    if($geneA['id_genero']!=$generos){
+                        $genA=$geneA['id_genero'];
+
+                        $sql = "SELECT PG.id_genero_subgenero FROM pelicula_genero PG
+                        INNER JOIN genero_subgenero SG ON PG.id_genero_subgenero= SG.id_genero_subgenero
+                        WHERE id_subgenero=$id AND id_genero = $genA";
+                        $res1 = $this->con->query($sql)->fetch();
+                    }
+                }
+            }
+        
+
+     
+        $sql1 = "DELETE FROM genero_subgenero WHERE id_subgenero = $id";
+        $this->con->exec($sql1);
+        
+            foreach($datos['genero'] as $gen) {
+                
+                $sql2 = "INSERT INTO genero_subgenero(id_genero, id_subgenero) VALUES ('".$gen."','".$id."')";
+                $this->con->exec($sql2);
+                
+            }
+        //###################################################################
+
+
 
     }
+    
     public function delete($id){
         $sql1 = "DELETE FROM genero_subgenero WHERE id_subgenero = $id";
         $this->con->exec($sql1);
@@ -82,7 +118,21 @@ class SubGeneroDAO extends DAO{
         return $this->con->exec($sql);
     }
 
-   
+   public function sebita(){
+    foreach($datos['genero'] as $gen) {
+        $sql = "SELECT id_genero_subgenero FROM genero_subgenero WHERE id_subgenero = $id AND id_genero = $gen";
+        $res1 = $this->con->query($sql)->fetch();
+
+        $sql = "DELETE FROM pelicula_genero WHERE id_genero_subgenero = $res1";
+        $this->con->exec($sql);
+        $id = $this->con->lastInsertId();
+
+        $sql2 = "INSERT INTO genero_subgenero(id_genero_subgenero,id_genero, id_subgenero) VALUES ('".$res1."','".$gen."','".$id."')";
+        $this->con->exec($sql2);
+    }
+       
+
+   }
     
 }
 

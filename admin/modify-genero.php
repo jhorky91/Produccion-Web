@@ -11,7 +11,6 @@ $GeneroB = new GeneroBusiness($con);
     if(isset($_POST['add'])){
       $res = $_POST['tGene'];
       $datos = array(
-        'status'=>$_POST['status'],
         'nombre'=>$_POST['nombre']
       );
       $GeneroB->Add($datos,$res);
@@ -26,8 +25,7 @@ $GeneroB = new GeneroBusiness($con);
            
       $res = $_POST['tGene'];
       $datos= array(
-        'nombre'=> $_POST['nombre'],
-        'status'=> $_POST['status']
+        'nombre'=> $_POST['nombre']
       );
       $GeneroB->Add($datos, $res);       
       redirect('generos.php');
@@ -69,12 +67,7 @@ $GeneroB = new GeneroBusiness($con);
             <div class="card-body">
               <div class="table-responsive">
                     <form method="POST" action="" name="prod" enctype="multipart/form-data">
-                      <table class="table bg-gradient-dark text-white" id="dataTable" width="100%" cellspacing="0">
-                      <tr>
-                          <td align="right"><label for="txtStatus">Status:</label</td>
-                          <td><input type="text" id="txtStatus" name="status" <?= isset($Edit)?'value="'.$Genero->getStatus().'"':''?> size="50" class="bg-danger text-white" required></td>
-                        </tr>
-                        
+                      <table class="table bg-gradient-dark text-white" id="dataTable" width="100%" cellspacing="0">                        
                         <tr>
                           <td align="right"><label for="txtName">Nombre:</label</td>
                           <td><input type="text" id="txtName" name="nombre" <?= isset($Edit)?'value="'.$Genero->getNombre().'"':''?> size="50" class="bg-danger text-white" required></td>

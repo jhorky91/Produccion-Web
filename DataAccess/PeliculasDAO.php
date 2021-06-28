@@ -161,7 +161,7 @@ class PeliculasDAO extends DAO{
 
     public function modify($id, $datos = array()){
         $sql = "UPDATE $this->table SET 
-                status = '".$datos['status']."',
+                
                 nombre ='".$datos['nombre']."',
                 precio = '".$datos['precio']."',
                 id_clasificacion = '".$datos['id_clasificacion']."',

@@ -68,8 +68,7 @@ class UserDAO extends DAO{
 
     public function modify($id, $datos = array()){
         if($datos['perfil']=='Admin'){
-        $sql = "UPDATE $this->table SET status='".$datos['status']."',
-                                        nombre = '".$datos['nombre']."',
+        $sql = "UPDATE $this->table SET nombre = '".$datos['nombre']."',
                                         apellido = '".$datos['apellido']."',
                                         fecha = NOW(),
                                         fecha_nac ='".$datos['fecha_nac']."', 
@@ -79,7 +78,7 @@ class UserDAO extends DAO{
                 WHERE id_usuario = $id";
                 $this->con->exec($sql);
         }else{
-            $sql = "UPDATE $this->table SET status='".$datos['status']."',
+            $sql = "UPDATE $this->table SET 
                                         nombre = '".$datos['nombre']."',
                                         apellido = '".$datos['apellido']."',
                                         fecha = NOW(),

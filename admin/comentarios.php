@@ -21,7 +21,7 @@ if(isset($_GET['del'])){
 if(isset($_GET['status'])){
   $id = $_GET['status'];
   
-  $coment = $ComentarioB->getPerfil($id);
+  $coment = $ComentarioB->getEntrada($id);
 
   if($coment->getStatus()==1){
     $sta = 0;

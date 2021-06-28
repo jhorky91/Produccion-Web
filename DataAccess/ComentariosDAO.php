@@ -61,7 +61,7 @@ class ComentariosDAO extends DAO{
     }
 
     public function modify($id, $datos = array()){
-        $sql = "UPDATE $this->table SET status = '".$datos['status']."', fecha= NOW(),rating='".$datos['rating']."'
+        $sql = "UPDATE $this->table SET fecha= NOW(),rating='".$datos['rating']."'
         ,titulo='".$datos['titulo']."',comentario='".$datos['comentario']."',id_pelicula='".$datos['id_pelicula']."'
         ,id_usuario='".$datos['id_usuario']."' WHERE id_comentario = ".$id;
         

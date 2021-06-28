@@ -52,7 +52,7 @@ class GeneroDAO extends DAO{
 
     public function generoSubgenero($id){
         
-        $sql = "SELECT sg.id_subgenero, sg.nombre FROM subgenero sg INNER JOIN genero_subgenero gs ON sg.id_subgenero = gs.id_subgenero 
+        $sql = "SELECT DISTINCT sg.id_subgenero, sg.nombre FROM subgenero sg INNER JOIN genero_subgenero gs ON sg.id_subgenero = gs.id_subgenero 
         WHERE gs.id_genero = $id";
         $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'SubGeneroEntity')->fetchAll();
         return $resultado;
@@ -78,9 +78,9 @@ class GeneroDAO extends DAO{
 
     public function modify($id, $datos=array()){
         
-        $sql = "UPDATE $this->table SET status= ?,nombre=? WHERE id_genero=?";
+        $sql = "UPDATE $this->table SET nombre=? WHERE id_genero=?";
         $send = $this->con->prepare($sql);
-        $send ->execute([$datos['status'],$datos['nombre'],$id]);
+        $send ->execute([$datos['nombre'],$id]);
         
     }
 
