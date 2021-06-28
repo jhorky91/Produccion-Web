@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-06-2021 a las 23:51:32
--- Versión del servidor: 10.4.18-MariaDB
--- Versión de PHP: 8.0.3
+-- Tiempo de generación: 28-06-2021 a las 07:13:55
+-- Versión del servidor: 10.4.19-MariaDB
+-- Versión de PHP: 7.3.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -55,13 +55,21 @@ INSERT INTO `admin` (`id_admin`, `status`, `nombre`, `apellido`, `fecha`, `usuar
 
 CREATE TABLE `campo_dinamico_comentario` (
   `id_campo_dinamico_comentario` int(11) NOT NULL,
-  `nombre` varchar(100) COLLATE utf32_unicode_ci NOT NULL,
-  `campo` varchar(300) COLLATE utf32_unicode_ci NOT NULL,
+  `pregunta` varchar(300) COLLATE utf32_unicode_ci NOT NULL,
+  `detalle` varchar(3000) COLLATE utf32_unicode_ci NOT NULL,
   `tipo` int(11) NOT NULL,
   `status` int(11) NOT NULL,
-  `obligatorio` int(11) NOT NULL,
-  `id_comentario` int(11) NOT NULL
+  `obligatorio` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `campo_dinamico_comentario`
+--
+
+INSERT INTO `campo_dinamico_comentario` (`id_campo_dinamico_comentario`, `pregunta`, `detalle`, `tipo`, `status`, `obligatorio`) VALUES
+(1, '¿te gusto la pelicula?', '', 1, 1, 1),
+(8, '¿te gusto la pelicula?', '', 1, 1, 0),
+(9, '¿el audio y video eran de buena calidad?', 'si,no', 4, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -75,6 +83,15 @@ CREATE TABLE `campo_dinamico_pelicula` (
   `nombre` varchar(30) COLLATE utf32_unicode_ci NOT NULL,
   `detalle` varchar(300) COLLATE utf32_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `campo_dinamico_pelicula`
+--
+
+INSERT INTO `campo_dinamico_pelicula` (`id_campo_dinamico_pelicula`, `id_pelicula`, `nombre`, `detalle`) VALUES
+(40, 56, 'Alias', 'Guasón'),
+(42, 1, 'Oscars', '3'),
+(43, 1, 'Golden Globe', '5');
 
 -- --------------------------------------------------------
 
@@ -352,9 +369,7 @@ INSERT INTO `genero` (`id_genero`, `status`, `nombre`) VALUES
 (10, 1, 'Musical'),
 (11, 1, 'Romance'),
 (12, 1, 'Suspenso'),
-(13, 1, 'Terror'),
-(14, 0, 'Genero de prueba'),
-(15, 0, '');
+(13, 1, 'Terror');
 
 -- --------------------------------------------------------
 
@@ -411,14 +426,7 @@ INSERT INTO `genero_subgenero` (`id_genero_subgenero`, `id_genero`, `id_subgener
 (27, 12, 21),
 (40, 13, NULL),
 (8, 13, 6),
-(19, 13, 14),
-(41, 14, NULL),
-(45, 14, 6),
-(44, 14, 10),
-(42, 14, 17),
-(43, 14, 18),
-(46, 15, NULL),
-(47, 15, 8);
+(19, 13, 14);
 
 -- --------------------------------------------------------
 
@@ -440,7 +448,8 @@ CREATE TABLE `ip` (
 --
 
 INSERT INTO `ip` (`id_ip`, `id_usuario`, `nombre_usuario`, `ip`, `fecha`, `id_pelicula`) VALUES
-(1, 1, 'Roberto Rocco', '::1', '2021-06-12 19:12:22', 1);
+(1, 1, 'Roberto Rocco', '::1', '2021-06-12 19:12:22', 1),
+(2, 16, 'Roberto Rocco', '::1', '2021-06-27 23:58:59', 56);
 
 -- --------------------------------------------------------
 
@@ -529,7 +538,8 @@ INSERT INTO `pelicula` (`id_pelicula`, `status`, `nombre`, `precio`, `id_clasifi
 (61, 1, 'I Am not Your Negro', 120, 2, '95 min.', '2016', 'Raoul Peck', 'Samuel L. Jackson, Harry Belafonte, Marlon Brando', 'El escritor James Baldwin realizó en 1979 un ensayo, Remember This House, sobre el racismo en Estados Unidos, hablando de su relación con Malcolm X, Martin Luther King, Medgar Evers, entre otros activistas, y el proceso por la lucha de los derechos de los afroestadounidenses.2​'),
 (62, 1, 'Capturing the Friedmans', 150, 3, '107 min.', '2003', 'Andrew Jarecki', 'Arnold Friedman, Elaine Friedman, David Friedman, Seth Friedman, Jesse Friedman', 'Documental sobre los Friedman, una familia judía aparentemente típica de clase media alta cuyo mundo se transforma instantáneamente cuando el padre y su hijo menor son arrestados y acusados ​​de crímenes espantosos y horribles.'),
 (63, 1, 'Life Itself', 150, 3, '121 min', '2014', 'Steve James', 'Roger Ebert, Chaz Ebert, Werner Herzog, A.O. Scott, Errol Morris, Ava DuVernay, Martin Scorsese, Ste', 'La vida y carrera del reconocido crítico de cine y comentarista social Roger Ebert.'),
-(64, 1, 'The Shawshank Redemption', 150, 3, '2h 22min', '1995', 'Frank Darabont', ' Tim Robbins, Morgan Freeman, Bob Gunton ', 'Un hombre inocente es enviado a una corrupta penitenciaria de Maine en 1947 y sentenciado a dos cadenas perpetuas por un doble asesinato.');
+(64, 1, 'The Shawshank Redemption', 150, 3, '2h 22min', '1995', 'Frank Darabont', ' Tim Robbins, Morgan Freeman, Bob Gunton ', 'Un hombre inocente es enviado a una corrupta penitenciaria de Maine en 1947 y sentenciado a dos cadenas perpetuas por un doble asesinato.'),
+(65, 0, 'Aventura2', 2000, 2, '111', '2020', 'michael bay', 'jhonny depp', 'vfdsfsdfsdaf');
 
 -- --------------------------------------------------------
 
@@ -548,8 +558,6 @@ CREATE TABLE `pelicula_genero` (
 --
 
 INSERT INTO `pelicula_genero` (`id_pelicula_genero`, `id_pelicula`, `id_genero_subgenero`) VALUES
-(1, 1, 15),
-(2, 1, 34),
 (3, 2, 15),
 (4, 2, 34),
 (5, 3, 17),
@@ -704,9 +712,6 @@ INSERT INTO `pelicula_genero` (`id_pelicula_genero`, `id_pelicula`, `id_genero_s
 (154, 54, 34),
 (155, 55, 24),
 (156, 55, 25),
-(157, 56, 26),
-(158, 56, 32),
-(159, 56, 34),
 (160, 57, 23),
 (161, 57, 32),
 (162, 58, 26),
@@ -723,7 +728,34 @@ INSERT INTO `pelicula_genero` (`id_pelicula_genero`, `id_pelicula`, `id_genero_s
 (173, 63, 24),
 (174, 63, 25),
 (175, 64, 27),
-(176, 64, 34);
+(176, 64, 34),
+(292, 65, 10),
+(297, 56, 32),
+(298, 56, 34),
+(299, 56, 26),
+(336, 1, 15),
+(337, 1, 34);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pelicula_pregunta`
+--
+
+CREATE TABLE `pelicula_pregunta` (
+  `id_pelicula_pregunta` int(11) NOT NULL,
+  `id_pelicula` int(11) NOT NULL,
+  `id_campo_dinamico_comentario` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `pelicula_pregunta`
+--
+
+INSERT INTO `pelicula_pregunta` (`id_pelicula_pregunta`, `id_pelicula`, `id_campo_dinamico_comentario`) VALUES
+(37, 1, 1),
+(38, 1, 8),
+(39, 1, 9);
 
 -- --------------------------------------------------------
 
@@ -801,6 +833,19 @@ INSERT INTO `permiso` (`id_permiso`, `nombre`, `code`, `module`) VALUES
 (8, 'Borrar Genero', 'gen.del', 'gen'),
 (9, 'Modificar Genero', 'gen.mod', 'gen'),
 (12, 'Agregar Subgenero', 'subgen.add', 'subgen');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `respuesta_comentario`
+--
+
+CREATE TABLE `respuesta_comentario` (
+  `id_respuesta_comentario` int(11) NOT NULL,
+  `id_campo_dinamico_comentario` int(11) NOT NULL,
+  `id_comentario` int(11) NOT NULL,
+  `detalle` varchar(3000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -951,8 +996,7 @@ ALTER TABLE `admin`
 -- Indices de la tabla `campo_dinamico_comentario`
 --
 ALTER TABLE `campo_dinamico_comentario`
-  ADD PRIMARY KEY (`id_campo_dinamico_comentario`),
-  ADD KEY `id_comentario` (`id_comentario`);
+  ADD PRIMARY KEY (`id_campo_dinamico_comentario`);
 
 --
 -- Indices de la tabla `campo_dinamico_pelicula`
@@ -1019,6 +1063,13 @@ ALTER TABLE `pelicula_genero`
   ADD KEY `id_genero_subgenero` (`id_genero_subgenero`);
 
 --
+-- Indices de la tabla `pelicula_pregunta`
+--
+ALTER TABLE `pelicula_pregunta`
+  ADD PRIMARY KEY (`id_pelicula_pregunta`),
+  ADD KEY `id_pelicula` (`id_pelicula`,`id_campo_dinamico_comentario`);
+
+--
 -- Indices de la tabla `perfil`
 --
 ALTER TABLE `perfil`
@@ -1037,6 +1088,14 @@ ALTER TABLE `perfil_permiso`
 --
 ALTER TABLE `permiso`
   ADD PRIMARY KEY (`id_permiso`);
+
+--
+-- Indices de la tabla `respuesta_comentario`
+--
+ALTER TABLE `respuesta_comentario`
+  ADD PRIMARY KEY (`id_respuesta_comentario`),
+  ADD KEY `id_campo_dinamico_comentario` (`id_campo_dinamico_comentario`,`id_comentario`),
+  ADD KEY `id_comentario` (`id_comentario`);
 
 --
 -- Indices de la tabla `subgenero`
@@ -1080,13 +1139,13 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT de la tabla `campo_dinamico_comentario`
 --
 ALTER TABLE `campo_dinamico_comentario`
-  MODIFY `id_campo_dinamico_comentario` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_campo_dinamico_comentario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `campo_dinamico_pelicula`
 --
 ALTER TABLE `campo_dinamico_pelicula`
-  MODIFY `id_campo_dinamico_pelicula` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_campo_dinamico_pelicula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT de la tabla `clasificacion`
@@ -1098,7 +1157,7 @@ ALTER TABLE `clasificacion`
 -- AUTO_INCREMENT de la tabla `comentario`
 --
 ALTER TABLE `comentario`
-  MODIFY `id_comentario` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=214;
+  MODIFY `id_comentario` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=215;
 
 --
 -- AUTO_INCREMENT de la tabla `direccion`
@@ -1110,19 +1169,19 @@ ALTER TABLE `direccion`
 -- AUTO_INCREMENT de la tabla `genero`
 --
 ALTER TABLE `genero`
-  MODIFY `id_genero` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_genero` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `genero_subgenero`
 --
 ALTER TABLE `genero_subgenero`
-  MODIFY `id_genero_subgenero` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id_genero_subgenero` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT de la tabla `ip`
 --
 ALTER TABLE `ip`
-  MODIFY `id_ip` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_ip` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `pelicula`
@@ -1134,7 +1193,13 @@ ALTER TABLE `pelicula`
 -- AUTO_INCREMENT de la tabla `pelicula_genero`
 --
 ALTER TABLE `pelicula_genero`
-  MODIFY `id_pelicula_genero` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=186;
+  MODIFY `id_pelicula_genero` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=338;
+
+--
+-- AUTO_INCREMENT de la tabla `pelicula_pregunta`
+--
+ALTER TABLE `pelicula_pregunta`
+  MODIFY `id_pelicula_pregunta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT de la tabla `perfil`
@@ -1147,6 +1212,12 @@ ALTER TABLE `perfil`
 --
 ALTER TABLE `permiso`
   MODIFY `id_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT de la tabla `respuesta_comentario`
+--
+ALTER TABLE `respuesta_comentario`
+  MODIFY `id_respuesta_comentario` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `subgenero`
@@ -1169,12 +1240,6 @@ ALTER TABLE `usuario_direccion`
 --
 -- Restricciones para tablas volcadas
 --
-
---
--- Filtros para la tabla `campo_dinamico_comentario`
---
-ALTER TABLE `campo_dinamico_comentario`
-  ADD CONSTRAINT `campo_dinamico_comentario_ibfk_1` FOREIGN KEY (`id_comentario`) REFERENCES `comentario` (`id_comentario`);
 
 --
 -- Filtros para la tabla `campo_dinamico_pelicula`
@@ -1222,6 +1287,13 @@ ALTER TABLE `pelicula_genero`
 ALTER TABLE `perfil_permiso`
   ADD CONSTRAINT `perfil_permiso_ibfk_1` FOREIGN KEY (`id_perfil`) REFERENCES `perfil` (`id_perfil`),
   ADD CONSTRAINT `perfil_permiso_ibfk_2` FOREIGN KEY (`id_permiso`) REFERENCES `permiso` (`id_permiso`);
+
+--
+-- Filtros para la tabla `respuesta_comentario`
+--
+ALTER TABLE `respuesta_comentario`
+  ADD CONSTRAINT `respuesta_comentario_ibfk_1` FOREIGN KEY (`id_comentario`) REFERENCES `comentario` (`id_comentario`),
+  ADD CONSTRAINT `respuesta_comentario_ibfk_2` FOREIGN KEY (`id_campo_dinamico_comentario`) REFERENCES `campo_dinamico_comentario` (`id_campo_dinamico_comentario`);
 
 --
 -- Filtros para la tabla `usuario_direccion`

@@ -74,6 +74,7 @@ if(isset($_GET['status'])){
                       <th>Directores</th>
                       <th>Actores</th>
                       <th>Descripcion</th>
+                      <th>Comentarios</th>
                       <th>Acciones</th>
                     </tr>
                   </thead>
@@ -143,6 +144,9 @@ if(isset($_GET['status'])){
 
                       <?php $contador++; ?>
 
+                      </td>
+                      <td>
+                      <a href="comentarios.php?id=<?php echo $peli->getID();?>"><i class="btn btn-danger text-white">Comentarios</i></a>
                       </td>
                       <td><center>
                       <a href="modify-pelicula.php?edit=<?php echo $peli->getID();?>"><i class="fas fa-edit text-danger"></a></i>&nbsp;&nbsp;

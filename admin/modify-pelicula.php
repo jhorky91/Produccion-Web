@@ -7,11 +7,13 @@ require_once('../Business/PeliculaBusiness.php');
 require_once('../Business/GeneroBusiness.php');
 require_once('../Business/SubGeneroBusiness.php');
 require_once('../Business/ClasificacionBusiness.php');
+require_once('../Business/ComentarioBusiness.php');
 
 $PeliculaB = new PeliculaBusiness($con);
 $GeneroB = new GeneroBusiness($con);
 $SubGeneroB = new SubGeneroBusiness($con);
 $ClasificacionB = new ClasificacionBusiness($con);  
+$ComentarioB = new ComentarioBusiness($con);
 
     if(isset($_POST['add'])){
             
@@ -28,18 +30,11 @@ $ClasificacionB = new ClasificacionBusiness($con);
                      'imagen' => $_FILES['imagen']);
     
 
-      $id=$PeliculaB->Add($datos);
-      
-      $campos= array(
-        'id'=> $id,
-        'nombre'=> $_POST['nombre'],
-        'status'=> $_POST['status']
-      );
-
-      $PeliculaB->AddCampos($campos);
-
-       // y CAMPOS DINAMICOS
-       
+    $id=$PeliculaB->Add($datos);
+    
+    if(!empty($_POST['campoDinamico'])){
+      $PeliculaB->AddCampos($id,$_POST['campoDinamico']);
+    }
 
     redirect('peliculas.php');
     
@@ -64,16 +59,17 @@ $ClasificacionB = new ClasificacionBusiness($con);
       $id = $_GET['edit'];           
 
       $PeliculaB->getMod($id,$datos);
+    
+     if(!empty($_POST['campoDinamico'])){
+      $PeliculaB->AddCampos($id,$_POST['campoDinamico']);
+     }
 
-           
-      
-      
-      //IMAGENES
-      if(!empty($datos['imagen'])){
-        $PeliculaB->saveImage($id,$datos['imagen']);
-      }
-
-      redirect('peliculas.php');
+     //###########################################################################
+     
+     if(!empty($_POST['tcampo'])){
+       $PeliculaB->AddPreguntas($id,$_POST['tcampo']);
+     }
+     redirect('peliculas.php');
     }
   ?>
 
@@ -84,6 +80,7 @@ $ClasificacionB = new ClasificacionBusiness($con);
           <?php if (isset($_GET['edit'])) {
             $Edit = true;
             $Pelicula = $PeliculaB->getEntrada($_GET['edit']);
+            
             ?>
             
             <h1 class="h3 mb-2 text-gray-800">Editar Pelicula</h1>
@@ -116,21 +113,21 @@ $ClasificacionB = new ClasificacionBusiness($con);
                         <?php if(isset($Edit)) { ?>
                         <tr>
                           <td align="right"><label for="txtStatus">Status:</label</td>
-                          <td><input type="text" id="txtStatus" name="status" value="<?= $Pelicula->getStatus()?>" size="50" class="bg-danger text-white"></td>
+                          <td><input type="text" id="txtStatus" name="tStatus" value="<?= $Pelicula['status']?>" size="50" class="bg-danger text-white" required></td>
                         </tr>
                         <?php } ?>
                         <tr>
                           <td align="right"><label for="txtName">Nombre:</label</td>
-                          <td><input type="text" id="txtName" name="tName" <?= isset($Edit)?'value="'.$Pelicula->getNombre().'"':''?> size="50" class="bg-danger text-white"></td>
+                          <td><input type="text" id="txtName" name="tName" <?= isset($Edit)?'value="'.$Pelicula['nombre'].'"':''?> size="50" class="bg-danger text-white" required></td>
                         </tr>
                         <tr>
                           <td align="right"><label for="txtPrecio">Precio:</label</td>
-                          <td><input type="text" id="txtPrecio" name="tPrecio" <?= isset($Edit)?'value="'.$Pelicula->getPrecio().'"':''?> size="10" class="bg-danger text-white"></td>
+                          <td><input type="text" id="txtPrecio" name="tPrecio" <?= isset($Edit)?'value="'.$Pelicula['precio'].'"':''?> size="10" class="bg-danger text-white" ></td>
                         </tr>
                         <tr>
                           <td align="right"><label for="tClasi">Clasificación:</label</td>
                           <td>
-                          <select name="tClasi" id="#clasi" class="bg-danger text-white">
+                          <select name="tClasi" id="#clasi" class="bg-danger text-white ">
                           <?php
                           
                             
@@ -142,7 +139,7 @@ $ClasificacionB = new ClasificacionBusiness($con);
                             <option class="bg-danger text-white" value="<?php echo $clas->getID(); ?>"
                               <?php 
                               if(isset($Edit)){
-                                if( $clas->getID() == $Pelicula->getIDClasificacion()){
+                                if( $clas->getID() == $Pelicula['clasificacion']){
                                   echo 'selected="selected"';
                                 }
                               }
@@ -240,19 +237,19 @@ $ClasificacionB = new ClasificacionBusiness($con);
                         </tr>
                         <tr>
                           <td align="right"><label for="txtAnio">Año:</label></td>
-                          <td><input type="text" id="txtAnio" name="tAnio" <?= isset($Edit)?'value="'.$Pelicula->getAnio().'"':''?> size="5" class="bg-danger text-white"></td>
+                          <td><input type="text" id="txtAnio" name="tAnio" <?= isset($Edit)?'value="'.$Pelicula['anio'].'"':''?> size="5" class="bg-danger text-white" required></td>
                         </tr>
                         <tr>
                           <td align="right"><label for="txtDirect">Directores:</label></td>
-                          <td><input type="text" id="txtDirect" name="tDirect" <?= isset($Edit)?'value="'.$Pelicula->getDirectores().'"':''?> size="50" class="bg-danger text-white"></td>
+                          <td><input type="text" id="txtDirect" name="tDirect" <?= isset($Edit)?'value="'.$Pelicula['directores'].'"':''?> size="50" class="bg-danger text-white" required></td>
                         </tr>
                         <tr>
                           <td align="right"><label for="txtActor">Actores:</label></td>
-                          <td><input type="text" id="txtActor" name="tActor" <?= isset($Edit)?'value="'.$Pelicula->getActores().'"':''?> size="50" class="bg-danger text-white"></td>
+                          <td><input type="text" id="txtActor" name="tActor" <?= isset($Edit)?'value="'.$Pelicula['actores'].'"':''?> size="50" class="bg-danger text-white" required></td>
                         </tr>
                         <tr>
                           <td align="right"><label for="txtDur">Duración:</label></td>
-                          <td><input type="text" id="txtDur" name="tDur" <?= isset($Edit)?'value="'.$Pelicula->getDuracion().'"':''?> size="7" class="bg-danger text-white"></td>
+                          <td><input type="text" id="txtDur" name="tDur" <?= isset($Edit)?'value="'.$Pelicula['duracion'].'"':''?> size="7" class="bg-danger text-white" required></td>
                         </tr>                                                  
                         <tr>
                           <td align="right"><label for="txtImg">Imagen:</label></td>
@@ -260,8 +257,61 @@ $ClasificacionB = new ClasificacionBusiness($con);
                         </tr>
                         <tr>
                           <td align="right"><label for="txtDescripcion">Descripción:</label></td>
-                          <td align="left"><textarea id="txtDescripcion" name="tDescripcion" cols="80" rows="5" class="bg-danger text-white"><?= isset($Edit)?$Pelicula->getDescripcion():''?></textarea></td>
-                        </tr>                           
+                          <td align="left"><textarea id="txtDescripcion" name="tDescripcion" cols="80" rows="5" class="bg-danger text-white" required><?= isset($Edit)?$Pelicula['descripcion']:''?></textarea></td>
+                        </tr>
+
+                        <tr> 
+                                <td align="right"> 
+                                  <label for="campo">Preguntas:</label>
+                                </td>
+                                <td align="left"> 
+                            <?php foreach($ComentarioB->getPreguntas() as $preg){ 
+                                    
+                              ?>
+                                
+                               
+                                  <input type="checkbox" id="campo" name="tcampo[]" value="<?php echo $preg['id_campo_dinamico_comentario']?>" size="30" class="bg-danger text-white" 
+                                  <?php 
+                                  foreach($Pelicula['preguntas'] as $pr){
+                                    if($pr['id_campo_dinamico_comentario'] == $preg['id_campo_dinamico_comentario']){
+                                      echo 'checked';
+                                    }
+                                   }
+                                      
+                                  
+                                  ?>>
+                                  <label class="ml-3"><?php echo $preg['pregunta']?></label>
+                                
+                            <?php 
+                            echo '<br>';
+                              } ?>
+                            </td>
+                        </tr>
+
+                         <?php if(!empty($Pelicula['campoDinamico'])) { 
+                           $contcampos=11;
+                           foreach($Pelicula['campoDinamico'] as $campos) {
+                            $contcampos++;
+                           ?>
+
+                          
+                          <tr>
+                            <td align="right"><label for="txtDescripcion">Detalles:</label></td>
+                            <td>
+                            <input type="text" id="txtDur" name="campoDinamico[<?php echo $contcampos ?>][nombre]" value='<?php echo $campos['nombre']; ?>' size="15" class="bg-danger text-white">
+                            <input type="text" id="txtDur" name="campoDinamico[<?php echo $contcampos ?>][detalle]" value='<?php echo $campos['detalle']; ?>' size="30" class="bg-danger text-white">
+                            <input type='button' value='Borrar' onclick='deleteRow(this)' name='campo3'>
+                            </td>
+                          </tr> 
+
+
+                        <?php 
+                            }
+                      
+                          } ?>
+
+
+
                         <tr>
                           <td align="right"><input type="submit"  name="<?= isset($Edit)?'mod':'add'?>" value="Guardar" id="btnSavePeli" class="btn btn-danger"></td>
                           <td align="left"><input type="reset" value="Reset" class="btn btn-danger"> 
@@ -296,19 +346,27 @@ $ClasificacionB = new ClasificacionBusiness($con);
   <?php require_once('footer.php'); ?>
 
   <script>
+let rows = document.getElementById('dataTable').getElementsByTagName('tr');
+          let rowCount = rows.length;
+          let posicion = rowCount - 1;
+          console.log(posicion);
 
         function agregarFila() {
           let rows = document.getElementById('dataTable').getElementsByTagName('tr');
           let rowCount = rows.length;
           let posicion = rowCount - 1;
+          
 
           let tabla = document.getElementById('dataTable');
           let row = tabla.insertRow(rowCount - 1);
           let cellNombre = row.insertCell(0);
           let cellDetalle = row.insertCell(1);
-          let atributo = cellNombre.setAttribute('align','right');
+          //let cellDetalle = row.insertCell(2);
+          
+          cellNombre.setAttribute('align','right');
           cellNombre.innerHTML = "<label  for='MasDetalles'>Mas Detalles:</label>";
-          cellDetalle.innerHTML = "<input type='text' id='MasDetalles' name='campoDinamico["+posicion+"]['nombre']' size='15' > <input id='MasDetalles' class='bg-danger' type='text'name='campoDinamico["+posicion+"]['detalle']' size='30' >  <input type='button' value='Borrar' onclick='deleteRow(this)' name='campo3'>";
+          cellDetalle.innerHTML = "<input type='text' id='MasDetalles' name='campoDinamico["+posicion+"][nombre]' size='15' > <input id='MasDetalles' class='bg-danger text-white' type='text'name='campoDinamico["+posicion+"][detalle]' size='30' > <input type='button' value='Borrar' onclick='deleteRow(this)' name='campo3'>";
+          //cellDetalle.innerHTML = "<input type='button' value='Borrar' onclick='deleteRow(this)' name='campo3'>";
           
         }
 

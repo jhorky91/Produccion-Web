@@ -71,6 +71,7 @@ if(isset($_GET['status'])){
                       <th>ID</th>
                       <th>Status</th>
                       <th>Nombre</th>
+                      <th>Subgeneros</th>
                       <th>Acciones</th>
                     </tr>
                   </thead>
@@ -81,6 +82,9 @@ if(isset($_GET['status'])){
                     <td><?php echo $cat->getID(); ?></td>
                     <td><?php echo $cat->getStatus(); ?></td>
                       <td><?php echo $cat->getNombre(); ?></td>
+                      <td>
+                      <a href="subgenero.php?id=<?php echo $cat->getID();?>"><i class="btn btn-danger text-white">Subgeneros</i></a>
+                      </td>
                       <td><center>
                       <a href="modify-genero.php?edit=<?php echo $cat->getID();?>"><i class="fas fa-edit text-danger"></i></a>&nbsp;&nbsp;
                       <a href="generos.php?del=<?php echo $cat->getID();?>"><i class="fas fa-trash-alt text-danger"></i></a>&nbsp;&nbsp;

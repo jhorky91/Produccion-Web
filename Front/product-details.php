@@ -16,7 +16,6 @@ $IPB = new IPBusiness($con);
 		$datos = array('id_usuario'=>$_SESSION['id'], 'rating'=>$_POST['tRating'],
 		 'titulo'=> $_POST['tTitle'], 'comentario'=>$_POST['tComentario'],'id_pelicula'=> $_GET['id']);
 
-echo $cadenalimpia;
 
 		$res=$comentsB->getAdd($datos);
 		if($res==true){
@@ -50,21 +49,21 @@ echo $cadenalimpia;
                         <div class="row">
                             <div class="col-5">
 
-                                <img class="img-fluid" src="  <?php echo 'images/'.$b->getID().'.jpg'; ?> " alt="">
+                                <img class="img-fluid" src="  <?php echo 'images/'.$b['id'].'.jpg'; ?> " alt="">
                             </div>
                             <div class="col-7">
-                                <h3><?php echo $b->getNombre()?></h3>
+                                <h3><?php echo $b['nombre']?></h3>
                                 <p class="text-dark"><strong>Genero:</strong>
                                     <?php 
                           require_once('../Business/GeneroBusiness.php');
 						  $genB = new GeneroBusiness($con);
 							
-						  $g=$genB->getEntradaIDPeli($b->getID());
+						  $g=$genB->getEntradaIDPeli($b['id']);
 
 						  require_once('../Business/SubGeneroBusiness.php');
 						  $SubgenB = new SubGeneroBusiness($con);
 							
-						  $sg=$SubgenB->getEntradaIDPeli($b->getID());
+						  $sg=$SubgenB->getEntradaIDPeli($b['id']);
 
 						  foreach($g as $gene){
 							echo $gene->getNombre().' ';
@@ -77,11 +76,11 @@ echo $cadenalimpia;
                       ?>
                                 </p>
                                 <br>
-                                <p class="text-dark"> <strong>Precio:</strong> $<?php echo $b->getPrecio()?></p>
+                                <p class="text-dark"> <strong>Precio:</strong> $<?php echo $b['precio']?></p>
                                 <br>
-                                <p class="text-dark"><strong>Clasificacion por edades:</strong> <?php echo $b->getIDClasificacion()?></p>
+                                <p class="text-dark"><strong>Clasificacion por edades:</strong> <?php echo $b['clasificacion']?></p>
                                 <br>
-                                <p class="text-dark"><strong>Año:</strong> <?php echo $b->getAnio()?></p>
+                                <p class="text-dark"><strong>Año:</strong> <?php echo $b['anio']?></p>
 								<input class="btn btn-warning w-25 font-weight-bold"  type="submit" name="addCart" value="ADD TO CART">
 
                             </div>
@@ -89,7 +88,7 @@ echo $cadenalimpia;
                         <?php
 						require_once('../Business/ComentarioBusiness.php');
 						$comentarioB = new ComentarioBusiness($con);
-						$c=$comentarioB->getRating($b->getID());
+						$c=$comentarioB->getRating($b['id']);
 						 ?>
 
                         <ul class="nav nav-pills pt-3">
@@ -100,22 +99,22 @@ echo $cadenalimpia;
 									<table class="table table-xl-responsive-borderless" width="100%" cellspacing="0">
 						  				<tr>
 										    <td><div class="row"><h4><b class="badge badge-danger">Directores:</b></h4></td>
-											<td class="mx-auto"><div class="col"><?php echo $b->getDirectores()?></div></td>
+											<td class="mx-auto"><div class="col"><?php echo $b['directores']?></div></td>
 											</div>											
 										</tr>
 											
 										<tr>	
 										    <td><div class="row"><h4><b class="badge badge-danger">Actores:</b></h4></td>
-											<td><div class="col"><?php echo $b->getActores()?></div></td>
+											<td><div class="col"><?php echo $b['actores']?></div></td>
 											</div>
 										</tr>	
 											<td><div class="row"><h4><b class="badge badge-danger">Duracion:</b></h4></td>
-											<td><div class="col"><?php echo $b->getDuracion()?></div></td>
+											<td><div class="col"><?php echo $b['duracion']?></div></td>
 											</div>
 										</tr>
 										<tr>	
 										    <td><div class="row"><h4><b class="badge badge-danger">Descripcion:</b></h4></td>
-											<td><div class="col"><?php echo $b->getDescripcion()?></div></td>
+											<td><div class="col"><?php echo $b['descripcion']?></div></td>
 											</div>
 										</tr>
 										<tr>
@@ -123,6 +122,22 @@ echo $cadenalimpia;
 											<td><div class="col"><?php echo $c->getRating()?></div></td>
 											</div>								
 										</tr>
+
+										<?php if(!empty($b['campoDinamico'])) { 
+												$contcampos=10;
+												foreach($b['campoDinamico'] as $campos) {
+													$contcampos++;
+												?>
+
+												
+												<tr>
+													<td><div class="row"><h4><b class="badge badge-danger"><?php echo $campos['nombre'] ?></b></h4></div></td>
+													<td><div class="col"><?php echo $campos['detalle']?></div></td>
+											
+												</tr> 
+										<?php 
+											}
+										} ?>
 
 									</table>
 							   </div>
@@ -147,7 +162,7 @@ echo $cadenalimpia;
 						  
 						  //$comentsB-> getEntradaIDPeli($b->getID()); 
 
-						  foreach($comentsB->getEntradaIDPeli($b->getID()) as $comen){
+						  foreach($comentsB->getEntradaIDPeli($b['id']) as $comen){
 							require_once('../Business/UserBusiness.php');
 							$UserB = new UserBusiness($con);
 							$User = $UserB->getEntrada($comen->getIDUsuario());
@@ -251,24 +266,18 @@ echo $cadenalimpia;
 					 </select>	 
             </div>
 			<div class="form-group">
-			<input type="text" placeholder="Titulo" class="form-control" name="tTitle" >
+			<input type="text" placeholder="Titulo" class="form-control" name="tTitle" required >
 			</div>
             <div class="form-group">
               	<textarea placeholder="Escribe tu comentario..."
                         class="form-control"
-                        id="example-textarea" name="tComentario" rows="7"></textarea>
+                        id="example-textarea" name="tComentario" rows="7" required></textarea>
             </div>
-
-                                <div class="text-right">
-                                    <a href="#" class="btn btn-danger">
-                                        <span>Reset</span>
-                                    </a>
-                                    <!--<a href="#" class="btn btn-success">
-										<span>Enviar</span>-->
-									<input class="btn btn-success" type="submit" name="add" value="Enviar">	
-                                        
-                                    </a>
-                                </div>
+					
+				<div class="text-right">
+					<a href="#" class="btn btn-danger"><span>Reset</span></a>
+					<input class="btn btn-success" type="submit" name="add" value="Enviar">	
+				</div>
 
 		  </form>
 		  <?php }  } ?>

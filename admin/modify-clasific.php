@@ -67,15 +67,15 @@ $ClasificacionB = new ClasificacionBusiness($con);
                       <table class="table bg-gradient-dark text-white" id="dataTable" width="100%" cellspacing="0">
                       <tr>
                           <td align="right"><label for="txtStatus">Status:</label></td>
-                          <td><input type="text" id="txtStatus" name="status" <?= isset($Edit)?'value="'.$Clasificacion->getStatus().'"':''?> size="10" class="bg-danger text-white"></td>
+                          <td><input type="text" id="txtStatus" name="status" <?= isset($Edit)?'value="'.$Clasificacion->getStatus().'"':''?> size="10" class="bg-danger text-white" required></td>
                       </tr>
                       <tr>
                           <td align="right"><label for="txtName">Nombre:</label></td>
-                          <td><input type="text" id="txtName" name="nombre" <?= isset($Edit)?'value="'.$Clasificacion->getNombre().'"':''?> size="50" class="bg-danger text-white"></td>
+                          <td><input type="text" id="txtName" name="nombre" <?= isset($Edit)?'value="'.$Clasificacion->getNombre().'"':''?> size="50" class="bg-danger text-white" required></td>
                         </tr>
                         <tr>
                           <td align="right"><label for="txtDescripcion">Descripción:</label></td>
-                          <td align="left"><textarea id="txtDescripcion" name="descripcion" cols="80" rows="5" class="bg-danger text-white"><?= isset($Edit)? $Clasificacion->getDescripcion():''?></textarea></td>
+                          <td align="left"><textarea id="txtDescripcion" name="descripcion" cols="80" rows="5" class="bg-danger text-white" required><?= isset($Edit)? $Clasificacion->getDescripcion():''?></textarea></td>
                         </tr>                            
                         <tr>
                           <td align="right"><input type="submit" name="<?= isset($Edit)?'mod':'add'?>" value="Guardar" class="btn btn-danger"></td>

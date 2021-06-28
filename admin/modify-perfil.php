@@ -64,7 +64,7 @@ $PerfilB = new PerfilBusiness($con);
                       <table class="table bg-gradient-dark text-white" id="dataTable" width="100%" cellspacing="0">
                       <tr>
                           <td align="right"><label for="txtNombre">Nombre:</label></td>
-                          <td><input type="text" id="txtNombre" name="nombre" <?= isset($Edit)?'value="'.$Perfil->getNombre().'"':''?> size="50" class="bg-danger text-white"></td>
+                          <td><input type="text" id="txtNombre" name="nombre" <?= isset($Edit)?'value="'.$Perfil->getNombre().'"':''?> size="50" class="bg-danger text-white" required></td>
                       </tr>
                     
                       
@@ -91,7 +91,7 @@ $PerfilB = new PerfilBusiness($con);
                               }
                           } }?>
                           
-                          type="checkbox" id="permisos" name="tPermisos[]" value="<?php echo $per->getID() ?>" size="5" class="bg-danger text-white">
+                          type="checkbox" id="permisos" name="tPermisos[]" value="<?php echo $per->getID() ?>" size="5" class="bg-danger text-white" required>
                           <label class="bg-danger text-white" for="generos"><?php echo $per->getNombre() ?></label>
                           
                             <?php $cont++; 

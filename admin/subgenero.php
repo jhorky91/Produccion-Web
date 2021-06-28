@@ -75,7 +75,15 @@ if(isset($_GET['status'])){
                   </thead>
                   <tbody>
                   <?php
-                  foreach($SubgeneroB->getEntradas() as $cat){ ?>
+                  if(isset($_GET['id'])){
+                    $dato=array('genero'=>$_GET['id']);
+                    
+                    $sub=$SubgeneroB->getEntradas($dato);
+                  }else{
+                    $sub=$SubgeneroB->getEntradas();
+                  }
+
+                  foreach($sub as $cat){ ?>
                     <tr align="center">
                     <td><?php echo $cat->getID(); ?></td>
                     <td><?php echo $cat->getStatus(); ?></td>

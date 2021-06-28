@@ -19,9 +19,31 @@ class PeliculasDAO extends DAO{
         
         
         $sql = "SELECT * FROM $this->table WHERE id_pelicula=".$id;
-        $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'PeliculaEntity')->fetch();
-             
-        return $resultado;
+        $resultadopeli = $this->con->query($sql,PDO::FETCH_CLASS,'PeliculaEntity')->fetch();
+
+        $sql = "SELECT nombre, detalle FROM campo_dinamico_pelicula WHERE id_pelicula = $id";
+        $resultado = $this->con->query($sql,PDO::FETCH_ASSOC)->fetchAll();
+        
+        $sql = "SELECT PP.id_campo_dinamico_comentario, CDC.pregunta, CDC.detalle, CDC.tipo, CDC.status, CDC.obligatorio FROM pelicula_pregunta PP
+        INNER JOIN campo_dinamico_comentario CDC ON PP.id_campo_dinamico_comentario = CDC.id_campo_dinamico_comentario
+        WHERE PP.id_pelicula=".$id;
+        $preg= $this->con->query($sql,PDO::FETCH_ASSOC)->fetchAll();
+
+        $contenido= array('id' => $resultadopeli->getID(),
+                          'status' => $resultadopeli->getStatus(),
+                          'nombre' => $resultadopeli->getNombre(),
+                          'precio' => $resultadopeli->getPrecio(),
+                          'clasificacion' => $resultadopeli->getIDClasificacion(),
+                          'duracion' => $resultadopeli->getDuracion(),
+                          'anio' => $resultadopeli->getAnio(),
+                          'directores' => $resultadopeli->getDirectores(),
+                          'actores' => $resultadopeli->getActores(),
+                          'descripcion' => $resultadopeli->getDescripcion(),
+                          'campoDinamico' => $resultado,
+                          'preguntas'=> $preg
+                         );
+
+        return $contenido;
     }
 
     public function getAll($where = array()){
@@ -124,11 +146,16 @@ class PeliculasDAO extends DAO{
         }
         return $id ;
     }
-    public function camposDinamicos($datos=array()){
-        foreach($datos as $dat){
-            $sql = "INSERT INTO campo_dinamico_pelicula(id_pelicula,nombre,detalle)
-            VALUES ('0','".$dat['id']."','".$dat['nombre']."','".$dat['detalle']."')";
-            $this->con->exec($sql);
+    public function camposDinamicos($id,$datos=array()){
+       
+        foreach($datos as $index=>$dat){
+       
+            if(isset($datos[$index])){
+                
+                $sql = "INSERT INTO campo_dinamico_pelicula(id_pelicula,nombre,detalle)
+                VALUES ('".$id."','".$datos[$index]['nombre']."','".$datos[$index]['detalle']."')";
+                $this->con->exec($sql);
+            }
         }
     }
 
@@ -160,6 +187,9 @@ class PeliculasDAO extends DAO{
                 $this->con->exec($sql);
             }
         }
+        
+        $sql = 'DELETE FROM campo_dinamico_pelicula WHERE id_pelicula='.$id;
+        $this->con->exec($sql);
 
 
     }
@@ -238,6 +268,19 @@ class PeliculasDAO extends DAO{
 
 
     }
+    public function AddPreguntas($id,$datos=array()){
+            $sql = "DELETE FROM pelicula_pregunta
+                    WHERE id_pelicula=".$id;
+            $this->con->exec($sql);
+        
+        foreach($datos as $dat){
+            $sql = "INSERT INTO pelicula_pregunta(id_pelicula,id_campo_dinamico_comentario) 
+                    VALUES ('".$id."','".$dat."')";
+            $this->con->exec($sql);
+        }
+    }
+
+    
 
     
     

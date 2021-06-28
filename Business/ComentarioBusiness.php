@@ -53,6 +53,11 @@ class ComentarioBusiness {
 
         return $entradas;
     }
+    public function cambioStatusPregunta($id,$sta){
+        $entradas = $this->ComentariosDAO->cambioStatusPregunta($id,$sta); 
+
+        return $entradas;
+    }
     public function getDel($id){
         $entradas = $this->ComentariosDAO->delete($id); 
 
@@ -69,6 +74,28 @@ class ComentarioBusiness {
 
     public function contarInactivos(){
         return $this->ComentariosDAO->contarInactivos();
+    }
+
+    public function getPreguntas(){
+        return $this->ComentariosDAO->getPreguntas();
+    }
+    public function getPregunta($id){
+        return $this->ComentariosDAO->getPregunta($id);
+    }
+    public function getModPregunta($id,$datos = array()){
+        $entradas = $this->ComentariosDAO->modifyPregunta($id, $datos); 
+
+        $entradas;
+    }
+    public function getAddPregunta($datos = array()){
+        $entradas = $this->ComentariosDAO->savePregunta($datos); 
+
+        $entradas;
+    }
+    public function getDelPregunta($id){
+        $entradas = $this->ComentariosDAO->deletePregunta($id); 
+
+        $entradas;
     }
 }
 

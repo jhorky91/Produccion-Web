@@ -4,9 +4,6 @@ include_once('../Helpers/funcs.php');
 
 include_once(DIR_BASE.'Business/ComentarioBusiness.php');
 
-    if(isset($_GET['edit'])){
-        
-    }
 ?>
 
         <!-- End of Topbar -->
@@ -30,33 +27,33 @@ include_once(DIR_BASE.'Business/ComentarioBusiness.php');
                       <table class="table bg-gradient-dark text-white" id="dataTable" width="100%" cellspacing="0">
                         <tr>
                           <td align="right"><label for="txtStatus">Status:</label</td>
-                          <td><input type="text" id="txtStatus" name="tStatus" value="<?php echo isset($dato)?$dato->getStatus():''?>" size="50" class="bg-danger text-white"></td>
+                          <td><input type="text" id="txtStatus" name="tStatus" value="<?php echo isset($dato)?$dato->getStatus():''?>" size="50" class="bg-danger text-white" required></td>
                         </tr>
                         
                         <tr>
                           <td align="right"><label for="txtUser">Usuario:</label</td>
-                          <td><input type="text" id="txtUser" name="tUser" value="<?php echo isset($dato)?$dato->getIDUsuario():''?>" size="50" class="bg-danger text-white"></td>
+                          <td><input type="text" id="txtUser" name="tUser" value="<?php echo isset($dato)?$dato->getIDUsuario():''?>" size="50" class="bg-danger text-white" required></td>
                         </tr>
 
                         <tr>
                           <td align="right"><label for="txtRating">ID Pelicula:</label</td>
-                          <td><input type="text" id="txtRating" name="tRating" value="<?php echo isset($dato)?$dato->getIDPelicula():''?>" size="50" class="bg-danger text-white"></td>
+                          <td><input type="text" id="txtRating" name="tRating" value="<?php echo isset($dato)?$dato->getIDPelicula():''?>" size="50" class="bg-danger text-white" required></td>
                         </tr>
 
                         <tr>
                           <td align="right"><label for="txtRating">Rating:</label</td>
-                          <td><input type="text" id="txtRating" name="tRating" value="<?php echo isset($dato)?$dato->getRating():''?>" size="50" class="bg-danger text-white"></td>
+                          <td><input type="text" id="txtRating" name="tRating" value="<?php echo isset($dato)?$dato->getRating():''?>" size="50" class="bg-danger text-white" required></td>
                         </tr>
 
                         <tr>
                           <td align="right"><label for="txtTitulo">Titulo:</label</td>
-                          <td align="left"><textarea id="txtTitulo" name="tTitulo" cols="80" rows="5" class="bg-danger text-white"><?php echo isset($dato)?$dato->getTitulo():''?></textarea></td>
+                          <td align="left"><textarea id="txtTitulo" name="tTitulo" cols="80" rows="5" class="bg-danger text-white" required><?php echo isset($dato)?$dato->getTitulo():''?></textarea></td>
                         </tr>                            
                         <tr>
 
                         <tr>
                           <td align="right"><label for="txtComentario">Comentario:</label</td>
-                          <td align="left"><textarea id="txtComentario" name="tComentario" cols="80" rows="5" class="bg-danger text-white"><?php echo isset($dato)?$dato->getComentario():''?></textarea></td>
+                          <td align="left"><textarea id="txtComentario" name="tComentario" cols="80" rows="5" class="bg-danger text-white" required><?php echo isset($dato)?$dato->getComentario():''?></textarea></td>
                         </tr>                            
                         <tr>
 

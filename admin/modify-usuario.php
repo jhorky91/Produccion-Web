@@ -140,32 +140,32 @@ if(isset($_POST['mod'])) {
                       </tr>
                        <tr>
                           <td align="right"><label for="txtName">Nombre:</label</td>
-                          <td><input type="text" id="txtName" name="tName" <?= isset($Edit)?'value="'.$User->getNombre().'"':''?> size="50" class="bg-danger text-white"></td>
+                          <td><input type="text" id="txtName" name="tName" <?= isset($Edit)?'value="'.$User->getNombre().'"':''?> size="50" class="bg-danger text-white" required></td>
                         </tr>
 
                         <tr>
                           <td align="right"><label for="txtApellido">Apellido:</label</td>
-                          <td><input type="text" id="txtApellido" name="tApellido" <?= isset($Edit)?'value="'.$User->getApellido().'"':''?> size="50" class="bg-danger text-white"></td>
+                          <td><input type="text" id="txtApellido" name="tApellido" <?= isset($Edit)?'value="'.$User->getApellido().'"':''?> size="50" class="bg-danger text-white" required></td>
                         </tr>
 
                         <tr>
                           <td align="right"><label for="txtFecha">Fecha de nacimiento:</label</td>
-                          <td><input type="date" id="txtFecha" name="tFechaNac" <?= isset($Edit)?'value="'.$User->getFechaNac().'"':''?> size="10" class="bg-danger text-white"></td>
+                          <td><input type="date" id="txtFecha" name="tFechaNac" <?= isset($Edit)?'value="'.$User->getFechaNac().'"':''?> size="10" class="bg-danger text-white" required></td>
                         </tr>
 
                         <tr>
                           <td align="right"><label for="txtUser">User:</label</td>
-                          <td><input type="text" id="txtUser" name="tUser" <?= isset($Edit)?'value="'.$User->getUsuario().'"':''?> size="50" class="bg-danger text-white"></td>
+                          <td><input type="text" id="txtUser" name="tUser" <?= isset($Edit)?'value="'.$User->getUsuario().'"':''?> size="50" class="bg-danger text-white" required></td>
                         </tr>
 
                         <tr>
                           <td align="right"><label for="txtEmail">Email:</label</td>
-                          <td><input type="text" id="txtEmail" name="tEmail" <?= isset($Edit)?'value="'.$User->getEmail().'"':''?> size="50" class="bg-danger text-white"></td>
+                          <td><input type="text" id="txtEmail" name="tEmail" <?= isset($Edit)?'value="'.$User->getEmail().'"':''?> size="50" class="bg-danger text-white" required></td>
                         </tr>
 
                         <tr>
                           <td align="right"><label for="txtPass">Password:</label</td>
-                          <td><input type="password" id="txtPass" name="tPass" <?= isset($Edit)?'value="'.$User->getPass().'"':''?>  size="50" class="bg-danger text-white">
+                          <td><input type="password" id="txtPass" name="tPass" <?= isset($Edit)?'value="'.$User->getPass().'"':''?>  size="50" class="bg-danger text-white" required>
                           <button id="txtPass" class="btn btn-danger" type="button" onclick="mostrarPassword()"> <span class="fa fa-eye-slash icon"></span> </button>
                           </td>
                         </tr>

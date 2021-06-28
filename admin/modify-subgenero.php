@@ -81,12 +81,12 @@ $SubGeneroB = new SubGeneroBusiness($con);
                       <table class="table bg-gradient-dark text-white" id="dataTable" width="100%" cellspacing="0">
                       <tr>
                           <td align="right"><label for="txtStatus">Status:</label</td>
-                          <td><input type="text" id="txtStatus" name="status" <?= isset($Edit)?'value="'.$SubGenero->getStatus().'"':''?> size="50" class="bg-danger text-white"></td>
+                          <td><input type="text" id="txtStatus" name="status" <?= isset($Edit)?'value="'.$SubGenero->getStatus().'"':''?> size="50" class="bg-danger text-white" required></td>
                         </tr>
                         
                         <tr>
                           <td align="right"><label for="txtName">Nombre:</label</td>
-                          <td><input type="text" id="txtName" name="nombre" <?= isset($Edit)?'value="'.$SubGenero->getNombre().'"':''?> size="50" class="bg-danger text-white"></td>
+                          <td><input type="text" id="txtName" name="nombre" <?= isset($Edit)?'value="'.$SubGenero->getNombre().'"':''?> size="50" class="bg-danger text-white" required></td>
                         </tr>
                         <tr>
                           <td align="right"><label for="txtGene">Género:</label</td>

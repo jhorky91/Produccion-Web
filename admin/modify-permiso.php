@@ -69,15 +69,15 @@ $PermisoB = new PermisoBusiness($con);
                       <table class="table bg-gradient-dark text-white" id="dataTable" width="100%" cellspacing="0">
                         <tr>
                             <td align="right"><label for="txtNombre">Nombre:</label></td>
-                            <td><input type="text" id="txtNombre" name="nombre" <?= isset($Edit)?'value="'.$Permisos->getNombre().'"':''?> size="50" class="bg-danger text-white"></td>
+                            <td><input type="text" id="txtNombre" name="nombre" <?= isset($Edit)?'value="'.$Permisos->getNombre().'"':''?> size="50" class="bg-danger text-white" required></td>
                         </tr>
                         <tr>
                             <td align="right"><label for="txtCode">Code:</label></td>
-                            <td><input type="text" id="txtCode" name="code" <?= isset($Edit)?'value="'.$Permisos->getCode().'"':''?> size="50" class="bg-danger text-white"></td>
+                            <td><input type="text" id="txtCode" name="code" <?= isset($Edit)?'value="'.$Permisos->getCode().'"':''?> size="50" class="bg-danger text-white" required></td>
                         </tr>
                         <tr>
                             <td align="right"><label for="txtModule">Module:</label></td>
-                            <td><input type="text" id="txtModule" name="module" <?= isset($Edit)?'value="'.$Permisos->getModule().'"':''?> size="50" class="bg-danger text-white"></td>
+                            <td><input type="text" id="txtModule" name="module" <?= isset($Edit)?'value="'.$Permisos->getModule().'"':''?> size="50" class="bg-danger text-white" required></td>
                         </tr>                           
                         <tr>
                             <td align="right"><input type="submit" name="<?= isset($Edit)?'mod':'add'?>" value="Guardar" class="btn btn-danger"></td>

@@ -23,8 +23,8 @@ class PeliculaBusiness {
         return $entrada;
       
     }
-    public function AddCampos($datos=array()){
-        $entrada = $this->PeliculasDAO->camposDinamicos($datos);
+    public function AddCampos($id,$datos=array()){
+        $entrada = $this->PeliculasDAO->camposDinamicos($id,$datos);
         return $entrada;
       
     }
@@ -112,6 +112,10 @@ class PeliculaBusiness {
 
     public function getImagenes($id){
         return obtener_imagenes('Front/imagenes/'.$id);
+    }
+
+    public function addPreguntas($id, $datos = array()){
+        return $this->PeliculasDAO->addPreguntas($id, $datos);
     }
 
 }

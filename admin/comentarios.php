@@ -58,6 +58,7 @@ if(isset($_GET['status'])){
               
               <input class="btn btn-danger" type="submit" value="Importar">
               <input class="btn btn-danger" type="submit" value="Exportar">
+              <a  class="btn btn-danger" href="preguntas.php">Preguntas</a>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -81,7 +82,13 @@ if(isset($_GET['status'])){
                   <tbody>
                   
                   <?php $contador=0;
-                  foreach($ComentarioB->getEntradas() as $peli){ ?>
+                  if(isset($_GET['id'])){
+                    $comen = $ComentarioB->getEntradaIDPeli($_GET['id']);
+                  }else{
+                    $comen=$ComentarioB->getEntradas();
+                  }
+
+                  foreach($comen as $peli){ ?>
                     <tr align="center">
                     <td><?php echo $peli->getIDComentario(); ?></td>
                     <td><?php echo $peli->getStatus(); ?></td>
@@ -95,7 +102,7 @@ if(isset($_GET['status'])){
                       <td>
                       <?php 
                        $pel = $PeliculaB->getEntrada($peli->getIDPelicula());                      
-                              echo $pel->getNombre();
+                              echo $pel['nombre'];
                        ?>
                       </td>
                       

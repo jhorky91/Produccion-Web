@@ -30,12 +30,12 @@ class SubGeneroDAO extends DAO{
 
     public function getAll($where = array()){
         $sgen=array();
-        if(isset($_GET['genero']) && !empty($_GET['genero'])){
-            $sgen[]=' AND GS.id_genero = '.$_GET['genero'];
+        if(isset($where['genero']) && !empty($where['genero'])){
+            $sgen[]=' AND GS.id_genero = '.$where['genero'];
         }
-        if(isset($_GET['subgenero']) && !empty($_GET['subgenero'])){
-            $sgen[]=' AND GS.id_subgenero = '.$_GET['subgenero'].'
-                      AND GS.id_subgenero != '.$_GET['subgenero'];
+        if(isset($where['subgenero']) && !empty($where['subgenero'])){
+            $sgen[]=' AND GS.id_subgenero = '.$where['subgenero'].'
+                      AND GS.id_subgenero != '.$where['subgenero'];
         }
 
         $sWhereStr='';
