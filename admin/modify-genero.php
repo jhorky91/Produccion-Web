@@ -1,8 +1,8 @@
 <?php
 $GeneroSidebar = true;
 include('header.php');
-include_once(DIR_BASE.'/Helpers/funcs.php');
-require_once(DIR_BASE.'/Business/GeneroBusiness.php');
+include_once('../Helpers/funcs.php');
+require_once('../Business/GeneroBusiness.php');
 
 
 $GeneroB = new GeneroBusiness($con);

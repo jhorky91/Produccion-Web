@@ -1,8 +1,8 @@
 <?php
 include('header.php');
-include_once(DIR_BASE.'/Helpers/funcs.php');
+include_once('../Helpers/funcs.php');
 
-include_once(DIR_BASE.'/Business/ComentarioBusiness.php');
+include_once('../Business/ComentarioBusiness.php');
 $ComentarioB = NEW ComentarioBusiness($con);
 
     if(isset($_GET['edit'])){

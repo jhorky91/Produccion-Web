@@ -1,8 +1,8 @@
 <?php
 $PermisoSidebar = true;
 include('header.php');
-include_once(DIR_BASE.'/Helpers/funcs.php');
-require_once(DIR_BASE.'/Business/PermisoBusiness.php');
+include_once('../Helpers/funcs.php');
+require_once('../Business/PermisoBusiness.php');
 
 
 

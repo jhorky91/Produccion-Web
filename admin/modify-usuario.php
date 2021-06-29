@@ -6,15 +6,15 @@ if(isset($_GET['user'])){
   $UsuarioSidebar = true;
 }
 include('header.php');
-include_once(DIR_BASE.'/Helpers/funcs.php');
+include_once('../Helpers/funcs.php');
 
-require_once(DIR_BASE.'/Business/UserBusiness.php');
+require_once('../Business/UserBusiness.php');
 $UserB = new UserBusiness($con);
 
-require_once(DIR_BASE.'/Business/PerfilBusiness.php');
+require_once('../Business/PerfilBusiness.php');
 $PerfilB = new PerfilBusiness($con);
 
-require_once(DIR_BASE.'/Business/DireccionBusiness.php');
+require_once('../Business/DireccionBusiness.php');
 $DirB = new DireccionBusiness($con);
 
 //ADMIN--------------------------------------------------------------------------------------

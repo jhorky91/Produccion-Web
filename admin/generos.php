@@ -5,7 +5,7 @@ include_once('header.php');
   //Devuelve el contenido de la tabla Clasificacion    
   //$generos = "SELECT id_genero, nombre FROM genero;";
   //$resultado = $con->query($generos); 
- require_once(DIR_BASE.'/Business/GeneroBusiness.php');
+ require_once('../Business/GeneroBusiness.php');
   $GeneroB = new GeneroBusiness($con);
   
   //Fin del Select

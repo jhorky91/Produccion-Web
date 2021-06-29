@@ -1,9 +1,9 @@
 <?php
 $ClasificacionSidebar = true;
 include('header.php');
-include_once(DIR_BASE.'/Helpers/funcs.php');
+include_once('../Helpers/funcs.php');
 
-require_once(DIR_BASE.'/Business/ClasificacionBusiness.php');
+require_once('../Business/ClasificacionBusiness.php');
 $ClasificacionB = new ClasificacionBusiness($con);
 
     //Guardamos un nuevo Genero

@@ -1,8 +1,8 @@
 <?php
 $PeliculasSidebar = true;
   include_once('header.php'); 
-  include_once(DIR_BASE.'/Business/ClasificacionBusiness.php');
-  require_once(DIR_BASE.'/Business/PeliculaBusiness.php');
+  include_once('../Business/ClasificacionBusiness.php');
+  require_once('../Business/PeliculaBusiness.php');
   $PeliculaB = new PeliculaBusiness($con);
   $ClasificacionB = new ClasificacionBusiness($con);
 

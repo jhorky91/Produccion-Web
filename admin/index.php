@@ -2,10 +2,10 @@
 $IndexSidebar = true;
 include_once('header.php'); 
 
-require_once(DIR_BASE.'/Helpers/config.php');
+require_once('../Helpers/config.php');
 
-require_once(DIR_BASE.'/Business/UserBusiness.php');
-require_once(DIR_BASE.'/Business/PeliculaBusiness.php');
+require_once('../Business/UserBusiness.php');
+require_once('../Business/PeliculaBusiness.php');
 
 $UserB = new UserBusiness($con);
 $PeliB = new PeliculaBusiness($con);

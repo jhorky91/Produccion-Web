@@ -1,14 +1,14 @@
 <?php
 $UsuarioSidebar = true;
 include('header.php'); 
-include_once(DIR_BASE.'/Helpers/funcs.php');
+include_once('../Helpers/funcs.php');
 $Perfil="Cliente";
 //Devuelve el contenido de la tabla Usuarios    
 
 /*$usuarios = "SELECT id_usuario,status,nombre,apellido,fecha,fecha_nac,usuario,email,telefono,pedidos,dinero_gastado FROM usuario";
 $resultado = $con->query($usuarios);*/
 
-require_once(DIR_BASE.'/Business/UserBusiness.php');
+require_once('../Business/UserBusiness.php');
 $UserB = new UserBusiness($con);
 
 if(isset($_GET['del'])){

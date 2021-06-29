@@ -6,7 +6,7 @@ include('header.php');
 //$clasi = "SELECT id_clasificacion, nombre, descripcion FROM clasificacion;";
 //$resultado = $con->query($clasi); 
 //Fin del Select
-require_once(DIR_BASE.'/Business/ClasificacionBusiness.php');
+require_once('../Business/ClasificacionBusiness.php');
 $ClasificacionB = new ClasificacionBusiness($con);
 
 

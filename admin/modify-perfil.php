@@ -1,8 +1,8 @@
 <?php
 $PerfilSidebar = true;
 include('header.php');
-include_once(DIR_BASE.'/Helpers/funcs.php');
-require_once(DIR_BASE.'/Business/PerfilBusiness.php');
+include_once('../Helpers/funcs.php');
+require_once('../Business/PerfilBusiness.php');
 
 
 

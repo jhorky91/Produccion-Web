@@ -1,11 +1,11 @@
 <?php
 include('header.php');
-include_once(DIR_BASE.'/Helpers/funcs.php');
+include_once('../Helpers/funcs.php');
 
-include_once(DIR_BASE.'/Business/ComentarioBusiness.php');
+include_once('../Business/ComentarioBusiness.php');
 $ComentarioB = new ComentarioBusiness($con);
 
-include_once(DIR_BASE.'/Business/PeliculaBusiness.php');
+include_once('../Business/PeliculaBusiness.php');
 $PeliculaB = new PeliculaBusiness($con);
 
     //Guardamos un nuevo Genero

@@ -3,7 +3,7 @@ $PerfilSidebar = true;
 include('header.php');
 
 
-require_once(DIR_BASE.'/Business/PerfilBusiness.php');
+require_once('../Business/PerfilBusiness.php');
 $PerfilB = new PerfilBusiness($con);
 
 
