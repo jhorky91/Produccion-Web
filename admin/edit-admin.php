@@ -1,12 +1,12 @@
 <?php
 include('header.php');
-include_once('../Helpers/funcs.php');
+include_once(DIR_BASE.'/Helpers/funcs.php');
 
 
     //ADMIN--------------------------------------------------------------------------------------
     //-------------------------------------------------------------------------------------------
 
-$datos = file_get_contents('../../DataAccess/admin.json');
+$datos = file_get_contents(DIR_BASE.'/../DataAccess/admin.json');
 //convierto a un array
 $datosJson = json_decode($datos,true);
 if(isset($_POST['tTipo'])){

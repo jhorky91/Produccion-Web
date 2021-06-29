@@ -1,12 +1,12 @@
 <?php
 
 include('header.php');
-include_once('../Helpers/funcs.php');
-require_once('../Business/PeliculaBusiness.php');
-require_once('../Business/GeneroBusiness.php');
-require_once('../Business/SubGeneroBusiness.php');
-require_once('../Business/ClasificacionBusiness.php');
-require_once('../Business/ComentarioBusiness.php');
+include_once(DIR_BASE.'/Helpers/funcs.php');
+require_once(DIR_BASE.'/Business/PeliculaBusiness.php');
+require_once(DIR_BASE.'/Business/GeneroBusiness.php');
+require_once(DIR_BASE.'/Business/SubGeneroBusiness.php');
+require_once(DIR_BASE.'/Business/ClasificacionBusiness.php');
+require_once(DIR_BASE.'/Business/ComentarioBusiness.php');
 
 $PeliculaB = new PeliculaBusiness($con);
 $GeneroB = new GeneroBusiness($con);
