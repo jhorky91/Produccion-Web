@@ -1,8 +1,7 @@
 <?php
-//
+
 include('header.php');
 include_once('../Helpers/funcs.php');
-
 require_once('../Business/PeliculaBusiness.php');
 require_once('../Business/GeneroBusiness.php');
 require_once('../Business/SubGeneroBusiness.php');

@@ -173,15 +173,23 @@ class PeliculasDAO extends DAO{
                     WHERE id_pelicula = ".$id;
         $this->con->exec($sql);
 
-               $sql = 'DELETE FROM pelicula_genero WHERE id_pelicula='.$id;
-               $this->con->exec($sql);
+        $sql = 'DELETE FROM pelicula_genero WHERE id_pelicula='.$id;
+        $this->con->exec($sql);
         
         foreach($datos['generos'] as $gen){
             foreach($datos['subgeneros'] as $subgen){
                 $sql = "SELECT id_genero_subgenero FROM genero_subgenero
-                        WHERE (id_genero = ".$gen." AND id_subgenero = ".$subgen.") OR (id_genero = ".$gen." AND id_subgenero IS NULL)";
+                        WHERE id_genero = ".$gen." AND id_subgenero = $subgen";
                 $result=$this->con->query($sql)->fetch();
         
+                $sql = "INSERT INTO pelicula_genero(id_pelicula,id_genero_subgenero) 
+                        VALUES ('".$id."','".$result['id_genero_subgenero']."')";
+                $this->con->exec($sql);
+
+                $sql = "SELECT id_genero_subgenero FROM genero_subgenero
+                WHERE id_genero = ".$gen." AND id_subgenero IS NULL";
+                $result=$this->con->query($sql)->fetch();
+
                 $sql = "INSERT INTO pelicula_genero(id_pelicula,id_genero_subgenero) 
                         VALUES ('".$id."','".$result['id_genero_subgenero']."')";
                 $this->con->exec($sql);

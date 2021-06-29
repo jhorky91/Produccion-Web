@@ -80,7 +80,9 @@ $PerfilB = new PerfilBusiness($con);
                           $PermisoB = new PermisoBusiness($con);
                           
                           $cont=0;
-                          foreach($PermisoB->getPermisos() as $per){ ?>
+                          $contL=0;
+                          foreach($PermisoB->getPermisos() as $per){ 
+                          $contL++ ?>
 
                           <input 
                           
@@ -91,8 +93,8 @@ $PerfilB = new PerfilBusiness($con);
                               }
                           } }?>
                           
-                          type="checkbox" id="permisos" name="tPermisos[]" value="<?php echo $per->getID() ?>" size="5" class="bg-danger text-white" required>
-                          <label class="bg-danger text-white" for="generos"><?php echo $per->getNombre() ?></label>
+                          type="checkbox" id="permisos<?php echo $contL; ?>" name="tPermisos[]" value="<?php echo $per->getID() ?>" size="5" class="bg-danger text-white" required>
+                          <label class="bg-danger text-white" for="permisos<?php echo $contL; ?>"><?php echo $per->getNombre() ?></label>
                           
                             <?php $cont++; 
                             if($cont==3){

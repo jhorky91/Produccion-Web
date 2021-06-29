@@ -25,6 +25,8 @@ class GeneroDAO extends DAO{
         INNER JOIN pelicula_genero PG ON GS.id_genero_subgenero = PG.id_genero_subgenero
         WHERE G.status=1 AND PG.id_pelicula=".$id;
         return $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'GeneroEntity')->fetchAll();
+
+
     }
 
     public function getAll($where = array()){
@@ -81,6 +83,63 @@ class GeneroDAO extends DAO{
         $sql = "UPDATE $this->table SET nombre=? WHERE id_genero=?";
         $send = $this->con->prepare($sql);
         $send ->execute([$datos['nombre'],$id]);
+
+        
+        //***************************************************************************************************** */
+        //***************************************************************************************************** */
+        //***************************************************************************************************** */
+
+        $sql = "SELECT id_subgenero FROM genero_subgenero WHERE id_genero = $id AND id_subgenero IS NOT NULL";
+        $result=$this->con->query($sql,PDO::FETCH_ASSOC)->fetchAll(); 
+        
+        if(isset($datos['subgenero'])){
+            foreach($datos['subgenero'] as $subgen){ //accion
+
+                if(!in_array($subgen, array_column($result, 'id_subgenero')) ){
+                    
+                    $sql = "INSERT INTO genero_subgenero(id_genero, id_subgenero) VALUES ('".$id."','".$subgen."')";
+                    $this->con->exec($sql); 
+                    
+                }  
+            }
+
+            $sql = "SELECT id_subgenero FROM genero_subgenero WHERE id_genero = $id AND id_subgenero IS NOT NULL";
+            $result = $this->con->query($sql,PDO::FETCH_ASSOC)->fetchAll(); 
+            
+             foreach(array_column($result, 'id_subgenero') as $res){
+             
+                if(!in_array($res,$datos['subgenero'])){
+                    
+                        $sql = "SELECT id_genero_subgenero FROM genero_subgenero WHERE id_subgenero=".$res." AND id_genero = $id";
+                        $result=$this->con->query($sql)->fetch();
+                           
+                        $sql = "DELETE FROM pelicula_genero WHERE id_genero_subgenero= ".$result['id_genero_subgenero'];
+                        $this->con->exec($sql);
+                        
+                        $sql = "DELETE FROM genero_subgenero WHERE id_genero_subgenero=".$result['id_genero_subgenero'];
+                        $this->con->exec($sql);
+                    } 
+             }
+            
+        } else{
+
+            foreach(array_column($result, 'id_subgenero') as $res){ 
+        
+                $sql = "SELECT id_genero_subgenero FROM genero_subgenero WHERE id_subgenero=".$res." AND id_genero = $id";
+                $result=$this->con->query($sql)->fetch();
+                
+                $sql = "DELETE FROM pelicula_genero WHERE id_genero_subgenero= ".$result['id_genero_subgenero'];
+                $this->con->exec($sql);
+                
+                $sql = "DELETE FROM genero_subgenero WHERE id_genero_subgenero=".$result['id_genero_subgenero'];
+                $this->con->exec($sql);
+                
+            }
+        }   
+     
+        //***************************************************************************************************** */
+        //***************************************************************************************************** */
+        //***************************************************************************************************** */
         
     }
 

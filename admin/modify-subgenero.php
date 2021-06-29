@@ -33,7 +33,7 @@ $SubGeneroB = new SubGeneroBusiness($con);
         'genero'=>$_POST['tGene']
         );
 
-      $SubGeneroB->getMod($id,$datos);       
+      $SubGeneroB->getMod($id,$datos);
       redirect('subgenero.php');
       } else {
         
@@ -97,8 +97,9 @@ $SubGeneroB = new SubGeneroBusiness($con);
 
 
                           $cont=0;
-                          foreach($GeneroB->getEntradas() as $cat){ ?>
-
+                          $contL=0;
+                          foreach($GeneroB->getEntradas() as $cat){ 
+                          $contL++ ?>
                           <input 
                           
                           <?php if(isset($Edit)){
@@ -108,8 +109,8 @@ $SubGeneroB = new SubGeneroBusiness($con);
                               }
                           } }?>
                           
-                           type="checkbox" id="generos" name="tGene[]" value="<?php echo $cat->getID() ?>" size="5" class="bg-danger text-white">
-                          <label class="bg-danger text-white" for="generos"><?php echo $cat->getNombre() ?></label>
+                           type="checkbox" id="generos<?php echo $contL; ?>" name="tGene[]" value="<?php echo $cat->getID() ?>" size="5" class="bg-danger text-white">
+                          <label class="bg-danger text-white" for="generos<?php echo $contL; ?>"><?php echo $cat->getNombre() ?></label>
                           
                             <?php $cont++; 
                             if($cont==3){

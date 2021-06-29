@@ -34,7 +34,7 @@ class ClasificacionDAO extends DAO{
     public function save($datos = array()){
 
         $sql = "INSERT INTO $this->table(status,nombre,descripcion)
-                VALUES ('".$datos['status']."','".$datos['nombre']."','".$datos['descripcion']."')";
+                VALUES (0,'".$datos['nombre']."','".$datos['descripcion']."')";
         return $this->con->exec($sql);
 
     }

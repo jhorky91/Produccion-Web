@@ -19,18 +19,26 @@ $GeneroB = new GeneroBusiness($con);
     }
 
     //Modificamos un genero ya existente
-    if(isset($_POST['mod'])) {
+     
+    
+    if(isset($_POST['mod'])) {     
       $id = $_GET['edit'];
-      $GeneroB->getDel($id);
-           
-      $res = $_POST['tGene'];
-      $datos= array(
-        'nombre'=> $_POST['nombre']
-      );
-      $GeneroB->Add($datos, $res);       
-      redirect('generos.php');
-    }
 
+      if(!empty($_POST['tGene'])){           
+        $datos= array(
+          'nombre'=> $_POST['nombre'],
+          'subgenero'=>$_POST['tGene']
+          );
+      }else {
+        $datos= array(
+          'nombre'=> $_POST['nombre']          
+          );
+      }
+
+      $GeneroB->getMod($id,$datos);
+      redirect('generos.php');
+     
+    }
     
 ?>
 
@@ -88,19 +96,21 @@ $GeneroB = new GeneroBusiness($con);
 
 
                           $cont=0;
-                          foreach($SubgeneroB->getEntradas() as $cat){ ?>
-
+                          $contL=0;
+                          foreach($SubgeneroB->getEntradas() as $cat){ 
+                                      $contL++;?>
                           <input 
                           
                           <?php if(isset($Edit)){
                             foreach($resultado as $result){
+                            
                               if($cat->getID() == $result->getID()){
                                 echo 'checked';
                               }
                           } }?>
                           
-                           type="checkbox" id="generos" name="tGene[]" value="<?php echo $cat->getID() ?>" size="5" class="bg-danger text-white">
-                          <label class="bg-danger text-white" for="generos"><?php echo $cat->getNombre() ?></label>
+                           type="checkbox" id="generos<?php echo $contL; ?>" name="tGene[]" value="<?php echo $cat->getID() ?>" size="5" class="bg-danger text-white">
+                          <label class="bg-danger text-white" for="generos<?php echo $contL;?>"><?php echo $cat->getNombre() ?></label>
                           
                             <?php $cont++; 
                             if($cont==3){

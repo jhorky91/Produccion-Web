@@ -72,43 +72,43 @@ class SubGeneroDAO extends DAO{
 
     }
 
-    public function modify($id, $datos = array()){
-        
-        $sql = "UPDATE $this->table SET nombre ='".$datos['nombre']."' WHERE id_subgenero = $id";
-        $this->con->exec($sql);
+    public function modify($id, $datos = array()){ 
+        $sql = "UPDATE $this->table SET nombre=? WHERE id_subgenero=?";
+        $send = $this->con->prepare($sql);
+        $send ->execute([$datos['nombre'],$id]);
         
         $sql = "SELECT id_genero FROM genero_subgenero WHERE id_subgenero = $id";
-        $generosantiguos=$this->con->query($sql,PDO::FETCH_ASSOC)->fetchAll();    //4 //2
+        $result=$this->con->query($sql,PDO::FETCH_ASSOC)->fetchAll(); 
         
-        
-            foreach($generosantiguos as $geneA){
-                foreach($datos['genero'] as $genero){
-                    if($geneA['id_genero']!=$generos){
-                        $genA=$geneA['id_genero'];
+        foreach($datos['genero'] as $gen){ 
 
-                        $sql = "SELECT PG.id_genero_subgenero FROM pelicula_genero PG
-                        INNER JOIN genero_subgenero SG ON PG.id_genero_subgenero= SG.id_genero_subgenero
-                        WHERE id_subgenero=$id AND id_genero = $genA";
-                        $res1 = $this->con->query($sql)->fetch();
-                    }
-                }
-            }
-        
-
+             if(!in_array($gen, array_column($result, 'id_genero')) ){
+                
+                $sql = "INSERT INTO genero_subgenero(id_genero, id_subgenero) VALUES ('".$gen."','".$id."')";
+                $this->con->exec($sql); 
+                
+            }  
+        }
      
-        $sql1 = "DELETE FROM genero_subgenero WHERE id_subgenero = $id";
-        $this->con->exec($sql1);
+        $sql = "SELECT id_genero FROM genero_subgenero WHERE id_subgenero = $id";
+        $result=$this->con->query($sql,PDO::FETCH_ASSOC)->fetchAll(); 
+
+         foreach($result as $index=>$res){
+            
+
+            if(!in_array($res['id_genero'], $datos['genero'])){
+                    $sql = "SELECT id_genero_subgenero FROM genero_subgenero WHERE id_genero=".$res['id_genero']." AND id_subgenero = $id";
+                    $result=$this->con->query($sql)->fetch();
+                       
+                    $sql = "DELETE FROM pelicula_genero WHERE id_genero_subgenero= ".$result['id_genero_subgenero'];
+                    $this->con->exec($sql);
+                    
+                    $sql = "DELETE FROM genero_subgenero WHERE id_genero_subgenero=".$result['id_genero_subgenero'];
+                    $this->con->exec($sql);
+                } 
+         }
+
         
-            foreach($datos['genero'] as $gen) {
-                
-                $sql2 = "INSERT INTO genero_subgenero(id_genero, id_subgenero) VALUES ('".$gen."','".$id."')";
-                $this->con->exec($sql2);
-                
-            }
-        //###################################################################
-
-
-
     }
     
     public function delete($id){
