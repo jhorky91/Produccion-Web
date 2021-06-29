@@ -1,8 +1,8 @@
 <?php
-    require_once('../Helpers/funcs.php');
+    require_once(DIR_BASE.'/Helpers/funcs.php');
 
-    require_once('../Helpers/config.php');
-    require_once('../Helpers/path.php');
+    require_once(DIR_BASE.'/Helpers/config.php');
+    require_once(DIR_BASE.'/Helpers/path.php');
  
     session_start();
     
