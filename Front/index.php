@@ -4,7 +4,7 @@
     <section>      
         <div class="container">
                 <div class="texto-bienvenida">
-                    <h1>Bienvenido a nuestra tienda de Peliculas</h1>
+                    <h1>Bienvenido a nuestra tienda de Peliculas  </h1>
                 </div>    
         </div>
     </section>
