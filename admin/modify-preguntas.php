@@ -106,8 +106,8 @@ $ComentarioB = NEW ComentarioBusiness($con);
                         <tr>
                           <td align="right"><label class='mt-4' for="txtObligatiorio">Obligatorio:</label></td>
                           <td><style> .radio {width: 25px;height: 25px;}</style>
-                              <p  class="mx-4"> <input class="radio mr-2" type="radio" id="txtObligatiorio" name="tObligatorio" value="1" <?php echo ($Comentario['obligatorio']==1)?'checked':''; ?> >Si</p>
-                              <p  class="mx-4"> <input class="radio mr-2" type="radio" id="txtObligatiorio" name="tObligatorio" value="0" <?php echo ($Comentario['obligatorio']==0)?'checked':''; ?>>No</p>
+                              <p  class="mx-4"> <input class="radio mr-2" type="radio" id="txtObligatiorio" name="tObligatorio" value="1" <?php if(isset($Edit)) { echo ($Comentario['obligatorio']==1)?'checked':''; }?> >Si</p>
+                              <p  class="mx-4"> <input class="radio mr-2" type="radio" id="txtObligatiorio" name="tObligatorio" value="0" <?php if(isset($Edit)) { echo ($Comentario['obligatorio']==0)?'checked':''; }?>>No</p>
                           </td>
                         </tr>                          
                         <tr>

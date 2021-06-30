@@ -265,11 +265,13 @@ $ComentarioB = new ComentarioBusiness($con);
                                
                                   <input type="checkbox" id="campo" name="tcampo[]" value="<?php echo $preg['id_campo_dinamico_comentario']?>" size="30" class="bg-danger text-white" 
                                   <?php 
-                                  foreach($Pelicula['preguntas'] as $pr){
+                                  if(isset($Edit)){
+                                    foreach($Pelicula['preguntas'] as $pr){
                                     if($pr['id_campo_dinamico_comentario'] == $preg['id_campo_dinamico_comentario']){
                                       echo 'checked';
                                     }
                                    }
+                                  }
                                       
                                   
                                   ?>>
@@ -277,7 +279,8 @@ $ComentarioB = new ComentarioBusiness($con);
                                 
                             <?php 
                             echo '<br>';
-                              } ?>
+                              }
+                               ?>
                             </td>
                         </tr>
 

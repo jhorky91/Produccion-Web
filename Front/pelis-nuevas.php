@@ -7,6 +7,7 @@ $pLanzamientos = new PeliculaBusiness($con);
 $cont=0;
 
 	foreach ($pLanzamientos->getUltimos() as $prod) { 
+		if($prod->getStatus()==1){
 		$cont++;
 	?>
 		<div class="col-lg-3">
@@ -21,4 +22,5 @@ $cont=0;
 
 	<?php if($cont==4){ break; }
 	
-	} ?>
+		} 
+	}?>

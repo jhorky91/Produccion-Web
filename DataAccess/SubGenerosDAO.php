@@ -46,7 +46,7 @@ class SubGeneroDAO extends DAO{
         }
 
         $sql = "SELECT DISTINCT SG.id_subgenero,SG.status,SG.nombre FROM $this->table SG 
-        ".$gensub."WHERE 1+1 ".$sWhereStr." ORDER BY nombre";
+        ".$gensub." WHERE 1+1 ".$sWhereStr." ORDER BY nombre";
         $resultado = $this->con->query($sql,PDO::FETCH_CLASS,'SubGeneroEntity')->fetchAll();
         return $resultado;
 

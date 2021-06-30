@@ -113,7 +113,8 @@ if(isset($_POST['mod'])) {
                           
                           <?php 
                           $cont=0;
-                          foreach($PerfilB->getPerfiles() as $per){ ?>
+                          foreach($PerfilB->getPerfiles() as $per){ 
+                            if($per->getStatus()==1) {?>
 
                           <input                           
                           <?php if(isset($Edit)){
@@ -133,7 +134,7 @@ if(isset($_POST['mod'])) {
                               echo "<br/>";
                             }?>
                           
-                          <?php   } ?>
+                          <?php   }} ?>
                           
                           
                       </td>

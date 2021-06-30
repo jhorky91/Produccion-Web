@@ -40,9 +40,8 @@ if(isset($_GET['del'])){
             <div class="card-header py-1">
             <span class="m-0 font-weight-bold text-danger">Todo(<?php echo $PermisoB->contar(); ?>)</span>
              
-              <a href="modify-permiso.php"><input class="btn btn-danger" type="submit" value="Añadir Clasificacion"></a>
-              <input class="btn btn-danger" type="submit" value="Importar">
-              <input class="btn btn-danger" type="submit" value="Exportar">
+              <a href="modify-permiso.php"><input class="btn btn-danger" type="submit" value="Añadir Permiso"></a>
+              
             </div>
             <div class="card-body">
               <div class="table-responsive">
