@@ -2,9 +2,9 @@
 
 require_once('DAO.php');
 require_once('../Models/PeliculaEntity.php');
-require_once('../DataAccess/GenerosDao.php');
-require_once('../DataAccess/SubGenerosDao.php');
-require_once('../DataAccess/ComentariosDao.php');
+require_once('../DataAccess/GenerosDAO.php');
+require_once('../DataAccess/SubGenerosDAO.php');
+require_once('../DataAccess/ComentariosDAO.php');
 
 class PeliculasDAO extends DAO{
 
